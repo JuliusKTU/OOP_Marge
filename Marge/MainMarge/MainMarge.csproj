@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E8DCC945-AFEA-484C-AAB1-838FCA00E8A1}</ProjectGuid>
+    <ProjectGuid>{F98A09FE-F2F8-452C-8A1A-31D02A8CCDC7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Marge</RootNamespace>
-    <AssemblyName>Marge</AssemblyName>
+    <RootNamespace>MainMarge</RootNamespace>
+    <AssemblyName>MainMarge</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\BoardCordinates.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
