@@ -4,46 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Marge"
+        xmlns:views="clr-namespace:Marge.Views"
+        xmlns:vm="clr-namespace:Marge.ViewModels"
+        d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
-    <Border
-            BorderThickness="1"
-            BorderBrush="Black">   
-    <Grid
-        ShowGridLines="True">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        
-
-            
-            
-       
-        
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <views:GridView Margin="10" DataContext="{Binding BoardCoordinatesViewModel}" />
+        </ScrollViewer>
     </Grid>
-    </Border>
 </Window>

@@ -6,15 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Marge.Domain;
+using System.Windows;
 
 namespace Marge.Commands
 {
     public class SendCoordinatesChatMessageCommand : ICommand
     {
-        private readonly BorderCoordinates _viewModel;
+        private readonly BoardCoordinatesViewModel _viewModel;
         private readonly SignalRChatService _chatService;
 
-        public SendCoordinatesChatMessageCommand(BorderCoordinates viewModel, SignalRChatService chatService)
+        public SendCoordinatesChatMessageCommand(BoardCoordinatesViewModel viewModel, SignalRChatService chatService)
         {
             _viewModel = viewModel;
             _chatService = chatService;
@@ -32,7 +34,19 @@ namespace Marge.Commands
         {
             try
             {
-                await _chatService.SendCoordinatesMessage(new BorderCoordinates());
+                
+                await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+                {
+                   
+                    message = "success"
+                    
+                    
+                }) ;
+                MessageBox.Show("message sent");
+            }
+            catch
+            {
+
             }
         }
     }

@@ -18,10 +18,17 @@ namespace Marge
         protected override void OnStartup(StartupEventArgs e)
         {
             HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000")
+                .WithUrl("http://localhost:5000/margechat")
                 .Build();
 
-            BorderCoordinates chatViewModel = BorderCoordinates(new Services.SignalRChatService(connection));
+            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(new Services.SignalRChatService(connection));
+
+            MainWindow window = new MainWindow
+            {
+                DataContext = new MainViewModel(chatViewModel)
+            };
+
+            window.Show();
 
         }
 
