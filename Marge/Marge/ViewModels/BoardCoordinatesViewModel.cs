@@ -15,6 +15,7 @@ namespace Marge.ViewModels
     public class BoardCoordinatesViewModel : ViewModelBase
     {
         private string _message { get; set; }
+        public int UniqueID { get; }
         public string Message
         {
             get
@@ -33,6 +34,9 @@ namespace Marge.ViewModels
 
         public BoardCoordinatesViewModel(SignalRChatService chatService)
         {
+            Random randNum = new Random();
+            UniqueID = randNum.Next(1, 100);
+
             SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
             _message = "Waiting for response";
 
@@ -57,7 +61,6 @@ namespace Marge.ViewModels
         {
             _message = coordinates.message;
             OnPropertyChanged(nameof(Message));
-            MessageBox.Show("message received");
         }
     }
 }

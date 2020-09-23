@@ -38,11 +38,10 @@ namespace Marge.Commands
                 await _chatService.SendCoordinatesMessage(new BoardCoordinates()
                 {
                    
-                    message = "success"
+                    message = _viewModel.UniqueID +  " has sent a message"
                     
                     
                 }) ;
-                MessageBox.Show("message sent");
             }
             catch
             {

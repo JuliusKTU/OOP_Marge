@@ -40,7 +40,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <TextBlock
+                Grid.Row="0"
+                Text="{Binding Path=UniqueID}"
+                >
+
+            </TextBlock>
+
             <Button
+                Grid.Row="1"
                 Command="{Binding SendCoordinatesCommand}">
 
                 
@@ -48,7 +56,7 @@
             </Button>
 
             <TextBlock Name="tbSettingText"
-                Grid.Row="1"
+                Grid.Row="2"
                 Text="{Binding Path=Message,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 >
 
