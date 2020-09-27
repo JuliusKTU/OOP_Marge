@@ -9,6 +9,9 @@ using System.Windows.Input;
 using Marge.Commands;
 using Marge.Domain;
 using Marge.Services;
+using System.Windows.Controls;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace Marge.ViewModels
 {
@@ -16,6 +19,11 @@ namespace Marge.ViewModels
     {
         private string _message { get; set; }
         public int UniqueID { get; }
+
+        private int _x { get; set; }
+        private int _y { get; set; }
+
+
         public string Message
         {
             get
@@ -28,17 +36,54 @@ namespace Marge.ViewModels
                 OnPropertyChanged(nameof(Message));
             }
         }
+        public int x
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+                OnPropertyChanged(nameof(x));
+            }
+        }
+        public int y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+                OnPropertyChanged(nameof(y));
+            }
+        }
 
 
-        public ICommand SendCoordinatesCommand { get; }
+        //public ICommand SendCoordinatesCommand { get; }
+        public ICommand MoveDownChatMessageCommand { get; }
+        public ICommand MoveLeftChatMessageCommand { get; }
+        public ICommand MoveRightChatMessageCommand { get; }
+        public ICommand MoveUpChatMessageCommand { get; }
+
 
         public BoardCoordinatesViewModel(SignalRChatService chatService)
         {
+
             Random randNum = new Random();
             UniqueID = randNum.Next(1, 100);
 
-            SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
+            //SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
+            MoveDownChatMessageCommand = new MoveDownChatMessageCommand(this, chatService);
+            MoveLeftChatMessageCommand = new MoveLeftChatMessageCommand(this, chatService);
+            MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, chatService);
+            MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService);
+
             _message = "Waiting for response";
+            x = UniqueID = randNum.Next(1, 9); ;
+            y = UniqueID = randNum.Next(1, 9); ;
 
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
 
@@ -57,10 +102,16 @@ namespace Marge.ViewModels
             return viewModel;
         }
 
+
         private void ChatService_CoordinatesMessageReceived(BoardCoordinates coordinates)
         {
             _message = coordinates.message;
+            _x = coordinates.x;
+            _y = coordinates.y;
             OnPropertyChanged(nameof(Message));
+            OnPropertyChanged(nameof(x));
+            OnPropertyChanged(nameof(y));
+
         }
     }
 }

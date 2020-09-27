@@ -31,5 +31,6 @@ namespace Marge.Services
         {
             await _connection.SendAsync("SendCoordinates", coordinates);
         }
+
     }
 }

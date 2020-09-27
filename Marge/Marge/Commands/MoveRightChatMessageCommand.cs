@@ -1,4 +1,5 @@
-﻿using Marge.Services;
+﻿using Marge.Domain;
+using Marge.Services;
 using Marge.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -6,17 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Marge.Domain;
-using System.Windows;
 
 namespace Marge.Commands
 {
-    public class SendCoordinatesChatMessageCommand : ICommand
+    class MoveRightChatMessageCommand : ICommand
     {
         private readonly BoardCoordinatesViewModel _viewModel;
         private readonly SignalRChatService _chatService;
 
-        public SendCoordinatesChatMessageCommand(BoardCoordinatesViewModel viewModel, SignalRChatService chatService)
+        public MoveRightChatMessageCommand(BoardCoordinatesViewModel viewModel, SignalRChatService chatService)
         {
             _viewModel = viewModel;
             _chatService = chatService;
@@ -34,14 +33,14 @@ namespace Marge.Commands
         {
             try
             {
-                
+
                 await _chatService.SendCoordinatesMessage(new BoardCoordinates()
                 {
-                   
-                    message = _viewModel.UniqueID +  " has sent a message",
+
+                    message = _viewModel.UniqueID + " has sent a message",
                     x = _viewModel.x + 1,
-                    y = _viewModel.y + 1
-                }) ;
+                    y = _viewModel.y
+                });
             }
             catch
             {

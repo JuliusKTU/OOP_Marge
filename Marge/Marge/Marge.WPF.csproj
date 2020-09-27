@@ -144,8 +144,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\MoveDownChatMessageCommand.cs" />
+    <Compile Include="Commands\MoveLeftChatMessageCommand.cs" />
+    <Compile Include="Commands\MoveRightChatMessageCommand.cs" />
+    <Compile Include="Commands\MoveUpChatMessageCommand.cs" />
     <Compile Include="Commands\SendCoordinatesChatMessageCommand.cs" />
     <Compile Include="Domain\BoardCoordinates.cs" />
+    <Compile Include="Domain\ChessGridItem.cs" />
     <Compile Include="Services\SignalRChatService.cs" />
     <Compile Include="ViewModels\BoardCoordinatesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
