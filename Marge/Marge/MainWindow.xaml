@@ -17,7 +17,5 @@
         </Grid.RowDefinitions>
         <views:GridView Margin="10" DataContext="{Binding BoardCoordinatesViewModel}" />
 
-        
-
     </Grid>
 </Window>

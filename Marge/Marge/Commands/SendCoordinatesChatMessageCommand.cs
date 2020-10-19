@@ -37,7 +37,6 @@ namespace Marge.Commands
                 
                 await _chatService.SendCoordinatesMessage(new BoardCoordinates()
                 {
-                   
                     message = _viewModel.UniqueID +  " has sent a message",
                     x = _viewModel.x + 1,
                     y = _viewModel.y + 1

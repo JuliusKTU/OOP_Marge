@@ -7,11 +7,10 @@ using System.Windows.Media;
 
 namespace Marge.Domain
 {
-    public class ChessGridItem
+    public class GridItem
     {
         public string SquareColor { get; set; }
         public string PieceShape { get; set; }
-
-        public string PieceColor { get; set; }
+        public bool Active { get; set; }
     }
 }

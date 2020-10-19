@@ -12,6 +12,7 @@ using Marge.Services;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Marge.DesignPatterns.FactoryPattern;
 
 namespace Marge.ViewModels
 {
@@ -82,11 +83,14 @@ namespace Marge.ViewModels
             MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService);
 
             _message = "Waiting for response";
-            x = UniqueID = randNum.Next(1, 9); ;
-            y = UniqueID = randNum.Next(1, 9); ;
+            x = 3;//UniqueID = randNum.Next(1, 9); 
+            y = 3;//UniqueID = randNum.Next(1, 9); 
+
+            
 
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
 
+            
         }
 
         public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService)
@@ -99,6 +103,10 @@ namespace Marge.ViewModels
                     ;
                 }
             });
+
+            BonusFactory a = new BonusFactory();
+            a.CreateBonus(1, chatService).SendBonus();
+
             return viewModel;
         }
 

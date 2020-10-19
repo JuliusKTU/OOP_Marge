@@ -149,8 +149,20 @@
     <Compile Include="Commands\MoveRightChatMessageCommand.cs" />
     <Compile Include="Commands\MoveUpChatMessageCommand.cs" />
     <Compile Include="Commands\SendCoordinatesChatMessageCommand.cs" />
+    <Compile Include="DesignPatterns\FactoryPattern\BonusFactory.cs" />
+    <Compile Include="DesignPatterns\FactoryPattern\Factory.cs" />
+    <Compile Include="DesignPatterns\FactoryPattern\Bonus.cs" />
+    <Compile Include="DesignPatterns\FactoryPattern\JackPot.cs" />
+    <Compile Include="DesignPatterns\FactoryPattern\Joke.cs" />
+    <Compile Include="DesignPatterns\FactoryPattern\Normal.cs" />
+    <Compile Include="DesignPatterns\StrategyPattern\Confusion.cs" />
+    <Compile Include="DesignPatterns\StrategyPattern\Freeze.cs" />
+    <Compile Include="DesignPatterns\StrategyPattern\Move.cs" />
+    <Compile Include="DesignPatterns\StrategyPattern\MovingStatusStrategy.cs" />
+    <Compile Include="DesignPatterns\StrategyPattern\Reverse.cs" />
     <Compile Include="Domain\BoardCoordinates.cs" />
-    <Compile Include="Domain\ChessGridItem.cs" />
+    <Compile Include="Domain\GridItem.cs" />
+    <Compile Include="GameObjects\Player.cs" />
     <Compile Include="Services\SignalRChatService.cs" />
     <Compile Include="ViewModels\BoardCoordinatesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -202,5 +214,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

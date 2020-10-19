@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.FactoryPattern;
+using Marge.Domain;
 using Marge.Services;
 using Marge.ViewModels;
 using System;
