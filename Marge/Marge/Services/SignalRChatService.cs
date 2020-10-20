@@ -34,10 +34,5 @@ namespace Marge.Services
             await _connection.SendAsync("SendCoordinates", coordinates);
         }
 
-        public async Task SendBonus(BoardCoordinates coordinates)
-        {
-            await _connection.SendAsync("BonusMessage", coordinates);
-        }
-
     }
 }

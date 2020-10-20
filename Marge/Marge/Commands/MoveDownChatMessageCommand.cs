@@ -37,8 +37,10 @@ namespace Marge.Commands
 
                 await _chatService.SendCoordinatesMessage(new BoardCoordinates()
                 {
-
                     message = _viewModel.UniqueID.ToString(),
+                    id = _viewModel.UniqueID,
+                    color = _viewModel.playerColor,
+                    messageType = MessageType.playerMovement,
                     x = _viewModel.x,
                     y = _viewModel.y + 1
                 });

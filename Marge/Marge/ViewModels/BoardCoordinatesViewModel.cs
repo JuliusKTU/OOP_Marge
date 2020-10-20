@@ -18,13 +18,17 @@ namespace Marge.ViewModels
 {
     public class BoardCoordinatesViewModel : ViewModelBase
     {
+        SignalRChatService _chatService;
+        public string playerColor = "";
         private string _message { get; set; }
-        public int UniqueID { get; }
+        public int UniqueID{ get; }
+        public int UniqueID2 { get; }
+        public int UniqueID3 { get; }
 
         private int _x { get; set; }
         private int _y { get; set; }
 
-
+        private int StepsCount = 0;
         public string Message
         {
             get
@@ -72,9 +76,15 @@ namespace Marge.ViewModels
 
         public BoardCoordinatesViewModel(SignalRChatService chatService)
         {
-
+            
             Random randNum = new Random();
-            UniqueID = randNum.Next(1, 100);
+            UniqueID = randNum.Next(100, 255);
+            UniqueID2 = randNum.Next(100, 255);
+            UniqueID3 = randNum.Next(100, 255);
+            MessageBox.Show(UniqueID + " " + UniqueID2 + " " + UniqueID3);
+
+            playerColor = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
+            //playerColor.Color = Color.FromArgb(255, 255, 255, 0);
 
             //SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
             MoveDownChatMessageCommand = new MoveDownChatMessageCommand(this, chatService);
@@ -83,14 +93,12 @@ namespace Marge.ViewModels
             MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService);
 
             _message = "Waiting for response";
-            x = 3;//UniqueID = randNum.Next(1, 9); 
-            y = 3;//UniqueID = randNum.Next(1, 9); 
-
-            
+            x = randNum.Next(1, 20);//UniqueID = randNum.Next(1, 9); 
+            y = randNum.Next(1, 20);//UniqueID = randNum.Next(1, 9); 
 
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
+            _chatService = chatService;
 
-            
         }
 
         public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService)
@@ -104,8 +112,7 @@ namespace Marge.ViewModels
                 }
             });
 
-            BonusFactory a = new BonusFactory();
-            a.CreateBonus(1, chatService).SendBonus();
+            
 
             return viewModel;
         }
@@ -113,12 +120,28 @@ namespace Marge.ViewModels
 
         private void ChatService_CoordinatesMessageReceived(BoardCoordinates coordinates)
         {
-            _message = coordinates.message;
-            _x = coordinates.x;
-            _y = coordinates.y;
-            OnPropertyChanged(nameof(Message));
-            OnPropertyChanged(nameof(x));
-            OnPropertyChanged(nameof(y));
+            if (coordinates.messageType == MessageType.playerMovement)
+            {
+                
+                StepsCount++;
+
+                if(StepsCount >= 10)
+                {
+                    var a = new BonusFactory();
+                    a.CreateBonus(1, _chatService).SendBonus();
+                    StepsCount = 0;
+                }
+               
+            }
+            if(coordinates.messageType != MessageType.buff && coordinates.id == UniqueID)
+            {
+                _message = coordinates.message;
+                _x = coordinates.x;
+                _y = coordinates.y;
+                OnPropertyChanged(nameof(Message));
+                OnPropertyChanged(nameof(x));
+                OnPropertyChanged(nameof(y));
+            }
 
         }
     }

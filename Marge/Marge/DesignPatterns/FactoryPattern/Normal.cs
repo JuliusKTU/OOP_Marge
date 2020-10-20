@@ -18,6 +18,7 @@ namespace Marge.DesignPatterns.Factory
         {
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
+                messageType = MessageType.buff,
                 message = "buff",
                 x = 8,
                 y = 8

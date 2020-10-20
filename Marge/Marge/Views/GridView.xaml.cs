@@ -57,9 +57,9 @@ namespace Marge.Views
 
             //< Rectangle Fill = "Black" IsHitTestVisible = "False"
             //           Grid.Column = "1" Grid.Row = "2" />
-            for (int x=0; x<10; x++)
+            for (int x=0; x<20; x++)
             {
-                for (int y=0; y<10; y++)
+                for (int y=0; y<20; y++)
                 {
                     Rectangle ColorBlock = new Rectangle();
                     ColorBlock.Name = "Tile" + x + y;
@@ -74,7 +74,7 @@ namespace Marge.Views
 
         }
 
-        public void SetTile(int x, int y, Brush color)
+        public void SetTile(int x, int y, SolidColorBrush color)
         {
             Rectangle ColorBlock = new Rectangle();
             ColorBlock.Name = "Tile" + x + y;
@@ -88,14 +88,19 @@ namespace Marge.Views
         private void ChatService_CoordinatesMessageReceived(BoardCoordinates coordinates)
         {
             string mess = coordinates.message;
-            if(x != -1 && y != -1)
+            if (coordinates.messageType == MessageType.buff)
             {
-                SetTile(coordinates.x, coordinates.y, Brushes.Black);
-                SetTile(x, y, Brushes.Red);
+
+                string[] words = coordinates.color.Split(' ');
+
+                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
-            x = coordinates.x;
-            y = coordinates.y;
-            
+            else
+            {
+                //string[] words = coordinates.color.Split(' ');
+
+                //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
 
         }
 

@@ -16,10 +16,5 @@ namespace Marge.SignalR.Hubs
             await Clients.All.SendAsync("ReceivedCoordinatesMessage", coords);
         }
 
-        public async Task SendBonus(BoardCoordinates coords)
-        {
-            await Clients.All.SendAsync("ReceivedBonusMessage", coords);
-        }
-
     }
 }
