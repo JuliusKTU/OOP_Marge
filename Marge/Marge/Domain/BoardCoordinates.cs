@@ -22,7 +22,8 @@ namespace Marge.Domain
     public enum MessageType
     {
         playerMovement,
-        buff
+        buff,
+        playerFreeze
         
     }
 }

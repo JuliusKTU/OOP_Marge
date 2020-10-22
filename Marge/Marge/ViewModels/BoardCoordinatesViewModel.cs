@@ -13,6 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using Marge.DesignPatterns.FactoryPattern;
+using Marge.GameObjects;
+using Marge.DesignPatterns.AbstractFactoryPattern;
 
 namespace Marge.ViewModels
 {
@@ -29,6 +31,7 @@ namespace Marge.ViewModels
         private int _y { get; set; }
 
         private int StepsCount = 0;
+        private int FreezeStepCount = 0;
         public string Message
         {
             get
@@ -49,6 +52,7 @@ namespace Marge.ViewModels
             }
             set
             {
+                CurrentPlayerCoordinates.x = value;
                 _x = value;
                 OnPropertyChanged(nameof(x));
             }
@@ -61,6 +65,7 @@ namespace Marge.ViewModels
             }
             set
             {
+                CurrentPlayerCoordinates.y = value;
                 _y = value;
                 OnPropertyChanged(nameof(y));
             }
@@ -81,8 +86,7 @@ namespace Marge.ViewModels
             UniqueID = randNum.Next(100, 255);
             UniqueID2 = randNum.Next(100, 255);
             UniqueID3 = randNum.Next(100, 255);
-            MessageBox.Show(UniqueID + " " + UniqueID2 + " " + UniqueID3);
-
+            
             playerColor = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
             //playerColor.Color = Color.FromArgb(255, 255, 255, 0);
 
@@ -95,7 +99,8 @@ namespace Marge.ViewModels
             _message = "Waiting for response";
             x = randNum.Next(1, 20);//UniqueID = randNum.Next(1, 9); 
             y = randNum.Next(1, 20);//UniqueID = randNum.Next(1, 9); 
-
+            CurrentPlayerCoordinates.x = x;
+            CurrentPlayerCoordinates.y = y;
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
 
@@ -124,6 +129,7 @@ namespace Marge.ViewModels
             {
                 
                 StepsCount++;
+                FreezeStepCount++;
 
                 if(StepsCount >= 10)
                 {
@@ -131,7 +137,14 @@ namespace Marge.ViewModels
                     a.CreateBonus(1, _chatService).SendBonus();
                     StepsCount = 0;
                 }
-               
+
+                if (StepsCount >= 5)
+                {
+                    var a = new FreezeFactory();
+                    a.CreateDebuff(_chatService).SendFreeze();
+                    FreezeStepCount = 0;
+                }
+
             }
             if(coordinates.messageType != MessageType.buff && coordinates.id == UniqueID)
             {

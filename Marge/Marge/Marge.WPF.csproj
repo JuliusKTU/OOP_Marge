@@ -149,6 +149,15 @@
     <Compile Include="Commands\MoveRightChatMessageCommand.cs" />
     <Compile Include="Commands\MoveUpChatMessageCommand.cs" />
     <Compile Include="Commands\SendCoordinatesChatMessageCommand.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\AbstractFacotry.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\BlackSplash.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\Buff.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\ColorSplash.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\Debuff.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeFactory.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeOthers.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeYourself.cs" />
+    <Compile Include="DesignPatterns\AbstractFactoryPattern\PaintBombFactory.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\BonusFactory.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Factory.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Bonus.cs" />
@@ -162,6 +171,7 @@
     <Compile Include="DesignPatterns\StrategyPattern\Reverse.cs" />
     <Compile Include="Domain\BoardCoordinates.cs" />
     <Compile Include="Domain\GridItem.cs" />
+    <Compile Include="GameObjects\CurrentPlayerCoordinates.cs" />
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="Services\SignalRChatService.cs" />
     <Compile Include="ViewModels\BoardCoordinatesViewModel.cs" />

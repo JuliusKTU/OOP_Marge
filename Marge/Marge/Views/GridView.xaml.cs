@@ -85,6 +85,19 @@ namespace Marge.Views
             gridMain.Children.Add(ColorBlock);
         }
 
+        public void SetEllipse(int x, int y, SolidColorBrush color)
+        {
+            Ellipse ColorBlock = new Ellipse();
+            ColorBlock.Name = "Tile" + x + y;
+            ColorBlock.Fill = color;
+            ColorBlock.Stroke = Brushes.Black;
+            ColorBlock.Stretch = Stretch.Fill;
+            Grid.SetColumn(ColorBlock, x);
+            Grid.SetRow(ColorBlock, y);
+
+            gridMain.Children.Add(ColorBlock);
+        }
+
         private void ChatService_CoordinatesMessageReceived(BoardCoordinates coordinates)
         {
             string mess = coordinates.message;
@@ -93,13 +106,20 @@ namespace Marge.Views
 
                 string[] words = coordinates.color.Split(' ');
 
-                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if(coordinates.messageType == MessageType.playerFreeze)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
             else
             {
-                //string[] words = coordinates.color.Split(' ');
+                string[] words = coordinates.color.Split(' ');
 
-                //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                
             }
 
         }
