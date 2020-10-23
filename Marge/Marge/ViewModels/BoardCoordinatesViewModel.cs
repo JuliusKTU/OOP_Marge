@@ -86,7 +86,17 @@ namespace Marge.ViewModels
             UniqueID = randNum.Next(100, 255);
             UniqueID2 = randNum.Next(100, 255);
             UniqueID3 = randNum.Next(100, 255);
-            
+
+            for (int x = 0; x < 20; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    Board.AddTile(x, y, new Tile(false, true, TileType.Neutral));
+                  
+                  
+                }
+            }
+
             playerColor = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
             //playerColor.Color = Color.FromArgb(255, 255, 255, 0);
 
@@ -151,6 +161,13 @@ namespace Marge.ViewModels
                 _message = coordinates.message;
                 _x = coordinates.x;
                 _y = coordinates.y;
+
+                if (Board.GetTile(_x, _y).TileType != TileType.Neutral)
+                {
+                    MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
+                }
+
+                Board.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
                 OnPropertyChanged(nameof(Message));
                 OnPropertyChanged(nameof(x));
                 OnPropertyChanged(nameof(y));

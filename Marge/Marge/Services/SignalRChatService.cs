@@ -14,14 +14,14 @@ namespace Marge.Services
         private readonly HubConnection _connection;
 
         public event Action<BoardCoordinates> CoordinatesReceived;
-        public event Action<BoardCoordinates> BonusReceived;
+        
 
         public SignalRChatService(HubConnection connection)
         {
             _connection = connection;
 
             _connection.On<BoardCoordinates>("ReceivedCoordinatesMessage", (coordinates) => CoordinatesReceived?.Invoke(coordinates));
-            _connection.On<BoardCoordinates>("ReceivedBonusMessage", (coordinates) => BonusReceived?.Invoke(coordinates));
+          
         }
 
         public async Task Connect()

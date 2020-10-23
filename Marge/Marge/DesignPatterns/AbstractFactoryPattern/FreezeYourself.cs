@@ -30,6 +30,15 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
                 y = 10
             });
 
+            if (Board.GetTile(10, 10).IsColored)
+            {
+                Board.AddTile(10, 10, new Tile(true, true, TileType.DebuffFreezeYourself));
+            }
+            else
+            {
+                Board.AddTile(10, 10, new Tile(false, true, TileType.DebuffFreezeYourself));
+            }
+
         }
     }
 }

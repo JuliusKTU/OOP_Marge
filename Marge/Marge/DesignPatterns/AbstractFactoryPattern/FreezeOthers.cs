@@ -1,4 +1,5 @@
 ﻿using Marge.Domain;
+using Marge.GameObjects;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,17 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
                 x = 11,
                 y = 11
             });
+
+            if (Board.GetTile(11,11).IsColored)
+            {
+                Board.AddTile(11, 11, new Tile(true, true, TileType.BuffFreezeOthers));
+            } 
+            else
+            {
+                Board.AddTile(11, 11, new Tile(false, true, TileType.BuffFreezeOthers));
+
+            }
+            
 
         }
     }

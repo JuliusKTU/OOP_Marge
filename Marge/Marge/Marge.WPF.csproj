@@ -171,8 +171,10 @@
     <Compile Include="DesignPatterns\StrategyPattern\Reverse.cs" />
     <Compile Include="Domain\BoardCoordinates.cs" />
     <Compile Include="Domain\GridItem.cs" />
+    <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\CurrentPlayerCoordinates.cs" />
     <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="Services\SignalRChatService.cs" />
     <Compile Include="ViewModels\BoardCoordinatesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

@@ -1,4 +1,5 @@
 ﻿using Marge.Domain;
+using Marge.GameObjects;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,16 @@ namespace Marge.DesignPatterns.Factory
                 y = 8
             }) ;
 
+
+            if (Board.GetTile(8, 8).IsColored)
+            {
+                Board.AddTile(8, 8, new Tile(true, true, TileType.BonusJackPot));
+            }
+            else
+            {
+                Board.AddTile(8, 8, new Tile(false, true, TileType.BonusJackPot));
+
+            }
         }
 
     }

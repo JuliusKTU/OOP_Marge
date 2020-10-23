@@ -1,4 +1,5 @@
 ﻿using Marge.Domain;
+using Marge.GameObjects;
 using Marge.Services;
 using Marge.ViewModels;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -57,16 +58,21 @@ namespace Marge.Views
 
             //< Rectangle Fill = "Black" IsHitTestVisible = "False"
             //           Grid.Column = "1" Grid.Row = "2" />
-            for (int x=0; x<20; x++)
+            for (int x = 0; x < 20; x++)
             {
-                for (int y=0; y<20; y++)
+                for (int y = 0; y < 20; y++)
                 {
+                    Board.AddTile(x, y, new Tile(false, true, TileType.Neutral));
+                    MessageBox.Show("Hello I am created");
                     Rectangle ColorBlock = new Rectangle();
                     ColorBlock.Name = "Tile" + x + y;
                     ColorBlock.Fill = Brushes.Aqua;
                     Grid.SetColumn(ColorBlock, x);
                     Grid.SetRow(ColorBlock, y);
                     gridMain.Children.Add(ColorBlock);
+
+                    
+                    
                 }
             }
 
