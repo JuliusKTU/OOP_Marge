@@ -120,6 +120,12 @@ namespace Marge.Views
 
                 SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
+            else if(coordinates.messageType == MessageType.enemy)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
             else
             {
                 string[] words = coordinates.color.Split(' ');

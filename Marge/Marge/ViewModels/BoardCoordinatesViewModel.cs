@@ -23,7 +23,7 @@ namespace Marge.ViewModels
         SignalRChatService _chatService;
         public string playerColor = "";
         private string _message { get; set; }
-        public int UniqueID{ get; }
+        public int UniqueID { get; }
         public int UniqueID2 { get; }
         public int UniqueID3 { get; }
 
@@ -32,6 +32,11 @@ namespace Marge.ViewModels
 
         private int StepsCount = 0;
         private int FreezeStepCount = 0;
+        private int EnemyCount = 0;
+
+        public Player MainPlayer { get; set; }
+        public Enemy MainEnemy { get; set; }
+
         public string Message
         {
             get
@@ -79,9 +84,10 @@ namespace Marge.ViewModels
         public ICommand MoveUpChatMessageCommand { get; }
 
 
-        public BoardCoordinatesViewModel(SignalRChatService chatService)
+        public BoardCoordinatesViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
         {
-            
+            MainPlayer = mainPlayer;
+            MainEnemy = mainEnemy;
             Random randNum = new Random();
             UniqueID = randNum.Next(100, 255);
             UniqueID2 = randNum.Next(100, 255);
@@ -92,12 +98,12 @@ namespace Marge.ViewModels
                 for (int y = 0; y < 20; y++)
                 {
                     Board.AddTile(x, y, new Tile(false, true, TileType.Neutral));
-                  
-                  
+
+
                 }
             }
 
-            playerColor = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
+            //playerColor = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
             //playerColor.Color = Color.FromArgb(255, 255, 255, 0);
 
             //SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
@@ -107,8 +113,11 @@ namespace Marge.ViewModels
             MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService);
 
             _message = "Waiting for response";
-            x = randNum.Next(1, 20);//UniqueID = randNum.Next(1, 9); 
-            y = randNum.Next(1, 20);//UniqueID = randNum.Next(1, 9); 
+
+            x = MainPlayer.PosX;
+            y = MainPlayer.PosY;
+            playerColor = MainPlayer.Color;
+
             CurrentPlayerCoordinates.x = x;
             CurrentPlayerCoordinates.y = y;
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
@@ -116,9 +125,10 @@ namespace Marge.ViewModels
 
         }
 
-        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService)
+        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
         {
-            BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(chatService);
+
+            BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(chatService, mainPlayer, mainEnemy);
             chatService.Connect().ContinueWith(task =>
             {
                 if (task.Exception != null)
@@ -126,8 +136,6 @@ namespace Marge.ViewModels
                     ;
                 }
             });
-
-            
 
             return viewModel;
         }
@@ -137,26 +145,35 @@ namespace Marge.ViewModels
         {
             if (coordinates.messageType == MessageType.playerMovement)
             {
-                
+
                 StepsCount++;
                 FreezeStepCount++;
+                EnemyCount++;
 
-                if(StepsCount >= 10)
+                if (StepsCount >= 10)
                 {
                     var a = new BonusFactory();
                     a.CreateBonus(1, _chatService).SendBonus();
                     StepsCount = 0;
                 }
 
-                if (StepsCount >= 5)
+                if (FreezeStepCount >= 5)
                 {
                     var a = new FreezeFactory();
                     a.CreateDebuff(_chatService).SendFreeze();
                     FreezeStepCount = 0;
                 }
 
+                if (EnemyCount >= 3)
+                {
+                    MainEnemy.ChangePossition();
+                    EnemyCount = 0;
+                }
             }
-            if(coordinates.messageType != MessageType.buff && coordinates.id == UniqueID)
+
+
+
+            if (coordinates.messageType != MessageType.buff && coordinates.id == UniqueID)
             {
                 _message = coordinates.message;
                 _x = coordinates.x;

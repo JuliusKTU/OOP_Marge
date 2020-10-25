@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Marge.ViewModels;
+using Marge.GameObjects;
+using Marge.DesignPatterns.BuilderPattern;
 
 namespace Marge
 {
@@ -21,7 +23,20 @@ namespace Marge
                 .WithUrl("http://localhost:5000/margechat")
                 .Build();
 
-            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(new Services.SignalRChatService(connection));
+            var SignalRConnection = new Services.SignalRChatService(connection);
+
+            var player = new PlayerBuilder();
+            player.BuildPlayerName();
+            player.BuildPlayerColor();
+            player.BuildPlayerPos();
+
+            var enemy = new EnemyBuilder();
+            enemy.BuildPlayerName();
+            enemy.BuildPlayerColor();
+            enemy.BuildPlayerPos();
+            enemy.passConnection(SignalRConnection);
+
+            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(SignalRConnection, player.GetPlayer(), enemy.GetEnemy());
 
             MainWindow window = new MainWindow
             {

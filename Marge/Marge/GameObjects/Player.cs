@@ -5,11 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Marge.GameObjects
 {
-    class Player
+    public class Player
     {
+        public string Name { get; set; }
+        public string Color { get; set; }
+        public int PosX { get; set; }
+        public int PosY { get; set; }
+
 
         //atributai
         Dictionary<string, IMovingStatusStrategy> strategyContext = new Dictionary<string, IMovingStatusStrategy>();
@@ -24,7 +30,7 @@ namespace Marge.GameObjects
 
         public void GetStrategy(IMovingStatusStrategy strategy)
         {
-          
+
         }
         public IMovingStatusStrategy RequestStrategy(string strategy)
         {

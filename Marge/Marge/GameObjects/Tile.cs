@@ -36,7 +36,8 @@ namespace Marge.GameObjects
         BonusJackPot,
         BonusNormal,
         BonusJoke,
-        Neutral
+        Neutral,
+        Enemy
 
     }
 }

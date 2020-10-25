@@ -23,7 +23,8 @@ namespace Marge.Domain
     {
         playerMovement,
         buff,
-        playerFreeze
+        playerFreeze,
+        enemy
         
     }
 }

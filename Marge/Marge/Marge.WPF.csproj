@@ -158,6 +158,9 @@
     <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeOthers.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeYourself.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\PaintBombFactory.cs" />
+    <Compile Include="DesignPatterns\BuilderPattern\Builder.cs" />
+    <Compile Include="DesignPatterns\BuilderPattern\EnemyBuilder.cs" />
+    <Compile Include="DesignPatterns\BuilderPattern\PlayerBuilder.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\BonusFactory.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Factory.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Bonus.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Domain\GridItem.cs" />
     <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\CurrentPlayerCoordinates.cs" />
+    <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="Services\SignalRChatService.cs" />
