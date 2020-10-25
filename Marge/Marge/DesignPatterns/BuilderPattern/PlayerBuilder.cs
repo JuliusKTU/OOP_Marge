@@ -19,9 +19,9 @@ namespace Marge.DesignPatterns.BuilderPattern
         public override void BuildPlayerColor()
         {
             Random randNum = new Random();
-            int UniqueID = randNum.Next(100, 255);
-            int UniqueID2 = randNum.Next(100, 255);
-            int UniqueID3 = randNum.Next(100, 255);
+            int UniqueID = randNum.Next(1, 255);
+            int UniqueID2 = randNum.Next(1, 255);
+            int UniqueID3 = randNum.Next(1, 255);
 
             string playerColor = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
 

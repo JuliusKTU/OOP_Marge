@@ -8,9 +8,9 @@ namespace Marge.DesignPatterns.StrategyPattern
 {
     class Move : IMovingStatusStrategy
     {
-        public void MovementChange()
+        public StrategyType MovementChange()
         {
-            throw new NotImplementedException();
+            return StrategyType.Move;
         }
     }
 }

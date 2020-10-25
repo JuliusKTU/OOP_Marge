@@ -8,6 +8,15 @@ namespace Marge.DesignPatterns.StrategyPattern
 {
     public interface IMovingStatusStrategy
     {
-         void MovementChange();
+        StrategyType MovementChange();
+        
+    }
+
+    public enum StrategyType
+    {
+        Move,
+        Frozen,
+        Reversed,
+        Confused
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Marge.DesignPatterns.FactoryPattern;
+using Marge.DesignPatterns.StrategyPattern;
 using Marge.Domain;
+using Marge.GameObjects;
 using Marge.Services;
 using Marge.ViewModels;
 using System;
@@ -15,11 +17,14 @@ namespace Marge.Commands
     {
         private readonly BoardCoordinatesViewModel _viewModel;
         private readonly SignalRChatService _chatService;
+        Player CurrentPlayer;
 
-        public MoveDownChatMessageCommand(BoardCoordinatesViewModel viewModel, SignalRChatService chatService)
+        public MoveDownChatMessageCommand(BoardCoordinatesViewModel viewModel, SignalRChatService chatService, Player player)
         {
             _viewModel = viewModel;
             _chatService = chatService;
+            CurrentPlayer = player;
+
         }
 
 
@@ -30,11 +35,12 @@ namespace Marge.Commands
             return true;
         }
 
+       
         public async void Execute(object parameter)
         {
-            try
-            {
 
+            if (CurrentPlayer.Strategy == StrategyType.Move)
+            {
                 await _chatService.SendCoordinatesMessage(new BoardCoordinates()
                 {
                     message = _viewModel.UniqueID.ToString(),
@@ -45,10 +51,16 @@ namespace Marge.Commands
                     y = _viewModel.y + 1
                 });
             }
-            catch
+            else if (CurrentPlayer.Strategy == StrategyType.Frozen && CurrentPlayer.AffectedCount != 0)
             {
+                CurrentPlayer.AffectedCount--;
 
+                if (CurrentPlayer.AffectedCount <= 0)
+                {
+                    CurrentPlayer.RequestStrategy(StrategyType.Move);
+                }
             }
+
         }
     }
 }

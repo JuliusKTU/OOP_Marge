@@ -8,9 +8,10 @@ namespace Marge.DesignPatterns.StrategyPattern
 {
     class Freeze : IMovingStatusStrategy
     {
-        public void MovementChange()
+        public StrategyType MovementChange()
         {
-            throw new NotImplementedException();
+            return StrategyType.Frozen;
         }
+        //zinute freeze
     }
 }

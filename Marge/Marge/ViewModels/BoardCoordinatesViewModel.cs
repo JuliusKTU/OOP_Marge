@@ -15,6 +15,7 @@ using System.Windows.Media;
 using Marge.DesignPatterns.FactoryPattern;
 using Marge.GameObjects;
 using Marge.DesignPatterns.AbstractFactoryPattern;
+using Marge.DesignPatterns.StrategyPattern;
 
 namespace Marge.ViewModels
 {
@@ -107,10 +108,10 @@ namespace Marge.ViewModels
             //playerColor.Color = Color.FromArgb(255, 255, 255, 0);
 
             //SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
-            MoveDownChatMessageCommand = new MoveDownChatMessageCommand(this, chatService);
-            MoveLeftChatMessageCommand = new MoveLeftChatMessageCommand(this, chatService);
-            MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, chatService);
-            MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService);
+            MoveDownChatMessageCommand = new MoveDownChatMessageCommand(this, chatService, MainPlayer);
+            MoveLeftChatMessageCommand = new MoveLeftChatMessageCommand(this, chatService, MainPlayer);
+            MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, chatService, MainPlayer);
+            MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService, MainPlayer);
 
             _message = "Waiting for response";
 
@@ -169,9 +170,9 @@ namespace Marge.ViewModels
                     MainEnemy.ChangePossition();
                     EnemyCount = 0;
                 }
+
+                //jei turi str count bet nedaro
             }
-
-
 
             if (coordinates.messageType != MessageType.buff && coordinates.id == UniqueID)
             {
@@ -182,6 +183,12 @@ namespace Marge.ViewModels
                 if (Board.GetTile(_x, _y).TileType != TileType.Neutral)
                 {
                     MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
+                }
+
+                if (Board.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
+                {
+                    MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
+                    MainPlayer.RequestStrategy(StrategyType.Frozen);
                 }
 
                 Board.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));

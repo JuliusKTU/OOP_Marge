@@ -15,26 +15,31 @@ namespace Marge.GameObjects
         public string Color { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
+        public StrategyType Strategy { get; set; }
+        public int AffectedCount { get; set; }
 
 
         //atributai
-        Dictionary<string, IMovingStatusStrategy> strategyContext = new Dictionary<string, IMovingStatusStrategy>();
+        Dictionary<StrategyType, IMovingStatusStrategy> strategyContext = new Dictionary<StrategyType, IMovingStatusStrategy>();
 
         public Player()
         {
-            strategyContext.Add(nameof(Confusion), new Confusion());
-            strategyContext.Add(nameof(Freeze), new Freeze());
-            strategyContext.Add(nameof(Reverse), new Reverse());
-            strategyContext.Add(nameof(Move), new Move());
+            strategyContext.Add(StrategyType.Confused, new Confusion());
+            strategyContext.Add(StrategyType.Frozen, new Freeze());
+            strategyContext.Add(StrategyType.Reversed, new Reverse());
+            strategyContext.Add(StrategyType.Move, new Move());
+            Strategy = strategyContext[StrategyType.Move].MovementChange();
+            AffectedCount = 0;
         }
 
         public void GetStrategy(IMovingStatusStrategy strategy)
         {
 
         }
-        public IMovingStatusStrategy RequestStrategy(string strategy)
+        public void RequestStrategy(StrategyType strategy)
         {
-            return strategyContext[strategy];
+            Strategy = strategyContext[strategy].MovementChange();
+            AffectedCount = 6;
         }
 
 
