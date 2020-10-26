@@ -33,18 +33,18 @@ namespace Marge.GameObjects
             });
 
             Board.AddTile(PosX, PosY, new Tile(true, true, TileType.Neutral));
-
+            Random randNum = new Random();
+            PosX = randNum.Next(0, 20);
+            PosY = randNum.Next(0, 20);
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
                 messageType = MessageType.enemy,
                 message = "enemy",
                 color = "255 0 0",
-                x = 3,
-                y = 3
+                x = PosX,
+                y = PosY
             });
-            PosX = 3;
-            PosY = 3;
-            Board.AddTile(3, 3, new Tile(true, true, TileType.Enemy));
+            Board.AddTile(PosX, PosY, new Tile(true, true, TileType.Enemy));
 
         }
 

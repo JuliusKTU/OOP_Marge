@@ -17,22 +17,26 @@ namespace Marge.DesignPatterns.Factory
 
         public override async void SendBonus()
         {
+            Random randNum = new Random();
+            int Randx = randNum.Next(0, 20);
+            int Randy = randNum.Next(0, 20);
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
                 messageType = MessageType.buff,
                 message = "buff",
-                x = 8,
-                y = 8
+                color = "255 255 204",
+                x = Randx,
+                y = Randy
             });
 
 
-            if (Board.GetTile(8, 8).IsColored)
+            if (Board.GetTile(Randx, Randy).IsColored)
             {
-                Board.AddTile(8, 8, new Tile(true, true, TileType.BonusJoke));
+                Board.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusJoke));
             }
             else
             {
-                Board.AddTile(8, 8, new Tile(false, true, TileType.BonusJoke));
+                Board.AddTile(Randx, Randy, new Tile(false, true, TileType.BonusJoke));
 
             }
             

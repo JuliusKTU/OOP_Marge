@@ -154,18 +154,20 @@ namespace Marge.ViewModels
                 if (StepsCount >= 10)
                 {
                     var a = new BonusFactory();
-                    a.CreateBonus(1, _chatService).SendBonus();
+                    Random randNum = new Random();
+                    int BonusNumber = randNum.Next(1, 4);
+                    a.CreateBonus(BonusNumber, _chatService).SendBonus();
                     StepsCount = 0;
                 }
 
-                if (FreezeStepCount >= 5)
+                if (FreezeStepCount >= 7)
                 {
                     var a = new FreezeFactory();
                     a.CreateDebuff(_chatService).SendFreeze();
                     FreezeStepCount = 0;
                 }
 
-                if (EnemyCount >= 3)
+                if (EnemyCount >= 15)
                 {
                     MainEnemy.ChangePossition();
                     EnemyCount = 0;
@@ -182,12 +184,26 @@ namespace Marge.ViewModels
 
                 if (Board.GetTile(_x, _y).TileType != TileType.Neutral)
                 {
-                    MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
+                    if(Board.GetTile(_x, _y).TileType == TileType.BonusJackPot)
+                    {
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString()+ " +50 Points");
+                    }
+                    else if (Board.GetTile(_x, _y).TileType == TileType.BonusNormal)
+                    {
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
+                    }
+                    else if (Board.GetTile(_x, _y).TileType == TileType.BonusJoke)
+                    {
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -1 Point");
+                    }
+                    else
+                    {
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
+                    }
                 }
 
                 if (Board.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                 {
-                    MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
                     MainPlayer.RequestStrategy(StrategyType.Frozen);
                 }
 
