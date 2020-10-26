@@ -60,6 +60,26 @@ namespace Marge.Commands
                     CurrentPlayer.RequestStrategy(StrategyType.Move);
                 }
             }
+            else if (CurrentPlayer.Strategy == StrategyType.Confused && CurrentPlayer.AffectedCount != 0)
+            {
+
+                await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+                {
+                    message = _viewModel.UniqueID.ToString(),
+                    id = _viewModel.UniqueID,
+                    color = _viewModel.playerColor,
+                    messageType = MessageType.playerMovement,
+                    x = _viewModel.x + 1,
+                    y = _viewModel.y + 1
+                });
+
+                CurrentPlayer.AffectedCount--;
+
+                if (CurrentPlayer.AffectedCount <= 0)
+                {
+                    CurrentPlayer.RequestStrategy(StrategyType.Move);
+                }
+            }
 
         }
     }

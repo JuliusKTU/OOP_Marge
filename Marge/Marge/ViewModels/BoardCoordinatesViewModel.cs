@@ -164,6 +164,7 @@ namespace Marge.ViewModels
                 {
                     var a = new FreezeFactory();
                     a.CreateDebuff(_chatService).SendFreeze();
+                    a.CreateBuff(_chatService).SendFreeze();
                     FreezeStepCount = 0;
                 }
 
@@ -205,6 +206,11 @@ namespace Marge.ViewModels
                 if (Board.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                 {
                     MainPlayer.RequestStrategy(StrategyType.Frozen);
+                }
+
+                if (Board.GetTile(_x, _y).TileType == TileType.Enemy)
+                {
+                    MainPlayer.RequestStrategy(StrategyType.Confused);
                 }
 
                 Board.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
