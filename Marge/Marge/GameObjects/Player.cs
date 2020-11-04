@@ -1,4 +1,5 @@
-﻿using Marge.DesignPatterns.StrategyPattern;
+﻿using Marge.DesignPatterns.AdapterPattern;
+using Marge.DesignPatterns.StrategyPattern;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Marge.GameObjects
         public StrategyType Strategy { get; set; }
         public int AffectedCount { get; set; }
 
+        public int Score = 0;
 
         //atributai
         Dictionary<StrategyType, IMovingStatusStrategy> strategyContext = new Dictionary<StrategyType, IMovingStatusStrategy>();
@@ -42,6 +44,9 @@ namespace Marge.GameObjects
             AffectedCount = 6;
         }
 
-
+        public void PlayerCalculateScore(int score)
+        {
+            Score += score;
+        }
     }
 }

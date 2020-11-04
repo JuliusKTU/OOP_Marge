@@ -44,6 +44,9 @@ namespace Marge.DesignPatterns.Factory
 
             }
         }
-
+        public override int ReturnAmount()
+        {
+            return 25;
+        }
     }
 }

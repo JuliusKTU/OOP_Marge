@@ -14,6 +14,7 @@ namespace Marge.DesignPatterns.Factory
         {
             _chatService = chatService;
         }
-        public abstract void SendBonus();
+        public abstract void SendBonus(); 
+        public abstract int ReturnAmount();
     }
 }

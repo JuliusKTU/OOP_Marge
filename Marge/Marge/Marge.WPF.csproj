@@ -158,6 +158,8 @@
     <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeOthers.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\FreezeYourself.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\PaintBombFactory.cs" />
+    <Compile Include="DesignPatterns\AdapterPattern\AdapterScore.cs" />
+    <Compile Include="DesignPatterns\AdapterPattern\IScore.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\Builder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\EnemyBuilder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\PlayerBuilder.cs" />

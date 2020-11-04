@@ -15,6 +15,11 @@ namespace Marge.DesignPatterns.Factory
         {
         }
 
+        public override int ReturnAmount()
+        {
+            return 10;
+        }
+
         public override async void SendBonus()
         {
             Random randNum = new Random();

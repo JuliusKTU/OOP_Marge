@@ -16,6 +16,7 @@ using Marge.DesignPatterns.FactoryPattern;
 using Marge.GameObjects;
 using Marge.DesignPatterns.AbstractFactoryPattern;
 using Marge.DesignPatterns.StrategyPattern;
+using Marge.DesignPatterns.AdapterPattern;
 
 namespace Marge.ViewModels
 {
@@ -37,6 +38,8 @@ namespace Marge.ViewModels
 
         public Player MainPlayer { get; set; }
         public Enemy MainEnemy { get; set; }
+
+        public IScore Score = new AdapterScore();
 
         public string Message
         {
@@ -74,6 +77,18 @@ namespace Marge.ViewModels
                 CurrentPlayerCoordinates.y = value;
                 _y = value;
                 OnPropertyChanged(nameof(y));
+            }
+        }
+        public int CurrentPlayerScore
+        {
+            get
+            {
+                return MainPlayer.Score;
+            }
+            set
+            {
+                MainPlayer.Score = value;
+                OnPropertyChanged(nameof(CurrentPlayerScore));
             }
         }
 
@@ -146,6 +161,10 @@ namespace Marge.ViewModels
         {
             if (coordinates.messageType == MessageType.playerMovement)
             {
+                if (coordinates.id == UniqueID)
+                {
+                    MainPlayer.Score++;
+                }
 
                 StepsCount++;
                 FreezeStepCount++;
@@ -185,17 +204,23 @@ namespace Marge.ViewModels
 
                 if (Board.GetTile(_x, _y).TileType != TileType.Neutral)
                 {
-                    if(Board.GetTile(_x, _y).TileType == TileType.BonusJackPot)
+                    if (Board.GetTile(_x, _y).TileType == TileType.BonusJackPot)
                     {
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString()+ " +50 Points");
+                        MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _chatService)));
+                        // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +25 Points");
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                     }
                     else if (Board.GetTile(_x, _y).TileType == TileType.BonusNormal)
                     {
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
+                        MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _chatService)));
+                        // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                     }
                     else if (Board.GetTile(_x, _y).TileType == TileType.BonusJoke)
                     {
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -1 Point");
+                        MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _chatService)));
+                        // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -5 Points");
+                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                     }
                     else
                     {
@@ -217,6 +242,7 @@ namespace Marge.ViewModels
                 OnPropertyChanged(nameof(Message));
                 OnPropertyChanged(nameof(x));
                 OnPropertyChanged(nameof(y));
+                OnPropertyChanged(nameof(CurrentPlayerScore));
             }
 
         }
