@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Marge.GameObjects
 {
-    public static class Board
+    public class Board
     {
-        static Tile[,] TilesMatrix = new Tile[20,20];
+        public int Lenght { get; set; }
+        public int Width { get; set; }
 
-        public static void AddTile(int x, int y, Tile tile)
+        public void Draw()
         {
-            TilesMatrix[y,x] = tile;
+
         }
 
-        public static Tile GetTile(int x, int y)
+        public Board(int lenght, int width)
         {
-            return TilesMatrix[y,x];
+            Lenght = lenght;
+            Width = width;
         }
+       
 
+
+        
+
+        //deep copies all the object
+        //return new board parameters - current variables
     }
 }

@@ -24,19 +24,19 @@ namespace Marge.DesignPatterns.Factory
             {
                 messageType = MessageType.buff,
                 message = "buff",
-                color = "255 255 204",
+                color = ColorOptions[YellowColorShades.Light].ReceiveColorCode(),
                 x = Randx,
                 y = Randy
             });
 
 
-            if (Board.GetTile(Randx, Randy).IsColored)
+            if (TilesSet.GetTile(Randx, Randy).IsColored)
             {
-                Board.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusJoke));
+                TilesSet.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusJoke));
             }
             else
             {
-                Board.AddTile(Randx, Randy, new Tile(false, true, TileType.BonusJoke));
+                TilesSet.AddTile(Randx, Randy, new Tile(false, true, TileType.BonusJoke));
 
             }
             

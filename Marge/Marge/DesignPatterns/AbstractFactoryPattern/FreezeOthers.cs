@@ -30,13 +30,13 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
                 y = 11
             });
 
-            if (Board.GetTile(11,11).IsColored)
+            if (TilesSet.GetTile(11,11).IsColored)
             {
-                Board.AddTile(11, 11, new Tile(true, true, TileType.BuffFreezeOthers));
+                TilesSet.AddTile(11, 11, new Tile(true, true, TileType.BuffFreezeOthers));
             } 
             else
             {
-                Board.AddTile(11, 11, new Tile(false, true, TileType.BuffFreezeOthers));
+                TilesSet.AddTile(11, 11, new Tile(false, true, TileType.BuffFreezeOthers));
 
             }
             

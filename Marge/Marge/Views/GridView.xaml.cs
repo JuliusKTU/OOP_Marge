@@ -62,7 +62,7 @@ namespace Marge.Views
             {
                 for (int y = 0; y < 20; y++)
                 {
-                    Board.AddTile(x, y, new Tile(false, true, TileType.Neutral));
+                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral));
                     MessageBox.Show("Hello I am created");
                     Rectangle ColorBlock = new Rectangle();
                     ColorBlock.Name = "Tile" + x + y;

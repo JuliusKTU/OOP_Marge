@@ -113,7 +113,7 @@ namespace Marge.ViewModels
             {
                 for (int y = 0; y < 20; y++)
                 {
-                    Board.AddTile(x, y, new Tile(false, true, TileType.Neutral));
+                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral));
 
 
                 }
@@ -202,43 +202,43 @@ namespace Marge.ViewModels
                 _x = coordinates.x;
                 _y = coordinates.y;
 
-                if (Board.GetTile(_x, _y).TileType != TileType.Neutral)
+                if (TilesSet.GetTile(_x, _y).TileType != TileType.Neutral)
                 {
-                    if (Board.GetTile(_x, _y).TileType == TileType.BonusJackPot)
+                    if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJackPot)
                     {
                         MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _chatService)));
                         // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +25 Points");
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
+                        MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                     }
-                    else if (Board.GetTile(_x, _y).TileType == TileType.BonusNormal)
+                    else if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusNormal)
                     {
                         MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _chatService)));
                         // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
+                        MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                     }
-                    else if (Board.GetTile(_x, _y).TileType == TileType.BonusJoke)
+                    else if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJoke)
                     {
                         MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _chatService)));
                         // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -5 Points");
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
+                        MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                     }
                     else
                     {
-                        MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString());
+                        MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                     }
                 }
 
-                if (Board.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
+                if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                 {
                     MainPlayer.RequestStrategy(StrategyType.Frozen);
                 }
 
-                if (Board.GetTile(_x, _y).TileType == TileType.Enemy)
+                if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)
                 {
                     MainPlayer.RequestStrategy(StrategyType.Confused);
                 }
 
-                Board.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
+                TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
                 OnPropertyChanged(nameof(Message));
                 OnPropertyChanged(nameof(x));
                 OnPropertyChanged(nameof(y));
