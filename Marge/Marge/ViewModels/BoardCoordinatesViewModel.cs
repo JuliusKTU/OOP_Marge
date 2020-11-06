@@ -17,6 +17,7 @@ using Marge.GameObjects;
 using Marge.DesignPatterns.AbstractFactoryPattern;
 using Marge.DesignPatterns.StrategyPattern;
 using Marge.DesignPatterns.AdapterPattern;
+using Marge.DesignPatterns.FacadePattern;
 
 namespace Marge.ViewModels
 {
@@ -37,6 +38,7 @@ namespace Marge.ViewModels
         private int EnemyCount = 0;
         private bool gameHasEnded = false;
 
+        public Facade facade;
         public Player MainPlayer { get; set; }
         public Enemy MainEnemy { get; set; }
 
@@ -109,6 +111,7 @@ namespace Marge.ViewModels
             UniqueID = randNum.Next(100, 255);
             UniqueID2 = randNum.Next(100, 255);
             UniqueID3 = randNum.Next(100, 255);
+           
 
             for (int x = 0; x < 20; x++)
             {
@@ -139,6 +142,7 @@ namespace Marge.ViewModels
             CurrentPlayerCoordinates.y = y;
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
+            facade = new Facade(chatService);
 
         }
 
@@ -171,6 +175,23 @@ namespace Marge.ViewModels
                         MainPlayer.Score++;
                     }
 
+                    //var a = new BonusFactory();
+                    Random randNum = new Random();
+                    int BonusNumber = randNum.Next(1, 4);
+                    //a.CreateBonus(BonusNumber, _chatService).SendBonus();
+                    facade.CreateBonus(BonusNumber);
+                    StepsCount = 0;
+                }
+
+                if (FreezeStepCount >= 7)
+                {
+                    //var a = new FreezeFactory();
+                    //a.CreateDebuff(_chatService).SendFreeze();
+                    // a.CreateBuff(_chatService).SendFreeze();
+                    facade.CreateDeBuff(TileType.DebuffFreezeYourself);
+                    facade.CreateBuff(TileType.BuffFreezeOthers);
+                    FreezeStepCount = 0;
+                }
 
                     StepsCount++;
                     FreezeStepCount++;

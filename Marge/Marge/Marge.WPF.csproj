@@ -167,6 +167,7 @@
     <Compile Include="DesignPatterns\BuilderPattern\Builder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\EnemyBuilder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\PlayerBuilder.cs" />
+    <Compile Include="DesignPatterns\FacadePattern\Facade.cs" />
     <Compile Include="DesignPatterns\PrototypePattern\BoardClone.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\BonusFactory.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Factory.cs" />
