@@ -111,7 +111,7 @@ namespace Marge.ViewModels
             UniqueID = randNum.Next(100, 255);
             UniqueID2 = randNum.Next(100, 255);
             UniqueID3 = randNum.Next(100, 255);
-           
+
 
             for (int x = 0; x < 20; x++)
             {
@@ -175,12 +175,16 @@ namespace Marge.ViewModels
                         MainPlayer.Score++;
                     }
 
-                    //var a = new BonusFactory();
-                    Random randNum = new Random();
-                    int BonusNumber = randNum.Next(1, 4);
-                    //a.CreateBonus(BonusNumber, _chatService).SendBonus();
-                    facade.CreateBonus(BonusNumber);
-                    StepsCount = 0;
+                    if (StepsCount > 10)
+                    {
+                        //var a = new BonusFactory();
+                        Random randNum = new Random();
+                        int BonusNumber = randNum.Next(1, 4);
+                        //a.CreateBonus(BonusNumber, _chatService).SendBonus();
+                        facade.CreateBonus(BonusNumber);
+                        StepsCount = 0;
+                    }
+                  
                 }
 
                 if (FreezeStepCount >= 7)
@@ -193,35 +197,18 @@ namespace Marge.ViewModels
                     FreezeStepCount = 0;
                 }
 
-                    StepsCount++;
-                    FreezeStepCount++;
-                    EnemyCount++;
+                StepsCount++;
+                FreezeStepCount++;
+                EnemyCount++;
 
-                    if (StepsCount >= 10)
-                    {
-                        var a = new BonusFactory();
-                        Random randNum = new Random();
-                        int BonusNumber = randNum.Next(1, 4);
-                        a.CreateBonus(BonusNumber, _chatService).SendBonus();
-                        StepsCount = 0;
-                    }
-
-                    if (FreezeStepCount >= 7)
-                    {
-                        var a = new FreezeFactory();
-                        a.CreateDebuff(_chatService).SendFreeze();
-                        a.CreateBuff(_chatService).SendFreeze();
-                        FreezeStepCount = 0;
-                    }
-
-                    if (EnemyCount >= 15)
-                    {
-                        MainEnemy.ChangePossition();
-                        EnemyCount = 0;
-                    }
-
-                    //jei turi str count bet nedaro
+                if (EnemyCount >= 15)
+                {
+                    MainEnemy.ChangePossition();
+                    EnemyCount = 0;
                 }
+
+                //jei turi str count bet nedaro
+
 
                 if (coordinates.messageType != MessageType.buff && coordinates.messageType != MessageType.gameOver && coordinates.id == UniqueID)
                 {
