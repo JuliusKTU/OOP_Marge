@@ -1,5 +1,7 @@
 ﻿using Marge.DesignPatterns.AdapterPattern;
 using Marge.DesignPatterns.StrategyPattern;
+using Marge.Domain;
+using Marge.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +49,16 @@ namespace Marge.GameObjects
         public void PlayerCalculateScore(int score)
         {
             Score += score;
+        }
+
+        public async void SendGameOverMessage(SignalRChatService _chatService, int currenPlayerId)
+        {
+            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+            {
+                message = "Game over",
+                id = currenPlayerId,
+                messageType = MessageType.gameOver
+            });
         }
     }
 }

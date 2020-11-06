@@ -76,7 +76,6 @@
                            
                        Grid.Column="{Binding x}" Grid.Row="{Binding y}"/>
 
-
             </Grid>
 
             <Grid Grid.Row="1">
@@ -91,10 +90,10 @@
                     HorizontalAlignment="Right"
                     FontSize="32"
                     Content="{Binding CurrentPlayerScore}"
-                    ContentStringFormat="{}Score : {0} / 500 ">
-                </Label>
+                    ContentStringFormat="{}Score : {0} / 500 "/>
 
-                    <Grid Grid.Column="0">
+
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>

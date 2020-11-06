@@ -24,7 +24,8 @@ namespace Marge.Domain
         playerMovement,
         buff,
         playerFreeze,
-        enemy
+        enemy,
+        gameOver
         
     }
 }

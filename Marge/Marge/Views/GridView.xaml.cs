@@ -80,6 +80,36 @@ namespace Marge.Views
 
         }
 
+        public void GenerateGameOverWindow()
+        {
+            bool even = false;
+            for (int x = 0; x < 20; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    Rectangle ColorBlock = new Rectangle();
+                    ColorBlock.Name = "Tile" + x + y;
+                    if (even)
+                    {
+                        ColorBlock.Fill = Brushes.Black;
+                        even = false;
+                    }
+                    else
+                    {
+                        ColorBlock.Fill = Brushes.White;
+                        even = true;
+                    }
+                    
+                    Grid.SetColumn(ColorBlock, x);
+                    Grid.SetRow(ColorBlock, y);
+                    gridMain.Children.Add(ColorBlock);
+                }
+
+                if (even) even = false;
+                else even = true;
+            }
+        }
+
         public void SetTile(int x, int y, SolidColorBrush color)
         {
             Rectangle ColorBlock = new Rectangle();
@@ -125,6 +155,10 @@ namespace Marge.Views
                 string[] words = coordinates.color.Split(' ');
 
                 SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if (coordinates.messageType == MessageType.gameOver)
+            {
+                GenerateGameOverWindow();
             }
             else
             {
