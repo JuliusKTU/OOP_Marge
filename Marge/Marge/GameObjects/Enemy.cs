@@ -36,6 +36,7 @@ namespace Marge.GameObjects
             Random randNum = new Random();
             PosX = randNum.Next(0, 20);
             PosY = randNum.Next(0, 20);
+            
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
                 messageType = MessageType.enemy,

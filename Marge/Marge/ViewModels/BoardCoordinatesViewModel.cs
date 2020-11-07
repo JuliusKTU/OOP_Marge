@@ -166,8 +166,6 @@ namespace Marge.ViewModels
         {
             if (!gameHasEnded)
             {
-
-
                 if (coordinates.messageType == MessageType.playerMovement)
                 {
                     if (coordinates.id == UniqueID)
@@ -184,29 +182,27 @@ namespace Marge.ViewModels
                         facade.CreateBonus(BonusNumber);
                         StepsCount = 0;
                     }
-                  
+
+                    if (FreezeStepCount >= 7)
+                    {
+                        //var a = new FreezeFactory();
+                        //a.CreateDebuff(_chatService).SendFreeze();
+                        // a.CreateBuff(_chatService).SendFreeze();
+                        facade.CreateDeBuff(TileType.DebuffFreezeYourself);
+                        facade.CreateBuff(TileType.BuffFreezeOthers);
+                        FreezeStepCount = 0;
+                    }
+
+                    StepsCount++;
+                    FreezeStepCount++;
+                    EnemyCount++;
+
+                    if (EnemyCount >= 15)
+                    {
+                        MainEnemy.ChangePossition();
+                        EnemyCount = 0;
+                    }
                 }
-
-                if (FreezeStepCount >= 7)
-                {
-                    //var a = new FreezeFactory();
-                    //a.CreateDebuff(_chatService).SendFreeze();
-                    // a.CreateBuff(_chatService).SendFreeze();
-                    facade.CreateDeBuff(TileType.DebuffFreezeYourself);
-                    facade.CreateBuff(TileType.BuffFreezeOthers);
-                    FreezeStepCount = 0;
-                }
-
-                StepsCount++;
-                FreezeStepCount++;
-                EnemyCount++;
-
-                if (EnemyCount >= 15)
-                {
-                    MainEnemy.ChangePossition();
-                    EnemyCount = 0;
-                }
-
                 //jei turi str count bet nedaro
 
 
@@ -259,7 +255,7 @@ namespace Marge.ViewModels
                     OnPropertyChanged(nameof(CurrentPlayerScore));
                 }
 
-                if (MainPlayer.Score >= 20)
+                if (MainPlayer.Score >= 100)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;
