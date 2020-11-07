@@ -27,6 +27,10 @@ namespace Marge.Domain
         bonusJackPot,
         buffFreezeOthers,
         debuffFreezeYourself,
+        buffSplashBomb,
+        debuffBlackSplash,
+        stepedOnColorSplash,
+        stepedOnBlackSplash,
         enemy,
         gameOver
         

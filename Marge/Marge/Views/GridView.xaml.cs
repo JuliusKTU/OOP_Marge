@@ -35,8 +35,12 @@ namespace Marge.Views
 
             //AddTiles();
 
+            //HubConnection connection = new HubConnectionBuilder()
+            //    .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
+            //    .Build();
+
             HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
+                .WithUrl("http://localhost:5000/margechat")
                 .Build();
 
             chatService = new Services.SignalRChatService(connection);
@@ -149,6 +153,50 @@ namespace Marge.Views
                 string[] words = coordinates.color.Split(' ');
 
                 SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if (coordinates.messageType == MessageType.buffSplashBomb)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if (coordinates.messageType == MessageType.debuffBlackSplash)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if (coordinates.messageType == MessageType.stepedOnColorSplash)
+            {
+                string[] words = coordinates.color.Split(' ');
+                SetTile(coordinates.x + 1, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 1, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y + 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x + 2, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 2, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y + 2, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y - 2, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x + 1, coordinates.y + 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 1, coordinates.y + 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x + 1, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 1, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if (coordinates.messageType == MessageType.stepedOnBlackSplash)
+            {
+                string[] words = coordinates.color.Split(' ');
+                SetTile(coordinates.x + 1, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 1, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y + 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x + 2, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 2, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y + 2, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x, coordinates.y - 2, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x + 1, coordinates.y + 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 1, coordinates.y + 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x + 1, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                SetTile(coordinates.x - 1, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
             else if(coordinates.messageType == MessageType.enemy)
             {

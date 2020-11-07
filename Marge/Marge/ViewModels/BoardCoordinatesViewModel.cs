@@ -36,6 +36,7 @@ namespace Marge.ViewModels
         private int StepsCount = 0;
         private int FreezeStepCount = 0;
         private int EnemyCount = 0;
+        private int SplashCount = 0;
         private bool gameHasEnded = false;
 
         public Facade facade;
@@ -193,9 +194,17 @@ namespace Marge.ViewModels
                         FreezeStepCount = 0;
                     }
 
+                    if (SplashCount >= 10)
+                    {
+                        facade.CreateDeBuff(TileType.DebuffBlackSplash);
+                        facade.CreateBuff(TileType.BuffColorSplash);
+                        SplashCount = 0;
+                    }
+
                     StepsCount++;
                     FreezeStepCount++;
                     EnemyCount++;
+                    SplashCount++;
 
                     if (EnemyCount >= 17)
                     {
@@ -234,6 +243,16 @@ namespace Marge.ViewModels
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                         {
                             MainPlayer.RequestStrategy(StrategyType.Frozen);
+                        }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.BuffColorSplash)
+                        {
+                            MainPlayer.SendSteppedOnColorSplash(_chatService, _x, _y);
+                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                        }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffBlackSplash)
+                        {
+                            MainPlayer.SendSteppedOnBlackSplash(_chatService, _x, _y);
+                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                         }
 
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)

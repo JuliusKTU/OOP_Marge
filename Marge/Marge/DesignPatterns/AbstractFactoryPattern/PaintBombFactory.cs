@@ -11,12 +11,12 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
     {
         public override Buff CreateBuff(SignalRChatService chatService)
         {
-            return new ColorSplash();
+            return new ColorSplash(chatService);
         }
 
         public override Debuff CreateDebuff(SignalRChatService chatService)
         {
-            return new BlackSplash();
+            return new BlackSplash(chatService);
         }
     }
 }

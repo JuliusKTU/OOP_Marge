@@ -19,8 +19,12 @@ namespace Marge
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            //HubConnection connection = new HubConnectionBuilder()
+            //    .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
+            //    .Build();
+
             HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
+                .WithUrl("http://localhost:5000/margechat")
                 .Build();
 
             var SignalRConnection = new Services.SignalRChatService(connection);

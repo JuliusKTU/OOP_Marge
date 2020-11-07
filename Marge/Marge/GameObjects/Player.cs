@@ -60,5 +60,29 @@ namespace Marge.GameObjects
                 messageType = MessageType.gameOver
             });
         }
+
+        public async void SendSteppedOnColorSplash(SignalRChatService _chatService, int xP, int yP)
+        {
+            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+            {
+                messageType = MessageType.stepedOnColorSplash,
+                message = "buff effect",
+                color = Color,
+                x = xP,
+                y = yP
+            });
+        }
+
+        public async void SendSteppedOnBlackSplash(SignalRChatService _chatService, int xP, int yP)
+        {
+            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+            {
+                messageType = MessageType.stepedOnBlackSplash,
+                message = "debuff effect",
+                color = "0 0 0",
+                x = xP,
+                y = yP
+            });
+        }
     }
 }

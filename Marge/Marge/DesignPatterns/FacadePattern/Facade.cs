@@ -28,9 +28,9 @@ namespace Marge.DesignPatterns.FacadePattern
             _chatService = chatService;
             _paintBomb = new PaintBombFactory();
             _freeze = new FreezeFactory();
-            _blackSplash = new BlackSplash();
+            _blackSplash = new BlackSplash(chatService);
             _freezeYourself = new FreezeYourself(chatService);
-            _colorSplash = new ColorSplash();
+            _colorSplash = new ColorSplash(chatService);
             _freezeOthers = new FreezeOthers(chatService);
             _factory = new BonusFactory();
 
