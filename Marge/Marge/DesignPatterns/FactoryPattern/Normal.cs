@@ -27,7 +27,7 @@ namespace Marge.DesignPatterns.Factory
             int Randy = randNum.Next(0, 20);
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
-                messageType = MessageType.buff,
+                messageType = MessageType.bonusNormal,
                 message = "buff",
                 color = ColorOptions[YellowColorShades.Dark].ReceiveColorCode(),
                 x = Randx,

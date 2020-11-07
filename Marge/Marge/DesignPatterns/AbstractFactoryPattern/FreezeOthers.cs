@@ -23,7 +23,7 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
-                messageType = MessageType.buff,
+                messageType = MessageType.buffFreezeOthers,
                 message = "buff",
                 color = "100 100 200",
                 x = 11,

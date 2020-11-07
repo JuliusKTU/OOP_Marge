@@ -26,7 +26,7 @@ namespace Marge.DesignPatterns.Factory
             int Randy = randNum.Next(0, 20);
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
-                messageType = MessageType.buff,
+                messageType = MessageType.bonusJackPot,
                 message = "buff",
                 color = ColorOptions[YellowColorShades.Normal].ReceiveColorCode(),
                 x = Randx,
@@ -35,15 +35,6 @@ namespace Marge.DesignPatterns.Factory
 
             
 
-            if (TilesSet.GetTile(Randx, Randy).IsColored)
-            {
-                TilesSet.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusJackPot));
-            }
-            else
-            {
-                TilesSet.AddTile(Randx, Randy, new Tile(false, true, TileType.BonusJackPot));
-
-            }
         }
         public override int ReturnAmount()
         {

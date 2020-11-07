@@ -23,7 +23,7 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()
             {
-                messageType = MessageType.playerFreeze,
+                messageType = MessageType.debuffFreezeYourself,
                 message = "playerFreeze",
                 color = "100 149 237",
                 x = 10,

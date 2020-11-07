@@ -22,8 +22,11 @@ namespace Marge.Domain
     public enum MessageType
     {
         playerMovement,
-        buff,
-        playerFreeze,
+        bonusJoke,
+        bonusNormal,
+        bonusJackPot,
+        buffFreezeOthers,
+        debuffFreezeYourself,
         enemy,
         gameOver
         

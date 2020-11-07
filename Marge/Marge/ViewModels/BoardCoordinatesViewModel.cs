@@ -173,7 +173,7 @@ namespace Marge.ViewModels
                         MainPlayer.Score++;
                     }
 
-                    if (StepsCount > 10)
+                    if (StepsCount > 11)
                     {
                         //var a = new BonusFactory();
                         Random randNum = new Random();
@@ -183,7 +183,7 @@ namespace Marge.ViewModels
                         StepsCount = 0;
                     }
 
-                    if (FreezeStepCount >= 7)
+                    if (FreezeStepCount >= 13)
                     {
                         //var a = new FreezeFactory();
                         //a.CreateDebuff(_chatService).SendFreeze();
@@ -197,65 +197,59 @@ namespace Marge.ViewModels
                     FreezeStepCount++;
                     EnemyCount++;
 
-                    if (EnemyCount >= 15)
+                    if (EnemyCount >= 17)
                     {
                         MainEnemy.ChangePossition();
                         EnemyCount = 0;
                     }
-                }
-                //jei turi str count bet nedaro
+
+                    //jei turi str count bet nedaro
 
 
-                if (coordinates.messageType != MessageType.buff && coordinates.messageType != MessageType.gameOver && coordinates.id == UniqueID)
-                {
-                    _message = coordinates.message;
-                    _x = coordinates.x;
-                    _y = coordinates.y;
-
-                    if (TilesSet.GetTile(_x, _y).TileType != TileType.Neutral)
+                    if (coordinates.id == UniqueID)
                     {
+                        _message = coordinates.message;
+                        _x = coordinates.x;
+                        _y = coordinates.y;
+
+
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJackPot)
                         {
                             MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _chatService)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +25 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
-                        else if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusNormal)
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusNormal)
                         {
                             MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _chatService)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
-                        else if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJoke)
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJoke)
                         {
                             MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _chatService)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -5 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
-                        else
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                         {
-                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                            MainPlayer.RequestStrategy(StrategyType.Frozen);
                         }
-                    }
 
-                    if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
-                    {
-                        MainPlayer.RequestStrategy(StrategyType.Frozen);
-                    }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)
+                        {
+                            MainPlayer.RequestStrategy(StrategyType.Confused);
+                        }
 
-                    if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)
-                    {
-                        MainPlayer.RequestStrategy(StrategyType.Confused);
+                        TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
+                        OnPropertyChanged(nameof(Message));
+                        OnPropertyChanged(nameof(x));
+                        OnPropertyChanged(nameof(y));
+                        OnPropertyChanged(nameof(CurrentPlayerScore));
                     }
-
-                    TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
-                    OnPropertyChanged(nameof(Message));
-                    OnPropertyChanged(nameof(x));
-                    OnPropertyChanged(nameof(y));
-                    OnPropertyChanged(nameof(CurrentPlayerScore));
                 }
 
-                if (MainPlayer.Score >= 100)
+                if (MainPlayer.Score >= 1000)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;

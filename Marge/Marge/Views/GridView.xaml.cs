@@ -36,7 +36,7 @@ namespace Marge.Views
             //AddTiles();
 
             HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/margechat")
+                .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
                 .Build();
 
             chatService = new Services.SignalRChatService(connection);
@@ -137,14 +137,14 @@ namespace Marge.Views
         private void ChatService_CoordinatesMessageReceived(BoardCoordinates coordinates)
         {
             string mess = coordinates.message;
-            if (coordinates.messageType == MessageType.buff)
+            if (coordinates.messageType == MessageType.buffFreezeOthers)
             {
 
                 string[] words = coordinates.color.Split(' ');
 
                 SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
-            else if(coordinates.messageType == MessageType.playerFreeze)
+            else if(coordinates.messageType == MessageType.debuffFreezeYourself)
             {
                 string[] words = coordinates.color.Split(' ');
 
@@ -155,6 +155,57 @@ namespace Marge.Views
                 string[] words = coordinates.color.Split(' ');
 
                 SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+            }
+            else if (coordinates.messageType == MessageType.bonusJackPot)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+
+                if (TilesSet.GetTile(coordinates.x, coordinates.y).IsColored)
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusJackPot));
+                }
+                else
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusJackPot));
+
+                }
+
+            }
+            else if (coordinates.messageType == MessageType.bonusNormal)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+
+                if (TilesSet.GetTile(coordinates.x, coordinates.y).IsColored)
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusNormal));
+                }
+                else
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusNormal));
+
+                }
+
+            }
+            else if (coordinates.messageType == MessageType.bonusJoke)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+
+                if (TilesSet.GetTile(coordinates.x, coordinates.y).IsColored)
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusJoke));
+                }
+                else
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusJoke));
+
+                }
+
             }
             else if (coordinates.messageType == MessageType.gameOver)
             {
