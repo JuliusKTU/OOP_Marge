@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Marge.DesignPatterns.BuilderPattern
 {
-    class EnemyBuilder : Builder
+    class EnemyBuilder : Builder 
     {
         private Enemy _enemy = new Enemy();
 

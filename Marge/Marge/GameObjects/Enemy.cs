@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.DecoratorPattern;
+using Marge.Domain;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Marge.GameObjects
 {
-    public class Enemy
+    public class Enemy : AbstractEnemy
     {
         public string Name { get; set; }
         public string Color { get; set; }
@@ -49,5 +50,16 @@ namespace Marge.GameObjects
 
         }
 
+        public override EnemyEffectOnPlayer Operation(Enemy enemy)
+        {
+            return EnemyEffectOnPlayer.Normal;
+        }
+    }
+    public enum EnemyEffectOnPlayer
+    {
+        DazeCurrentPlayer,
+        StealPoints,
+        Teleport,
+        Normal
     }
 }
