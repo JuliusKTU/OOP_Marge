@@ -41,7 +41,7 @@ namespace Marge.ViewModels
         private int FreezeStepCount = 0;
         private int EnemyCount = 0;
         private int SplashCount = 0;
-        private bool gameHasEnded = false;
+        public bool gameHasEnded = false;
 
         public Facade facade;
         public Player MainPlayer { get; set; }
@@ -320,10 +320,15 @@ namespace Marge.ViewModels
                     SetGamePause();
                 }
 
-                if (MainPlayer.Score >= 200)
+                if (MainPlayer.Score >= 10)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;
+                    gameHasEnded = true;
+                }
+
+                if(coordinates.messageType == MessageType.gameOver)
+                {
                     gameHasEnded = true;
                 }
             }

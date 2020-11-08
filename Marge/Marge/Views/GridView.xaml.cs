@@ -263,7 +263,9 @@ namespace Marge.Views
             }
             else if (coordinates.messageType == MessageType.gameOver)
             {
+                
                 GenerateGameOverWindow();
+
             }
             else if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
             {
