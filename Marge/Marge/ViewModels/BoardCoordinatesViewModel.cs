@@ -18,6 +18,7 @@ using Marge.DesignPatterns.AbstractFactoryPattern;
 using Marge.DesignPatterns.StrategyPattern;
 using Marge.DesignPatterns.AdapterPattern;
 using Marge.DesignPatterns.FacadePattern;
+using Marge.DesignPatterns.DecoratorPattern;
 
 namespace Marge.ViewModels
 {
@@ -42,6 +43,9 @@ namespace Marge.ViewModels
         public Facade facade;
         public Player MainPlayer { get; set; }
         public Enemy MainEnemy { get; set; }
+        StealPointsAbility enemySteal;
+        TeleportAbility teleportEnemy;
+        DazePlayerAbility dazeEnemy;
 
         public IScore Score = new AdapterScore();
 
@@ -112,6 +116,14 @@ namespace Marge.ViewModels
             UniqueID = randNum.Next(100, 255);
             UniqueID2 = randNum.Next(100, 255);
             UniqueID3 = randNum.Next(100, 255);
+
+            enemySteal = new StealPointsAbility();
+            teleportEnemy = new TeleportAbility();
+            dazeEnemy = new DazePlayerAbility();
+
+            enemySteal.SetEnemy(MainEnemy);
+            teleportEnemy.SetEnemy(enemySteal);
+            dazeEnemy.SetEnemy(teleportEnemy);
 
 
             for (int x = 0; x < 20; x++)
@@ -208,7 +220,10 @@ namespace Marge.ViewModels
 
                     if (EnemyCount >= 17)
                     {
+                        //enemy call
+
                         MainEnemy.ChangePossition();
+                        dazeEnemy.Operation(MainEnemy.PosX, MainEnemy.PosY, _chatService);
                         EnemyCount = 0;
                     }
 
@@ -258,6 +273,8 @@ namespace Marge.ViewModels
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)
                         {
                             MainPlayer.RequestStrategy(StrategyType.Confused);
+                            MainPlayer.Score -= 10;
+                            
                         }
 
                         TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));

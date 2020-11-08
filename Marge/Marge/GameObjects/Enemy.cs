@@ -50,9 +50,20 @@ namespace Marge.GameObjects
 
         }
 
-        public override EnemyEffectOnPlayer Operation(Enemy enemy)
+        public override async void Operation(int xa, int ya,SignalRChatService _chatService)
         {
-            return EnemyEffectOnPlayer.Normal;
+            //Random randNum = new Random();
+            //PosX = randNum.Next(0, 20);
+            //PosY = randNum.Next(0, 20);
+
+            //await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+            //{
+            //    messageType = MessageType.enemy,
+            //    message = "enemy",
+            //    color = "255 0 0",
+            //    x = PosX,
+            //    y = PosY
+            //});
         }
     }
     public enum EnemyEffectOnPlayer

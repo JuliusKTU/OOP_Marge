@@ -170,6 +170,7 @@
     <Compile Include="DesignPatterns\DecoratorPattern\DazePlayerAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\Decorator.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\AbstractEnemy.cs" />
+    <Compile Include="DesignPatterns\DecoratorPattern\SiganlRChatServide.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\StealPointsAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\TeleportAbility.cs" />
     <Compile Include="DesignPatterns\FacadePattern\Facade.cs" />

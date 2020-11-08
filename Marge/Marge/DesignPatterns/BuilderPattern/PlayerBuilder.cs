@@ -30,8 +30,8 @@ namespace Marge.DesignPatterns.BuilderPattern
         public override void BuildPlayerPos()
         {
             Random randNum = new Random();
-            int x = randNum.Next(1, 20);
-            int y = randNum.Next(1, 20);
+            int x = randNum.Next(1, 18);
+            int y = randNum.Next(1, 18);
             _player.PosX = x;
             _player.PosY = y;
         }

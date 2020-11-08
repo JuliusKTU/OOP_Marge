@@ -37,7 +37,8 @@ namespace Marge.GameObjects
         BonusNormal,
         BonusJoke,
         Neutral,
-        Enemy
+        Enemy,
+        EnemyWithAbilities
 
     }
 }

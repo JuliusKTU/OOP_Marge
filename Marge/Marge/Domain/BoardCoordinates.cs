@@ -32,7 +32,10 @@ namespace Marge.Domain
         stepedOnColorSplash,
         stepedOnBlackSplash,
         enemy,
-        gameOver
+        gameOver,
+        dazePlayerEnemy,
+        teleportPlayerEnemy,
+        stealPointEnemy
         
     }
 }

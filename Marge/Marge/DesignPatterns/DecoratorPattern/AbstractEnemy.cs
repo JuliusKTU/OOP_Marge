@@ -1,4 +1,5 @@
 ﻿using Marge.GameObjects;
+using Marge.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Marge.DesignPatterns.DecoratorPattern
 {
     public abstract class AbstractEnemy
     {
-        public abstract EnemyEffectOnPlayer Operation(Enemy enemy);
+        public abstract void Operation(int x, int y, SignalRChatService _chatService);
     }
 }

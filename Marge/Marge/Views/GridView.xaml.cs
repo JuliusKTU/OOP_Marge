@@ -35,13 +35,13 @@ namespace Marge.Views
 
             //AddTiles();
 
-            //HubConnection connection = new HubConnectionBuilder()
-            //    .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
-            //    .Build();
-
             HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/margechat")
+                .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
                 .Build();
+
+            //HubConnection connection = new HubConnectionBuilder()
+            //    .WithUrl("http://localhost:5000/margechat")
+            //    .Build();
 
             chatService = new Services.SignalRChatService(connection);
 
@@ -74,9 +74,6 @@ namespace Marge.Views
                     Grid.SetColumn(ColorBlock, x);
                     Grid.SetRow(ColorBlock, y);
                     gridMain.Children.Add(ColorBlock);
-
-                    
-                    
                 }
             }
 
@@ -198,11 +195,20 @@ namespace Marge.Views
                 SetTile(coordinates.x + 1, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
                 SetTile(coordinates.x - 1, coordinates.y - 1, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
-            else if(coordinates.messageType == MessageType.enemy)
+            else if(coordinates.messageType == MessageType.enemy || coordinates.messageType == MessageType.dazePlayerEnemy || coordinates.messageType == MessageType.stealPointEnemy || coordinates.messageType == MessageType.teleportPlayerEnemy)
             {
-                string[] words = coordinates.color.Split(' ');
+                if(coordinates.messageType == MessageType.enemy)
+                {
+                    string[] words = coordinates.color.Split(' ');
 
-                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                    SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.Enemy));
+                }
+                else
+                {
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.EnemyWithAbilities));
+                }
+                
             }
             else if (coordinates.messageType == MessageType.bonusJackPot)
             {
@@ -263,7 +269,24 @@ namespace Marge.Views
             {
                 string[] words = coordinates.color.Split(' ');
 
-                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                if(x == -1)
+                {
+                    x = coordinates.x;
+                    y = coordinates.y;
+                }
+                else
+                {
+                    
+                    SetTile(x, y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                    x = coordinates.x;
+                    y = coordinates.y;
+                    int a = int.Parse(words[0]) - 40;
+                    int b = int.Parse(words[1]) - 40;
+                    int c = int.Parse(words[2]) - 40;
+                    SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(a.ToString()), Byte.Parse(b.ToString()), Byte.Parse(c.ToString()))));
+                }
+
+                //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
                 
             }
 

@@ -33,7 +33,10 @@ namespace Marge.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            if (_viewModel.y -1 >= 0)
+                return true;
+            else
+                return false;
         }
 
         public async void Execute(object parameter)
