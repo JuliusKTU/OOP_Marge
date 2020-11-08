@@ -92,7 +92,7 @@
                     HorizontalAlignment="Right"
                     FontSize="32"
                     Content="{Binding CurrentPlayerScore}"
-                    ContentStringFormat="{}Score : {0} / 500 "/>
+                    ContentStringFormat="{}Score : {0} / 200 "/>
 
                 <Button
                     Margin="25"
