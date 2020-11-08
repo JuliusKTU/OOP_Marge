@@ -216,7 +216,7 @@ namespace Marge.ViewModels
                         MainPlayer.Score++;
                     }
 
-                    if (StepsCount > 30)
+                    if (StepsCount > 31)
                     {
                         //var a = new BonusFactory();
                         Random randNum = new Random();
@@ -226,7 +226,7 @@ namespace Marge.ViewModels
                         StepsCount = 0;
                     }
 
-                    if (FreezeStepCount >= 20)
+                    if (FreezeStepCount >= 23)
                     {
                         //var a = new FreezeFactory();
                         //a.CreateDebuff(_chatService).SendFreeze();
@@ -248,7 +248,7 @@ namespace Marge.ViewModels
                     EnemyCount++;
                     SplashCount++;
 
-                    if (EnemyCount >= 20)
+                    if (EnemyCount >= 21)
                     {
                         //enemy call
 
