@@ -320,7 +320,7 @@ namespace Marge.ViewModels
                     SetGamePause();
                 }
 
-                if (MainPlayer.Score >= 10)
+                if (MainPlayer.Score >= 200)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;
