@@ -32,10 +32,18 @@ namespace Marge.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.x + 1 <= 19)
-                return true;
+            if (!_viewModel.GamePaused)
+            {
+                if (_viewModel.x + 1 <= 19)
+                    return true;
+                else
+                    return false;
+            }
             else
+            {
                 return false;
+            }
+
         }
 
         

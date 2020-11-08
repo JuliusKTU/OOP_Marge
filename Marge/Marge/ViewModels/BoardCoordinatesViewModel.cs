@@ -216,7 +216,7 @@ namespace Marge.ViewModels
                         MainPlayer.Score++;
                     }
 
-                    if (StepsCount > 11)
+                    if (StepsCount > 30)
                     {
                         //var a = new BonusFactory();
                         Random randNum = new Random();
@@ -226,7 +226,7 @@ namespace Marge.ViewModels
                         StepsCount = 0;
                     }
 
-                    if (FreezeStepCount >= 13)
+                    if (FreezeStepCount >= 20)
                     {
                         //var a = new FreezeFactory();
                         //a.CreateDebuff(_chatService).SendFreeze();
@@ -236,7 +236,7 @@ namespace Marge.ViewModels
                         FreezeStepCount = 0;
                     }
 
-                    if (SplashCount >= 10)
+                    if (SplashCount >= 27)
                     {
                         facade.CreateDeBuff(TileType.DebuffBlackSplash);
                         facade.CreateBuff(TileType.BuffColorSplash);
@@ -248,7 +248,7 @@ namespace Marge.ViewModels
                     EnemyCount++;
                     SplashCount++;
 
-                    if (EnemyCount >= 17)
+                    if (EnemyCount >= 20)
                     {
                         //enemy call
 
