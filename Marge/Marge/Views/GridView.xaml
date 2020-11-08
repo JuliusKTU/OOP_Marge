@@ -83,8 +83,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                
-                
+
+
 
                 <Label
                     Grid.Column="2"
@@ -98,8 +98,8 @@
                     Margin="25"
                     HorizontalAlignment="Left"
                     Grid.Column="1"
+                    Content="{Binding GamePauseTitle}"
                     Grid.Row="0"
-                    Content="Undo"
                     Command="{Binding Pause}">
                 </Button>
 

@@ -28,6 +28,7 @@ namespace Marge.ViewModels
         public string playerColor = "";
 
         private bool _gamePaused = false;
+        private string _gamePauseTitle = "Pause";
         private string _message { get; set; }
         public int UniqueID { get; }
         public int UniqueID2 { get; }
@@ -61,6 +62,19 @@ namespace Marge.ViewModels
             {
                 _gamePaused = value;
                 OnPropertyChanged(nameof(GamePaused));
+            }
+        }
+
+        public string GamePauseTitle
+        {
+            get
+            {
+                return _gamePauseTitle;
+            }
+            set
+            {
+                _gamePauseTitle = value;
+                OnPropertyChanged(nameof(GamePauseTitle));
             }
         }
 
@@ -318,8 +332,19 @@ namespace Marge.ViewModels
 
         public void SetGamePause()
         {
+
             _gamePaused = !_gamePaused;
             OnPropertyChanged(nameof(GamePaused));
+
+
+
+
+            if (_gamePaused)
+                _gamePauseTitle = "Unpause";
+            else
+                _gamePauseTitle = "Pause";
+
+            OnPropertyChanged(nameof(GamePauseTitle));
         }
     }
 }
