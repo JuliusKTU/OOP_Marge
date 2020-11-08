@@ -35,7 +35,9 @@ namespace Marge.Domain
         gameOver,
         dazePlayerEnemy,
         teleportPlayerEnemy,
-        stealPointEnemy
+        stealPointEnemy,
+        gamePause,
+        gamePauseUndo
         
     }
 }

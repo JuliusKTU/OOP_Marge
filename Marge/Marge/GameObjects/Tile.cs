@@ -21,10 +21,6 @@ namespace Marge.GameObjects
             IsActive = Active;
             TileType = Type;
         }
-
-        //:'( 
-
-
     }
 
     public enum TileType

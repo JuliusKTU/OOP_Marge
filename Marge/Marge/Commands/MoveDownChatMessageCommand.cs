@@ -24,7 +24,6 @@ namespace Marge.Commands
             _viewModel = viewModel;
             _chatService = chatService;
             CurrentPlayer = player;
-
         }
 
 
@@ -32,10 +31,17 @@ namespace Marge.Commands
 
         public bool CanExecute(object parameter)
         {
-            if (_viewModel.y + 1 <= 19)
-                return true;
+            if (!_viewModel.GamePaused)
+            {
+                if (_viewModel.y + 1 <= 19)
+                    return true;
+                else
+                    return false;
+            }
             else
+            {
                 return false;
+            }
         }
 
        

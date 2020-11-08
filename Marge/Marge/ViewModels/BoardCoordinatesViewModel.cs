@@ -26,6 +26,8 @@ namespace Marge.ViewModels
     {
         SignalRChatService _chatService;
         public string playerColor = "";
+
+        private bool _gamePaused = false;
         private string _message { get; set; }
         public int UniqueID { get; }
         public int UniqueID2 { get; }
@@ -48,6 +50,19 @@ namespace Marge.ViewModels
         DazePlayerAbility dazeEnemy;
 
         public IScore Score = new AdapterScore();
+
+        public bool GamePaused
+        {
+            get
+            {
+                return _gamePaused;
+            }
+            set
+            {
+                _gamePaused = value;
+                OnPropertyChanged(nameof(GamePaused));
+            }
+        }
 
         public string Message
         {
@@ -106,6 +121,7 @@ namespace Marge.ViewModels
         public ICommand MoveLeftChatMessageCommand { get; }
         public ICommand MoveRightChatMessageCommand { get; }
         public ICommand MoveUpChatMessageCommand { get; }
+        public ICommand Pause { get; }
 
 
         public BoardCoordinatesViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
@@ -144,6 +160,7 @@ namespace Marge.ViewModels
             MoveLeftChatMessageCommand = new MoveLeftChatMessageCommand(this, chatService, MainPlayer);
             MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, chatService, MainPlayer);
             MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService, MainPlayer);
+            Pause = new Pause(this, chatService);
 
             _message = "Waiting for response";
 
@@ -156,7 +173,6 @@ namespace Marge.ViewModels
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
             facade = new Facade(chatService);
-
         }
 
         public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
@@ -285,6 +301,11 @@ namespace Marge.ViewModels
                     }
                 }
 
+                if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
+                {
+                    SetGamePause();
+                }
+
                 if (MainPlayer.Score >= 1000)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
@@ -293,6 +314,12 @@ namespace Marge.ViewModels
                 }
             }
 
+        }
+
+        public void SetGamePause()
+        {
+            _gamePaused = !_gamePaused;
+            OnPropertyChanged(nameof(GamePaused));
         }
     }
 }

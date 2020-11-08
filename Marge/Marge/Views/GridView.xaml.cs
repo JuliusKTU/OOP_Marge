@@ -265,6 +265,10 @@ namespace Marge.Views
             {
                 GenerateGameOverWindow();
             }
+            else if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
+            {
+                ;
+            }
             else
             {
                 string[] words = coordinates.color.Split(' ');

@@ -83,6 +83,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
+                
+                
 
                 <Label
                     Grid.Column="2"
@@ -91,6 +93,15 @@
                     FontSize="32"
                     Content="{Binding CurrentPlayerScore}"
                     ContentStringFormat="{}Score : {0} / 500 "/>
+
+                <Button
+                    Margin="25"
+                    HorizontalAlignment="Left"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Content="Undo"
+                    Command="{Binding Pause}">
+                </Button>
 
 
                 <Grid Grid.Column="0">
