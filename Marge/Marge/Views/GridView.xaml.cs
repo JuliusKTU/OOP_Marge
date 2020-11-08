@@ -269,22 +269,22 @@ namespace Marge.Views
             {
                 string[] words = coordinates.color.Split(' ');
 
-                if(x == -1)
-                {
-                    x = coordinates.x;
-                    y = coordinates.y;
-                }
-                else
-                {
+            //    if(x == -1)
+            //    {
+            //        x = coordinates.x;
+            //        y = coordinates.y;
+            //    }
+            //    else
+            //    {
                     
-                    SetTile(x, y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
-                    x = coordinates.x;
-                    y = coordinates.y;
-                    int a = int.Parse(words[0]) - 40;
-                    int b = int.Parse(words[1]) - 40;
-                    int c = int.Parse(words[2]) - 40;
-                    SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(a.ToString()), Byte.Parse(b.ToString()), Byte.Parse(c.ToString()))));
-                }
+                SetTile(coordinates.x, coordinates.x, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                //x = coordinates.x;
+                //y = coordinates.y;
+                //int a = int.Parse(words[0]) - 40;
+                //int b = int.Parse(words[1]) - 40;
+                //int c = int.Parse(words[2]) - 40;
+                //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(a.ToString()), Byte.Parse(b.ToString()), Byte.Parse(c.ToString()))));
+                //}
 
                 //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
                 
@@ -293,4 +293,5 @@ namespace Marge.Views
         }
 
     }
+
 }
