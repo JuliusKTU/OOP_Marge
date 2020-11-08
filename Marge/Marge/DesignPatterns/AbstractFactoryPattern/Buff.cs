@@ -8,6 +8,6 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 {
     public abstract class Buff
     {
-        public abstract void SendFreeze();
+        public abstract void SendBuff();
     }
 }

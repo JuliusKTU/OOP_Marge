@@ -8,6 +8,6 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 {
     public abstract class Debuff
     {
-        public abstract void SendFreeze();
+        public abstract void SendDebuff();
     }
 }

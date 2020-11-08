@@ -18,7 +18,7 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
         }
       
 
-        public override async void SendFreeze()
+        public override async void SendDebuff()
         {
 
             await _chatService.SendCoordinatesMessage(new BoardCoordinates()

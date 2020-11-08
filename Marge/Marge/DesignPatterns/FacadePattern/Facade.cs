@@ -42,14 +42,14 @@ namespace Marge.DesignPatterns.FacadePattern
 
             if (buffType == TileType.BuffFreezeOthers)
             {
-                _freeze.CreateBuff(_chatService).SendFreeze();
+                _freeze.CreateBuff(_chatService).SendBuff();
             }
 
 
             if (buffType == TileType.BuffColorSplash)
             {
                 // pakeisti abstraktu pavadinima sendfreeze i relatible
-                _paintBomb.CreateBuff(_chatService).SendFreeze();
+                _paintBomb.CreateBuff(_chatService).SendBuff();
             }
         }
 
@@ -58,14 +58,14 @@ namespace Marge.DesignPatterns.FacadePattern
 
             if (debuffType == TileType.DebuffFreezeYourself)
             {
-                _freeze.CreateDebuff(_chatService).SendFreeze();
+                _freeze.CreateDebuff(_chatService).SendDebuff();
             }
 
 
             if (debuffType == TileType.DebuffBlackSplash)
             {
                 // pakeisti abstraktu pavadinima sendfreeze i relatible
-                _paintBomb.CreateDebuff(_chatService).SendFreeze();
+                _paintBomb.CreateDebuff(_chatService).SendDebuff();
             }
         }
 

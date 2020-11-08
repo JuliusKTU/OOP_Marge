@@ -11,7 +11,7 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
     {
        
         //siuncia tipa buffo
-        public abstract Buff CreateBuff(SignalRChatService chatService); //pakeisti tipa
+        public abstract Buff CreateBuff(SignalRChatService chatService);
 
         public abstract Debuff CreateDebuff(SignalRChatService chatService);
 
