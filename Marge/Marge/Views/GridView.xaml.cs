@@ -267,6 +267,24 @@ namespace Marge.Views
                 GenerateGameOverWindow();
 
             }
+            else if (coordinates.messageType == MessageType.magician)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+
+                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.Magician));
+
+            }
+            else if (coordinates.messageType == MessageType.masterThief)
+            {
+                string[] words = coordinates.color.Split(' ');
+
+                SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+
+                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.MasterThief));
+
+            }
             else if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
             {
                 ;

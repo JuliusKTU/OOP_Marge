@@ -34,7 +34,9 @@ namespace Marge.GameObjects
         BonusJoke,
         Neutral,
         Enemy,
-        EnemyWithAbilities
+        EnemyWithAbilities,
+        Magician,
+        MasterThief
 
     }
 }

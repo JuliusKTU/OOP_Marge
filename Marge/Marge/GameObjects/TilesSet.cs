@@ -21,5 +21,10 @@ namespace Marge.GameObjects
             return TilesMatrix[y,x];
         }
 
+        public static Tile[,] GetAllTiles()
+        {
+            return TilesMatrix;
+        }
+
     }
 }

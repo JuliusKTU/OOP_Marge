@@ -19,6 +19,9 @@ using Marge.DesignPatterns.StrategyPattern;
 using Marge.DesignPatterns.AdapterPattern;
 using Marge.DesignPatterns.FacadePattern;
 using Marge.DesignPatterns.DecoratorPattern;
+using Marge.DesignPatterns.Iterator;
+using Marge.DesignPatterns.IteratorPattern;
+using Marge.DesignPatterns.TemplatePattern;
 
 namespace Marge.ViewModels
 {
@@ -41,6 +44,7 @@ namespace Marge.ViewModels
         private int FreezeStepCount = 0;
         private int EnemyCount = 0;
         private int SplashCount = 0;
+        private int ThiefCount = 0;
         public bool gameHasEnded = false;
 
         public Facade facade;
@@ -247,6 +251,7 @@ namespace Marge.ViewModels
                     FreezeStepCount++;
                     EnemyCount++;
                     SplashCount++;
+                    ThiefCount++;
 
                     if (EnemyCount >= 21)
                     {
@@ -255,6 +260,14 @@ namespace Marge.ViewModels
                         MainEnemy.ChangePossition();
                         dazeEnemy.Operation(MainEnemy.PosX, MainEnemy.PosY, _chatService);
                         EnemyCount = 0;
+                    }
+
+                    if(ThiefCount > 5)
+                    {
+                        Thief newThief = new Magician();
+                        newThief.Run(_chatService);
+                        Thief newThief2 = new MasterThief();
+                        newThief2.Run(_chatService);
                     }
 
                     //jei turi str count bet nedaro
@@ -299,6 +312,14 @@ namespace Marge.ViewModels
                             MainPlayer.SendSteppedOnBlackSplash(_chatService, _x, _y);
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                         }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.Magician)
+                        {
+                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                        }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.MasterThief)
+                        {
+                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                        }
 
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)
                         {
@@ -320,16 +341,24 @@ namespace Marge.ViewModels
                     SetGamePause();
                 }
 
-                if (MainPlayer.Score >= 200)
+                if (MainPlayer.Score >= 100)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;
-                    gameHasEnded = true;
+                    //gameHasEnded = true;
                 }
 
                 if(coordinates.messageType == MessageType.gameOver)
                 {
                     gameHasEnded = true;
+                    var BoardIter = new TilesCollection();
+                    BoardIter.AddItems(TilesSet.GetAllTiles());
+                    
+                    foreach (var item in BoardIter)
+                    {
+                        MessageBox.Show(item.ToString());
+                    }
+
                 }
             }
 
