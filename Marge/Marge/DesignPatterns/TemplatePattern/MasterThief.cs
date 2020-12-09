@@ -1,4 +1,5 @@
 ﻿using Marge.Domain;
+using Marge.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,25 +11,31 @@ namespace Marge.DesignPatterns.TemplatePattern
 {
     public class MasterThief : Thief
     {
-        public override async void Create()
+        protected override string Hide()
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+            //219, 217, 255
+            //183, 158, 254
+            //143, 68, 254
+            Random randNum = new Random();
+            int Randx = randNum.Next(0, 3);
+            if( Randx == 0)
             {
-                color = "201 0 129",
-                messageType = MessageType.masterThief,
-                x = 7,
-                y = 7
-            });
+                return "219 217 255";
+            }
+            else if(Randx == 1)
+            {
+                return "183 158 254";
+            }
+            else
+            {
+                return "143 68 254";
+            }
+
         }
 
-        public override void Hide()
+        protected override MessageType GetType()
         {
-            MessageBox.Show("Hidden");
-        }
-
-        public override void Steal()
-        {
-            MessageBox.Show("Stolen");
+            return MessageType.masterThief;
         }
     }
 }

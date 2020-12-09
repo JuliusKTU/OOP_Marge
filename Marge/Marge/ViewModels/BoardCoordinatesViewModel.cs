@@ -44,7 +44,8 @@ namespace Marge.ViewModels
         private int FreezeStepCount = 0;
         private int EnemyCount = 0;
         private int SplashCount = 0;
-        private int ThiefCount = 0;
+        private int MasterThiefCount = 0;
+        private int MagicianCount = 0;
         public bool gameHasEnded = false;
 
         public Facade facade;
@@ -102,7 +103,7 @@ namespace Marge.ViewModels
             }
             set
             {
-                CurrentPlayerCoordinates.x = value;
+                CurrentPlayer.x = value;
                 _x = value;
                 OnPropertyChanged(nameof(x));
             }
@@ -115,7 +116,7 @@ namespace Marge.ViewModels
             }
             set
             {
-                CurrentPlayerCoordinates.y = value;
+                CurrentPlayer.y = value;
                 _y = value;
                 OnPropertyChanged(nameof(y));
             }
@@ -151,6 +152,8 @@ namespace Marge.ViewModels
             UniqueID2 = randNum.Next(100, 255);
             UniqueID3 = randNum.Next(100, 255);
 
+            CurrentPlayer.color = UniqueID.ToString() + " " + UniqueID2.ToString() + " " + UniqueID3.ToString();
+
             enemySteal = new StealPointsAbility();
             teleportEnemy = new TeleportAbility();
             dazeEnemy = new DazePlayerAbility();
@@ -165,7 +168,6 @@ namespace Marge.ViewModels
                 for (int y = 0; y < 20; y++)
                 {
                     TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral));
-
 
                 }
             }
@@ -186,8 +188,8 @@ namespace Marge.ViewModels
             y = MainPlayer.PosY;
             playerColor = MainPlayer.Color;
 
-            CurrentPlayerCoordinates.x = x;
-            CurrentPlayerCoordinates.y = y;
+            CurrentPlayer.x = x;
+            CurrentPlayer.y = y;
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
             facade = new Facade(chatService);
@@ -207,7 +209,6 @@ namespace Marge.ViewModels
 
             return viewModel;
         }
-
 
         private void ChatService_CoordinatesMessageReceived(BoardCoordinates coordinates)
         {
@@ -251,7 +252,8 @@ namespace Marge.ViewModels
                     FreezeStepCount++;
                     EnemyCount++;
                     SplashCount++;
-                    ThiefCount++;
+                    MasterThiefCount++;
+                    MagicianCount++;
 
                     if (EnemyCount >= 21)
                     {
@@ -262,16 +264,21 @@ namespace Marge.ViewModels
                         EnemyCount = 0;
                     }
 
-                    if(ThiefCount > 5)
+                    if(MasterThiefCount > 5)
                     {
                         Thief newThief = new Magician();
                         newThief.Run(_chatService);
+                        MasterThiefCount = 0;
+                    }
+
+                    if (MagicianCount > 7 )
+                    {
                         Thief newThief2 = new MasterThief();
                         newThief2.Run(_chatService);
+                        MagicianCount = 0;
                     }
 
                     //jei turi str count bet nedaro
-
 
                     if (coordinates.id == UniqueID)
                     {
@@ -358,7 +365,6 @@ namespace Marge.ViewModels
                     {
                         MessageBox.Show(item.ToString());
                     }
-
                 }
             }
 

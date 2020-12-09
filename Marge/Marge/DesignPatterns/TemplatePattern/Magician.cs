@@ -1,4 +1,5 @@
 ﻿using Marge.Domain;
+using Marge.GameObjects;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -12,25 +13,22 @@ namespace Marge.DesignPatterns.TemplatePattern
     public class Magician : Thief
     {
 
-        public override async void Create()
+        protected override string Hide()
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
+            string[] bytes = CurrentPlayer.color.Split(' ');
+            if(Convert.ToInt32(bytes.Max()) < 220)
             {
-                color = "123 0 129",
-                messageType = MessageType.magician,
-                x = 2,
-                y = 2
-            });
+                bytes[0] = Convert.ToInt32(bytes[0] + 30).ToString();
+                bytes[1] = Convert.ToInt32(bytes[1] + 30).ToString();
+                bytes[2] = Convert.ToInt32(bytes[2] + 30).ToString();
+            }
+
+            return bytes[0] + " "+ bytes[1] + " "+ bytes[2];
         }
 
-        public override void Hide()
+        protected override MessageType GetType()
         {
-            MessageBox.Show("Hidden");
-        }
-
-        public override void Steal()
-        {
-            MessageBox.Show("Stolen");
+            return MessageType.magician;
         }
     }
 }

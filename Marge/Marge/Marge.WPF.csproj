@@ -190,6 +190,10 @@
     <Compile Include="DesignPatterns\DecoratorPattern\StealPointsAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\TeleportAbility.cs" />
     <Compile Include="DesignPatterns\FacadePattern\Facade.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\Diamond.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\Figure.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\FigureFactory.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\Traingle.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\BoardIterator.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\AbstractIterator.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\IteratorAggregate.cs" />
@@ -214,7 +218,7 @@
     <Compile Include="Domain\GridItem.cs" />
     <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\TilesSet.cs" />
-    <Compile Include="GameObjects\CurrentPlayerCoordinates.cs" />
+    <Compile Include="GameObjects\CurrentPlayer.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\Tile.cs" />
