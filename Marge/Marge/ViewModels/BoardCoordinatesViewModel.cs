@@ -22,6 +22,8 @@ using Marge.DesignPatterns.DecoratorPattern;
 using Marge.DesignPatterns.Iterator;
 using Marge.DesignPatterns.IteratorPattern;
 using Marge.DesignPatterns.TemplatePattern;
+using Marge.DesignPatterns.CompositePattern;
+using Marge.Enumerators;
 
 namespace Marge.ViewModels
 {
@@ -54,6 +56,7 @@ namespace Marge.ViewModels
         StealPointsAbility enemySteal;
         TeleportAbility teleportEnemy;
         DazePlayerAbility dazeEnemy;
+        Composite root;
 
         public IScore Score = new AdapterScore();
 
@@ -194,8 +197,40 @@ namespace Marge.ViewModels
             _chatService = chatService;
             facade = new Facade(chatService);
 
+            root = new Composite(ComponentType.Effect);
+            //Buffai
+
+            Composite buff = new Composite(ComponentType.Buff);
+            Composite negativeBuff = new Composite(ComponentType.Negative); //negative
+            Composite positiveBuff = new Composite(ComponentType.Positive); //positive
+            positiveBuff.Add(new Leaf(ComponentType.ColorSplash));
+            positiveBuff.Add(new Leaf(ComponentType.FreezeOthers));
+
+            negativeBuff.Add(new Leaf(ComponentType.BlackSplash));
+            negativeBuff.Add(new Leaf(ComponentType.FreezeYourself));
+
+            buff.Add(negativeBuff);
+            buff.Add(positiveBuff);
+
+            // /Buffai
+            // Bonusai
+
+            Composite bonus = new Composite(ComponentType.Bonus);
+            bonus.Add(new Leaf(ComponentType.JackPot));
+            bonus.Add(new Leaf(ComponentType.Normal));
+            bonus.Add(new Leaf(ComponentType.Joke));
+
+            //Bonusai
+
+            root.Add(buff);
+            root.Add(bonus);
+
+            //root.AddPoint(ComponentType.BlackSplash);
+            //root.Display(1);
 
             
+
+            //Bonusai
 
             //foreach (var item in BoardIter)
             //{
@@ -297,33 +332,44 @@ namespace Marge.ViewModels
 
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJackPot)
                         {
+                            root.AddPoint(ComponentType.JackPot);
                             MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _chatService)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +25 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusNormal)
                         {
+                            root.AddPoint(ComponentType.Normal);
                             MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _chatService)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJoke)
                         {
+                            root.AddPoint(ComponentType.Joke);
                             MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _chatService)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -5 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                         {
+                            root.AddPoint(ComponentType.FreezeYourself);
+                            MainPlayer.RequestStrategy(StrategyType.Frozen);
+                        }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.BuffFreezeOthers)
+                        {
+                            root.AddPoint(ComponentType.FreezeOthers);
                             MainPlayer.RequestStrategy(StrategyType.Frozen);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BuffColorSplash)
                         {
+                            root.AddPoint(ComponentType.ColorSplash);
                             MainPlayer.SendSteppedOnColorSplash(_chatService, _x, _y);
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffBlackSplash)
                         {
+                            root.AddPoint(ComponentType.BlackSplash);
                             MainPlayer.SendSteppedOnBlackSplash(_chatService, _x, _y);
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                         }
@@ -356,8 +402,9 @@ namespace Marge.ViewModels
                     SetGamePause();
                 }
 
-                if (MainPlayer.Score >= 10)
+                if (MainPlayer.Score >= 100)
                 {
+                    MessageBox.Show(root.Display(1));
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;
                     //gameHasEnded = true;
@@ -385,8 +432,6 @@ namespace Marge.ViewModels
                 {
                     gameHasEnded = true;
 
-                    
-                    
                 }
             }
 
@@ -397,9 +442,6 @@ namespace Marge.ViewModels
 
             _gamePaused = !_gamePaused;
             OnPropertyChanged(nameof(GamePaused));
-
-
-
 
             if (_gamePaused)
                 _gamePauseTitle = "Unpause";

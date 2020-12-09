@@ -185,6 +185,7 @@
     <Compile Include="DesignPatterns\BuilderPattern\PlayerBuilder.cs" />
     <Compile Include="DesignPatterns\CompositePattern\Component1.cs" />
     <Compile Include="DesignPatterns\CompositePattern\Composite.cs" />
+    <Compile Include="DesignPatterns\CompositePattern\Leaf.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\DazePlayerAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\Decorator.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\AbstractEnemy.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="DesignPatterns\TemplatePattern\Thief.cs" />
     <Compile Include="Domain\BoardCoordinates.cs" />
     <Compile Include="Domain\GridItem.cs" />
+    <Compile Include="Enumerators\ComponentType.cs" />
     <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\TilesSet.cs" />
     <Compile Include="GameObjects\CurrentPlayer.cs" />

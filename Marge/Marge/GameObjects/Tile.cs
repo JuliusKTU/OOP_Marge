@@ -30,6 +30,7 @@ namespace Marge.GameObjects
 
     public enum TileType
     {
+        Effect,
         BuffFreezeOthers,
         BuffColorSplash,
         DebuffFreezeYourself,
