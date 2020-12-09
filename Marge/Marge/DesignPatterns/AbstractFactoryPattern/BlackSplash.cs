@@ -31,11 +31,11 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 
             if (TilesSet.GetTile(4, 4).IsColored)
             {
-                TilesSet.AddTile(4, 4, new Tile(true, true, TileType.DebuffBlackSplash));
+                TilesSet.AddTile(4, 4, new Tile(true, true, TileType.DebuffBlackSplash, 4, 4));
             }
             else
             {
-                TilesSet.AddTile(4, 4, new Tile(false, true, TileType.DebuffBlackSplash));
+                TilesSet.AddTile(4, 4, new Tile(false, true, TileType.DebuffBlackSplash, 4, 4));
             }
         }
     }

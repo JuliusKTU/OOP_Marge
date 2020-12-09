@@ -32,11 +32,11 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 
             if (TilesSet.GetTile(11,11).IsColored)
             {
-                TilesSet.AddTile(11, 11, new Tile(true, true, TileType.BuffFreezeOthers));
+                TilesSet.AddTile(11, 11, new Tile(true, true, TileType.BuffFreezeOthers, 11, 11));
             } 
             else
             {
-                TilesSet.AddTile(11, 11, new Tile(false, true, TileType.BuffFreezeOthers));
+                TilesSet.AddTile(11, 11, new Tile(false, true, TileType.BuffFreezeOthers, 11, 11));
 
             }
             

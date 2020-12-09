@@ -15,11 +15,16 @@ namespace Marge.GameObjects
 
         public TileType TileType { get; set; }
 
-        public Tile(bool Colored, bool Active, TileType Type)
+        public int x { get; set; }
+        public int y { get; set; }
+
+        public Tile(bool Colored, bool Active, TileType Type, int xcoord, int ycoord)
         {
             IsColored = Colored;
             IsActive = Active;
             TileType = Type;
+            x = xcoord;
+            y = ycoord;
         }
     }
 

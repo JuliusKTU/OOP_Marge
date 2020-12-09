@@ -183,6 +183,8 @@
     <Compile Include="DesignPatterns\BuilderPattern\Builder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\EnemyBuilder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\PlayerBuilder.cs" />
+    <Compile Include="DesignPatterns\CompositePattern\Component1.cs" />
+    <Compile Include="DesignPatterns\CompositePattern\Composite.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\DazePlayerAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\Decorator.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\AbstractEnemy.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="DesignPatterns\FlyweightPattern\Figure.cs" />
     <Compile Include="DesignPatterns\FlyweightPattern\FigureFactory.cs" />
     <Compile Include="DesignPatterns\FlyweightPattern\Traingle.cs" />
+    <Compile Include="DesignPatterns\IteratorPattern\Aggregate.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\BoardIterator.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\AbstractIterator.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\IteratorAggregate.cs" />

@@ -167,7 +167,7 @@ namespace Marge.ViewModels
             {
                 for (int y = 0; y < 20; y++)
                 {
-                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral));
+                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral, x, y));
 
                 }
             }
@@ -193,6 +193,14 @@ namespace Marge.ViewModels
             chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
             facade = new Facade(chatService);
+
+
+            
+
+            //foreach (var item in BoardIter)
+            //{
+            //    MessageBox.Show(item.ToString());
+            //}
         }
 
         public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
@@ -335,7 +343,7 @@ namespace Marge.ViewModels
                             
                         }
 
-                        TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral));
+                        TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral, _x, _y));
                         OnPropertyChanged(nameof(Message));
                         OnPropertyChanged(nameof(x));
                         OnPropertyChanged(nameof(y));
@@ -348,23 +356,37 @@ namespace Marge.ViewModels
                     SetGamePause();
                 }
 
-                if (MainPlayer.Score >= 100)
+                if (MainPlayer.Score >= 10)
                 {
                     MainPlayer.SendGameOverMessage(_chatService, UniqueID);
                     MainPlayer.Score = 0;
                     //gameHasEnded = true;
+
+                    //var BoardIter = new TilesCollection();
+                    //for (int i = 0; i < 20; i++)
+                    //{
+                    //    for (int y = 0; y < 20; y++)
+                    //    {
+                    //        BoardIter[i, y] = TilesSet.GetTile(i, y);
+                    //    }
+                    //}
+                    //AbstractIterator iter = BoardIter.CreateIterator();
+
+                    //object item = iter.First();
+
+                    //while (item != null)
+                    //{
+                    //    MessageBox.Show(item.ToString());
+                    //    item = iter.Next();
+                    //}
                 }
 
                 if(coordinates.messageType == MessageType.gameOver)
                 {
                     gameHasEnded = true;
-                    var BoardIter = new TilesCollection();
-                    BoardIter.AddItems(TilesSet.GetAllTiles());
+
                     
-                    foreach (var item in BoardIter)
-                    {
-                        MessageBox.Show(item.ToString());
-                    }
+                    
                 }
             }
 

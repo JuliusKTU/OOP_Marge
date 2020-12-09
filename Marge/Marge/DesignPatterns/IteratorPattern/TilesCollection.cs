@@ -9,26 +9,38 @@ using System.Threading.Tasks;
 
 namespace Marge.DesignPatterns.IteratorPattern
 {
-    public class TilesCollection : IteratorAggregate
+    public class TilesCollection : Aggregate
     {
-        private Tile[,] allTiles;
-        public void AddItems(Tile[,] items)
+
+
+        private Tile[,] allTiles = new Tile[20, 20];
+        //public void AddItems(Tile[,] items)
+        //{
+        //    allTiles = items;
+        //}
+        //public Tile GetItem(int x, int y)
+        //{
+        //    return allTiles[y, x];
+        //}
+
+        public int Count
         {
-            allTiles = items;
-        }
-        public Tile GetItem(int x, int y)
-        {
-            return allTiles[y, x];
+            get { return 20;/*allTiles.Length;*/ }
         }
 
-        public int HowManyTiles()
+        public Tile this[int x, int y]
         {
-            return allTiles.Length;
+            get { return allTiles[y, x]; }
+            set { allTiles[y, x] = value; }
         }
 
-        public override IEnumerator GetEnumerator()
+        //public override IEnumerator GetEnumerator()
+        //{
+        //   yield return new BoardIterator(this, false) ;
+        //}
+        public override AbstractIterator CreateIterator()
         {
-           yield return new BoardIterator(this, false) ;
+            return new BoardIterator(this);
         }
     }
 }

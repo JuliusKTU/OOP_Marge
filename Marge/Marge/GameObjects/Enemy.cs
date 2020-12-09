@@ -33,7 +33,7 @@ namespace Marge.GameObjects
                 y = PosY
             });
 
-            TilesSet.AddTile(PosX, PosY, new Tile(true, true, TileType.Neutral));
+            TilesSet.AddTile(PosX, PosY, new Tile(true, true, TileType.Neutral, PosX, PosY));
             Random randNum = new Random();
             PosX = randNum.Next(0, 20);
             PosY = randNum.Next(0, 20);
@@ -46,7 +46,7 @@ namespace Marge.GameObjects
                 x = PosX,
                 y = PosY
             });
-            TilesSet.AddTile(PosX, PosY, new Tile(true, true, TileType.Enemy));
+            TilesSet.AddTile(PosX, PosY, new Tile(true, true, TileType.Enemy, PosX, PosY));
 
         }
 

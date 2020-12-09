@@ -37,11 +37,11 @@ namespace Marge.DesignPatterns.Factory
             
             if (TilesSet.GetTile(Randx, 15).IsColored)
             {
-                TilesSet.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusNormal));
+                TilesSet.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusNormal, Randx, Randy));
             }
             else
             {
-                TilesSet.AddTile(Randx, Randy, new Tile(false, true, TileType.BonusNormal));
+                TilesSet.AddTile(Randx, Randy, new Tile(false, true, TileType.BonusNormal, Randx, Randy));
 
             }
         }

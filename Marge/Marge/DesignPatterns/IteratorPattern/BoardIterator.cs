@@ -11,72 +11,117 @@ namespace Marge.DesignPatterns.Iterator
 {
     public class BoardIterator : AbstractIterator
     {
-        private TilesCollection _collection;
+        private TilesCollection _aggregate;
 
-        private int xposition = -1;
-        private int yposition = -1;
+        private int _currentx = 0;
+        private int _currenty = 0;
 
         private bool _even = false;
 
-        public BoardIterator(TilesCollection tileset, bool even = false)
+        public BoardIterator(TilesCollection aggregate, bool even = false)
         {
-            _collection = tileset;
+            _aggregate = aggregate;
             _even = even;
 
             if (even)
             {
-                xposition = 0;
-                yposition = 0;
+                _currentx = 0;
+                _currenty = 0;
             }
         }
 
-        public override object Current()
+        public override object CurrentItem()
         {
-            return _collection.GetItem(xposition, yposition);
+            return _aggregate[_currentx, _currenty];
         }
 
-        public override int[] Key()
+        public override object First()
         {
-            int[] array = new int[2];
-            array[0] = xposition;
-            array[1] = yposition;
-            return array;
+            return _aggregate[0, 0];
         }
 
-        public override bool MoveNext()
+        public override bool IsDone()
         {
-            MessageBox.Show("Inside");
-            if (yposition + 2 < _collection.HowManyTiles())
+            return _currentx >= 19 && _currenty >= 19;
+        }
+
+        public override object Next()
+        {
+
+            if (_currenty + 2 < _aggregate.Count)
             {
-                yposition += 2;
-                MessageBox.Show("Inside IF");
+                _currenty += 2;
+                return _aggregate[_currentx, _currenty];
+                
             }
             else
             {
-                MessageBox.Show("Inside ELSE");
-                if (xposition + 1 <= _collection.HowManyTiles())
+                if (_currentx + 1 < _aggregate.Count)
                 {
-                    xposition += 1;
-                    yposition = 0;
-                    return true;
+                    _currentx += 1;
+                    _currenty = 0;
+                    return _aggregate[_currentx, _currenty];
+   
                 }
                 else
                 {
-                    MessageBox.Show("Inside ELSE ELSE ");
-                    return false;
+                    return null;
                 }
-                
+
             }
 
-            return true;
-
         }
 
-        public override void Reset()
-        {
-            xposition = 0;
-            yposition = 0;
 
-        }
+
+        //public override object Current()
+        //{
+        //    //return _collection.GetItem(xposition, yposition);
+        //    return 1;
+        //}
+
+        //public override int[] Key()
+        //{
+        //    int[] array = new int[2];
+        //    array[0] = xposition;
+        //    array[1] = yposition;
+        //    return array;
+        //}
+
+        //public override bool MoveNext()
+        //{
+        //    MessageBox.Show("Inside");
+        //    if (yposition + 2 < _collection.HowManyTiles())
+        //    {
+        //        yposition += 2;
+        //        MessageBox.Show("Inside IF");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Inside ELSE");
+        //        if (xposition + 1 <= _collection.HowManyTiles())
+        //        {
+        //            xposition += 1;
+        //            yposition = 0;
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Inside ELSE ELSE ");
+        //            return false;
+        //        }
+
+        //    }
+
+        //    return true;
+
+        //}
+
+        //public override void Reset()
+        //{
+        //    xposition = 0;
+        //    yposition = 0;
+
+        //}
     }
 }

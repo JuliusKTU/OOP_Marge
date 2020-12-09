@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.IteratorPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using Marge.ViewModels;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -66,7 +68,7 @@ namespace Marge.Views
             {
                 for (int y = 0; y < 20; y++)
                 {
-                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral));
+                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral, x, y));
                     MessageBox.Show("Hello I am created");
                     Rectangle ColorBlock = new Rectangle();
                     ColorBlock.Name = "Tile" + x + y;
@@ -108,6 +110,35 @@ namespace Marge.Views
 
                 if (even) even = false;
                 else even = true;
+            }
+        }
+
+        public void GenerateGameOverWindow2()
+        {
+            var BoardIter = new TilesCollection();
+            for (int i = 0; i < 20; i++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    BoardIter[i, y] = TilesSet.GetTile(i, y);
+                }
+            }
+
+            AbstractIterator iter = BoardIter.CreateIterator();
+
+            object item = iter.First();
+
+            while (item != null)
+            {
+                Rectangle ColorBlock = new Rectangle();
+                ColorBlock.Name = "";
+
+                ColorBlock.Fill = Brushes.Black;
+                Tile tile = (Tile)item;
+                Grid.SetColumn(ColorBlock, tile.x);
+                Grid.SetRow(ColorBlock, tile.y);
+                gridMain.Children.Add(ColorBlock);
+                item = iter.Next();
             }
         }
 
@@ -202,11 +233,11 @@ namespace Marge.Views
                     string[] words = coordinates.color.Split(' ');
 
                     SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.Enemy));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.Enemy, coordinates.x, coordinates.y));
                 }
                 else
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.EnemyWithAbilities));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.EnemyWithAbilities, coordinates.x, coordinates.y));
                 }
                 
             }
@@ -218,11 +249,11 @@ namespace Marge.Views
 
                 if (TilesSet.GetTile(coordinates.x, coordinates.y).IsColored)
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusJackPot));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusJackPot, coordinates.x, coordinates.y));
                 }
                 else
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusJackPot));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusJackPot, coordinates.x, coordinates.y));
 
                 }
 
@@ -235,11 +266,11 @@ namespace Marge.Views
 
                 if (TilesSet.GetTile(coordinates.x, coordinates.y).IsColored)
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusNormal));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusNormal, coordinates.x, coordinates.y));
                 }
                 else
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusNormal));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusNormal, coordinates.x, coordinates.y));
 
                 }
 
@@ -252,11 +283,11 @@ namespace Marge.Views
 
                 if (TilesSet.GetTile(coordinates.x, coordinates.y).IsColored)
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusJoke));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.BonusJoke, coordinates.x, coordinates.y));
                 }
                 else
                 {
-                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusJoke));
+                    TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.BonusJoke, coordinates.x, coordinates.y));
 
                 }
 
@@ -264,7 +295,7 @@ namespace Marge.Views
             else if (coordinates.messageType == MessageType.gameOver)
             {
                 
-                GenerateGameOverWindow();
+                GenerateGameOverWindow2();
 
             }
             else if (coordinates.messageType == MessageType.magician)
@@ -273,7 +304,7 @@ namespace Marge.Views
 
                 SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
 
-                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.Magician));
+                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.Magician, coordinates.x, coordinates.y));
 
             }
             else if (coordinates.messageType == MessageType.masterThief)
@@ -282,7 +313,7 @@ namespace Marge.Views
 
                 SetEllipse(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
 
-                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.MasterThief));
+                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(false, true, TileType.MasterThief, coordinates.x, coordinates.y));
 
             }
             else if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
