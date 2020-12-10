@@ -210,6 +210,9 @@
     <Compile Include="DesignPatterns\FactoryPattern\Joke.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Normal.cs" />
     <Compile Include="DesignPatterns\PrototypePattern\IPrototype.cs" />
+    <Compile Include="DesignPatterns\StatePattern\Darken.cs" />
+    <Compile Include="DesignPatterns\StatePattern\Lighten.cs" />
+    <Compile Include="DesignPatterns\StatePattern\State.cs" />
     <Compile Include="DesignPatterns\StrategyPattern\Confusion.cs" />
     <Compile Include="DesignPatterns\StrategyPattern\Freeze.cs" />
     <Compile Include="DesignPatterns\StrategyPattern\Move.cs" />

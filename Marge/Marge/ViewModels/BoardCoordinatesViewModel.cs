@@ -24,6 +24,8 @@ using Marge.DesignPatterns.IteratorPattern;
 using Marge.DesignPatterns.TemplatePattern;
 using Marge.DesignPatterns.CompositePattern;
 using Marge.Enumerators;
+using System.Drawing;
+using Marge.DesignPatterns.StatePattern;
 
 namespace Marge.ViewModels
 {
@@ -41,6 +43,7 @@ namespace Marge.ViewModels
 
         private int _x { get; set; }
         private int _y { get; set; }
+        private static Board board { get; set; }
 
         private int StepsCount = 0;
         private int FreezeStepCount = 0;
@@ -49,6 +52,7 @@ namespace Marge.ViewModels
         private int MasterThiefCount = 0;
         private int MagicianCount = 0;
         public bool gameHasEnded = false;
+        public byte currByte = 255;
 
         public Facade facade;
         public Player MainPlayer { get; set; }
@@ -111,6 +115,8 @@ namespace Marge.ViewModels
                 OnPropertyChanged(nameof(x));
             }
         }
+
+        
         public int y
         {
             get
@@ -148,6 +154,8 @@ namespace Marge.ViewModels
 
         public BoardCoordinatesViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
         {
+
+
             MainPlayer = mainPlayer;
             MainEnemy = mainEnemy;
             Random randNum = new Random();
@@ -190,6 +198,9 @@ namespace Marge.ViewModels
             x = MainPlayer.PosX;
             y = MainPlayer.PosY;
             playerColor = MainPlayer.Color;
+            
+            
+
 
             CurrentPlayer.x = x;
             CurrentPlayer.y = y;
@@ -238,9 +249,9 @@ namespace Marge.ViewModels
             //}
         }
 
-        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
+        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy, Board currboard)
         {
-
+            board = currboard;
             BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(chatService, mainPlayer, mainEnemy);
             chatService.Connect().ContinueWith(task =>
             {
@@ -259,6 +270,21 @@ namespace Marge.ViewModels
             {
                 if (coordinates.messageType == MessageType.playerMovement)
                 {
+                    if(StepsCount < 17)
+                    {
+                        board.State = new Darken();
+                        board.Request();
+                    }
+                    else
+                    {
+                        board.State = new Lighten();
+                        board.Request();
+                    }
+                    
+                    //currByte -= 1;
+                    //BackgroundColor = Color.FromRgb(255, currByte, currByte).ToString();
+                    //OnPropertyChanged(nameof(BackgroundColor));
+
                     if (coordinates.id == UniqueID)
                     {
                         MainPlayer.Score++;

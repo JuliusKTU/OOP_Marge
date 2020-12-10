@@ -9,6 +9,7 @@ using System.Windows;
 using Marge.ViewModels;
 using Marge.GameObjects;
 using Marge.DesignPatterns.BuilderPattern;
+using Marge.DesignPatterns.StatePattern;
 
 namespace Marge
 {
@@ -40,11 +41,15 @@ namespace Marge
             enemy.BuildPlayerPos();
             enemy.passConnection(SignalRConnection);
 
-            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(SignalRConnection, player.GetPlayer(), enemy.GetEnemy());
+
+            var darkenBoard = new Darken();
+            Board board = new Board(darkenBoard);
+            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(SignalRConnection, player.GetPlayer(), enemy.GetEnemy(), board);
+            
 
             MainWindow window = new MainWindow
             {
-                DataContext = new MainViewModel(chatViewModel)
+                DataContext = new MainViewModel(chatViewModel, board)
             };
 
             window.Show();
