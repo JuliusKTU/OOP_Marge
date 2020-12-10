@@ -202,6 +202,12 @@
     <Compile Include="DesignPatterns\FlyweightPattern\Figure.cs" />
     <Compile Include="DesignPatterns\FlyweightPattern\FigureFactory.cs" />
     <Compile Include="DesignPatterns\FlyweightPattern\Traingle.cs" />
+    <Compile Include="DesignPatterns\Interpreter\ContextRoman.cs" />
+    <Compile Include="DesignPatterns\Interpreter\ExpressionRoman.cs" />
+    <Compile Include="DesignPatterns\Interpreter\HundredExpression.cs" />
+    <Compile Include="DesignPatterns\Interpreter\OneExpression.cs" />
+    <Compile Include="DesignPatterns\Interpreter\TenExpression.cs" />
+    <Compile Include="DesignPatterns\Interpreter\ThousandExpression.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\Aggregate.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\BoardIterator.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\AbstractIterator.cs" />

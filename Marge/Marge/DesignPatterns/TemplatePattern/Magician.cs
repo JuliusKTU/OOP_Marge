@@ -16,11 +16,11 @@ namespace Marge.DesignPatterns.TemplatePattern
         protected override string Hide()
         {
             string[] bytes = CurrentPlayer.color.Split(' ');
-            if(Convert.ToInt32(bytes.Max()) < 220)
+            if(Convert.ToInt32(bytes.Max()) < 200)
             {
-                bytes[0] = Convert.ToInt32(bytes[0] + 30).ToString();
-                bytes[1] = Convert.ToInt32(bytes[1] + 30).ToString();
-                bytes[2] = Convert.ToInt32(bytes[2] + 30).ToString();
+                bytes[0] = (Convert.ToInt32(bytes[0]) + 10).ToString();
+                bytes[1] = (Convert.ToInt32(bytes[1]) + 10).ToString();
+                bytes[2] = (Convert.ToInt32(bytes[2]) + 10).ToString();
             }
 
             return bytes[0] + " "+ bytes[1] + " "+ bytes[2];

@@ -27,6 +27,8 @@ using Marge.Enumerators;
 using System.Drawing;
 using Marge.DesignPatterns.StatePattern;
 using Marge.DesignPatterns.ChainOfResponsibilityPattern;
+using System.Runtime.Remoting.Contexts;
+using Marge.DesignPatterns.Interpreter;
 
 namespace Marge.ViewModels
 {
@@ -67,6 +69,8 @@ namespace Marge.ViewModels
         DamageDealer MagicianDamageDealer;
         DamageDealer ThiefDamageDealer;
         DamageDealer IceDamageDealer;
+
+        List<ExpressionRoman> tree;
 
         public IScore Score = new AdapterScore();
 
@@ -248,10 +252,18 @@ namespace Marge.ViewModels
             root.Add(buff);
             root.Add(bonus);
 
+            
+            tree = new List<ExpressionRoman>();
+            tree.Add(new ThousandExpression());
+            tree.Add(new HundredExpression());
+            tree.Add(new TenExpression());
+            tree.Add(new OneExpression());
+
+
             //root.AddPoint(ComponentType.BlackSplash);
             //root.Display(1);
 
-            
+
 
             //Bonusai
 
@@ -345,18 +357,18 @@ namespace Marge.ViewModels
                         EnemyCount = 0;
                     }
 
-                    if(MasterThiefCount > 5)
+                    if(MagicianCount > 5)
                     {
                         Thief newThief = new Magician();
                         newThief.Run(_chatService);
-                        MasterThiefCount = 0;
+                        MagicianCount = 0;
                     }
 
-                    if (MagicianCount > 7 )
+                    if (MasterThiefCount > 7 )
                     {
                         Thief newThief2 = new MasterThief();
                         newThief2.Run(_chatService);
-                        MagicianCount = 0;
+                        MasterThiefCount = 0;
                     }
 
                     //jei turi str count bet nedaro
@@ -414,7 +426,26 @@ namespace Marge.ViewModels
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Magician)
                         {
-                            IceDamageDealer.ProcessRequest(DamageDealerType.MagitianDamage, MainPlayer);
+
+                            Random randNum = new Random();
+                            int number = randNum.Next(1, 1000);
+                            string roman = ToRoman(number);
+
+                            ContextRoman context = new ContextRoman(roman);
+                            foreach (ExpressionRoman exp in tree)
+                            {
+                                exp.Interpret(context);
+                            }
+
+                            string message = "Does " + roman +" = " + number +" ?";
+                            string title = "Answer the question";
+
+                            MessageBoxResult result = MessageBox.Show(message, title, MessageBoxButton.YesNo);
+                            if (result == MessageBoxResult.No)
+                            {
+                                IceDamageDealer.ProcessRequest(DamageDealerType.MagitianDamage, MainPlayer);
+                            }
+                            
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.MasterThief)
                         {
@@ -429,6 +460,9 @@ namespace Marge.ViewModels
                         }
 
                         TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral, _x, _y));
+
+                        
+
                         OnPropertyChanged(nameof(Message));
                         OnPropertyChanged(nameof(x));
                         OnPropertyChanged(nameof(y));
@@ -488,6 +522,26 @@ namespace Marge.ViewModels
                 _gamePauseTitle = "Pause";
 
             OnPropertyChanged(nameof(GamePauseTitle));
+        }
+
+        public string ToRoman(int number)
+        {
+            if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException("insert value betwheen 1 and 3999");
+            if (number < 1) return string.Empty;
+            if (number >= 1000) return "M" + ToRoman(number - 1000);
+            if (number >= 900) return "CM" + ToRoman(number - 900);
+            if (number >= 500) return "D" + ToRoman(number - 500);
+            if (number >= 400) return "CD" + ToRoman(number - 400);
+            if (number >= 100) return "C" + ToRoman(number - 100);
+            if (number >= 90) return "XC" + ToRoman(number - 90);
+            if (number >= 50) return "L" + ToRoman(number - 50);
+            if (number >= 40) return "XL" + ToRoman(number - 40);
+            if (number >= 10) return "X" + ToRoman(number - 10);
+            if (number >= 9) return "IX" + ToRoman(number - 9);
+            if (number >= 5) return "V" + ToRoman(number - 5);
+            if (number >= 4) return "IV" + ToRoman(number - 4);
+            if (number >= 1) return "I" + ToRoman(number - 1);
+            throw new ArgumentOutOfRangeException("something bad happened");
         }
     }
 }
