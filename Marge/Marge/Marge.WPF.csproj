@@ -183,6 +183,11 @@
     <Compile Include="DesignPatterns\BuilderPattern\Builder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\EnemyBuilder.cs" />
     <Compile Include="DesignPatterns\BuilderPattern\PlayerBuilder.cs" />
+    <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\DamageDealer.cs" />
+    <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\EnemyDamage.cs" />
+    <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\IceDamage.cs" />
+    <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\MagicianDamage.cs" />
+    <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\ThiefDamage.cs" />
     <Compile Include="DesignPatterns\CompositePattern\Component1.cs" />
     <Compile Include="DesignPatterns\CompositePattern\Composite.cs" />
     <Compile Include="DesignPatterns\CompositePattern\Leaf.cs" />
@@ -224,6 +229,7 @@
     <Compile Include="Domain\BoardCoordinates.cs" />
     <Compile Include="Domain\GridItem.cs" />
     <Compile Include="Enumerators\ComponentType.cs" />
+    <Compile Include="Enumerators\DamageDealerType.cs" />
     <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\TilesSet.cs" />
     <Compile Include="GameObjects\CurrentPlayer.cs" />

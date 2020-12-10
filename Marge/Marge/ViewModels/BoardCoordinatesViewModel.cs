@@ -26,6 +26,7 @@ using Marge.DesignPatterns.CompositePattern;
 using Marge.Enumerators;
 using System.Drawing;
 using Marge.DesignPatterns.StatePattern;
+using Marge.DesignPatterns.ChainOfResponsibilityPattern;
 
 namespace Marge.ViewModels
 {
@@ -61,6 +62,11 @@ namespace Marge.ViewModels
         TeleportAbility teleportEnemy;
         DazePlayerAbility dazeEnemy;
         Composite root;
+
+        DamageDealer EnemyDamageDealer;
+        DamageDealer MagicianDamageDealer;
+        DamageDealer ThiefDamageDealer;
+        DamageDealer IceDamageDealer;
 
         public IScore Score = new AdapterScore();
 
@@ -198,9 +204,15 @@ namespace Marge.ViewModels
             x = MainPlayer.PosX;
             y = MainPlayer.PosY;
             playerColor = MainPlayer.Color;
-            
-            
 
+            EnemyDamageDealer = new EnemyDamage();
+            MagicianDamageDealer = new MagicianDamage();
+            ThiefDamageDealer = new ThiefDamage();
+            IceDamageDealer = new IceDamage();
+
+            IceDamageDealer.SetSuccessor(ThiefDamageDealer);
+            ThiefDamageDealer.SetSuccessor(MagicianDamageDealer);
+            MagicianDamageDealer.SetSuccessor(EnemyDamageDealer);
 
             CurrentPlayer.x = x;
             CurrentPlayer.y = y;
@@ -379,6 +391,7 @@ namespace Marge.ViewModels
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
                         {
+                            IceDamageDealer.ProcessRequest(DamageDealerType.IceDamage, MainPlayer);
                             root.AddPoint(ComponentType.FreezeYourself);
                             MainPlayer.RequestStrategy(StrategyType.Frozen);
                         }
@@ -401,17 +414,17 @@ namespace Marge.ViewModels
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Magician)
                         {
-                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                            IceDamageDealer.ProcessRequest(DamageDealerType.MagitianDamage, MainPlayer);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.MasterThief)
                         {
-                            MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                            IceDamageDealer.ProcessRequest(DamageDealerType.ThiefDamage, MainPlayer);
                         }
 
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Enemy)
                         {
+                            IceDamageDealer.ProcessRequest(DamageDealerType.EnemyDamage, MainPlayer);
                             MainPlayer.RequestStrategy(StrategyType.Confused);
-                            MainPlayer.Score -= 10;
                             
                         }
 
