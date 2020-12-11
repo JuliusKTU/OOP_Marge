@@ -80,7 +80,22 @@ namespace Marge.Views
             }
 
             //chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
+        }
 
+        public void ClearBoard()
+        {
+            for (int x = 0; x < 20; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    TilesSet.AddTile(x, y, new Tile(false, true, TileType.Neutral, x, y));
+                    Rectangle ColorBlock = new Rectangle();
+                    ColorBlock.Fill = Brushes.White;
+                    Grid.SetColumn(ColorBlock, x);
+                    Grid.SetRow(ColorBlock, y);
+                    gridMain.Children.Add(ColorBlock);
+                }
+            }
         }
 
         public void GenerateGameOverWindow()
@@ -319,6 +334,12 @@ namespace Marge.Views
             else if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
             {
                 ;
+            }
+            else if (coordinates.messageType == MessageType.reset)
+            {
+                ClearBoard();
+                string[] words = coordinates.color.Split(' ');
+                //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
             else
             {

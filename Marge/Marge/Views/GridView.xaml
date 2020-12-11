@@ -94,14 +94,8 @@
                     Content="{Binding CurrentPlayerScore}"
                     ContentStringFormat="{}Score : {0} / 200 "/>
 
-                <Button
-                    Margin="25"
-                    HorizontalAlignment="Left"
-                    Grid.Column="1"
-                    Content="{Binding GamePauseTitle}"
-                    Grid.Row="0"
-                    Command="{Binding Pause}">
-                </Button>
+                
+                
 
 
                 <Grid Grid.Column="0">
@@ -146,6 +140,32 @@
                         Command="{Binding MoveRightChatMessageCommand}">
                     </Button>
                     
+
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Margin="5 20 5 20"
+                        
+                        Content="RESTART"
+                        Command="{Binding RestartGame}">
+                    </Button>
+
+                    <Button
+                        Margin="5 20 5 20"
+                        Grid.Column="0"
+                        Content="{Binding GamePauseTitle}"
+                        Grid.Row="1"
+                        Command="{Binding Pause}">
+                    </Button>
 
                 </Grid>
 

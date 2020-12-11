@@ -29,6 +29,8 @@ using Marge.DesignPatterns.StatePattern;
 using Marge.DesignPatterns.ChainOfResponsibilityPattern;
 using System.Runtime.Remoting.Contexts;
 using Marge.DesignPatterns.Interpreter;
+using Marge.DesignPatterns.VisitorPattern;
+using Marge.DesignPatterns.MementoPattern;
 
 namespace Marge.ViewModels
 {
@@ -49,9 +51,12 @@ namespace Marge.ViewModels
         private static Board board { get; set; }
 
         private int StepsCount = 0;
-        private int FreezeStepCount = 0;
+        private int BonusCount = 0;
+        private int FreezeYourselfStepCount = 0;
+        private int FreezeOthersStepCount = 0;
         private int EnemyCount = 0;
-        private int SplashCount = 0;
+        private int BlackSplashCount = 0;
+        private int ColorSplashCount = 0;
         private int MasterThiefCount = 0;
         private int MagicianCount = 0;
         public bool gameHasEnded = false;
@@ -71,6 +76,9 @@ namespace Marge.ViewModels
         DamageDealer IceDamageDealer;
 
         List<ExpressionRoman> tree;
+        GameStructure game;
+
+        public MementoCareTaker memento { get; private set; }
 
         public IScore Score = new AdapterScore();
 
@@ -160,13 +168,17 @@ namespace Marge.ViewModels
         public ICommand MoveRightChatMessageCommand { get; }
         public ICommand MoveUpChatMessageCommand { get; }
         public ICommand Pause { get; }
-
+        public ICommand RestartGame { get; }
 
         public BoardCoordinatesViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
         {
 
 
             MainPlayer = mainPlayer;
+
+            memento = new MementoCareTaker();
+            memento.Memento = MainPlayer.CreateMemento();
+
             MainEnemy = mainEnemy;
             Random randNum = new Random();
             UniqueID = randNum.Next(100, 255);
@@ -202,6 +214,7 @@ namespace Marge.ViewModels
             MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, chatService, MainPlayer);
             MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService, MainPlayer);
             Pause = new Pause(this, chatService);
+            RestartGame = new RestartGame(this, chatService);
 
             _message = "Waiting for response";
 
@@ -248,29 +261,34 @@ namespace Marge.ViewModels
             bonus.Add(new Leaf(ComponentType.Joke));
 
             //Bonusai
-
+           
             root.Add(buff);
             root.Add(bonus);
 
-            
+            /* INTERPRETER DESIGN PATTERN IMPLEMENTATION */
             tree = new List<ExpressionRoman>();
             tree.Add(new ThousandExpression());
             tree.Add(new HundredExpression());
             tree.Add(new TenExpression());
             tree.Add(new OneExpression());
+            /* INTERPRETER DESIGN PATTERN IMPLEMENTATION */
 
 
-            //root.AddPoint(ComponentType.BlackSplash);
-            //root.Display(1);
+            /* VISITOR DESIGN PATTERN IMPLEMENTATION */
+            game = new GameStructure();
+            game.Attach(new Hard());
 
+            BonusSpawnRate bonusSpawn = new BonusSpawnRate();
+            BuffSpawnRate buffSpawn = new BuffSpawnRate();
+            DebuffSpawnRate debuffSpawn = new DebuffSpawnRate();
 
+            game.Accept(bonusSpawn);
+            game.Accept(buffSpawn);
+            game.Accept(debuffSpawn);
+            /* VISITOR DESIGN PATTERN IMPLEMENTATION */
 
-            //Bonusai
+            
 
-            //foreach (var item in BoardIter)
-            //{
-            //    MessageBox.Show(item.ToString());
-            //}
         }
 
         public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy, Board currboard)
@@ -294,17 +312,21 @@ namespace Marge.ViewModels
             {
                 if (coordinates.messageType == MessageType.playerMovement)
                 {
-                    if(StepsCount < 17)
+                    if (StepsCount == 0)
                     {
                         board.State = new Darken();
-                        board.Request();
                     }
-                    else
+                    else if (StepsCount == SpawnRates.StepsCount / 2)
                     {
                         board.State = new Lighten();
-                        board.Request();
                     }
-                    
+
+                    board.Request();
+                    if (StepsCount >= SpawnRates.StepsCount)
+                    {
+                        StepsCount = -1;
+                    }
+
                     //currByte -= 1;
                     //BackgroundColor = Color.FromRgb(255, currByte, currByte).ToString();
                     //OnPropertyChanged(nameof(BackgroundColor));
@@ -314,62 +336,71 @@ namespace Marge.ViewModels
                         MainPlayer.Score++;
                     }
 
-                    if (StepsCount > 31)
+                    if (BonusCount > SpawnRates.BonusCount)
                     {
                         //var a = new BonusFactory();
                         Random randNum = new Random();
                         int BonusNumber = randNum.Next(1, 4);
                         //a.CreateBonus(BonusNumber, _chatService).SendBonus();
                         facade.CreateBonus(BonusNumber);
-                        StepsCount = 0;
+                        BonusCount = 0;
+                        //MainPlayer.SetMemento(memento.Memento);
+
                     }
 
-                    if (FreezeStepCount >= 23)
+                    if (FreezeYourselfStepCount >= SpawnRates.FreezeYourselfStepCount)
                     {
-                        //var a = new FreezeFactory();
-                        //a.CreateDebuff(_chatService).SendFreeze();
-                        // a.CreateBuff(_chatService).SendFreeze();
                         facade.CreateDeBuff(TileType.DebuffFreezeYourself);
-                        facade.CreateBuff(TileType.BuffFreezeOthers);
-                        FreezeStepCount = 0;
+                        FreezeYourselfStepCount = 0;
                     }
 
-                    if (SplashCount >= 27)
+                    if (FreezeOthersStepCount >= SpawnRates.FreezeOthersStepCount)
+                    {
+                        facade.CreateBuff(TileType.BuffFreezeOthers);
+                        FreezeOthersStepCount = 0;
+                    }
+
+                    if (BlackSplashCount >= SpawnRates.BlackSplashCount)
                     {
                         facade.CreateDeBuff(TileType.DebuffBlackSplash);
+                        BlackSplashCount = 0;
+                    }
+                    if (ColorSplashCount >= SpawnRates.ColorSplashCount)
+                    {
                         facade.CreateBuff(TileType.BuffColorSplash);
-                        SplashCount = 0;
+                        ColorSplashCount = 0;
                     }
 
-                    StepsCount++;
-                    FreezeStepCount++;
-                    EnemyCount++;
-                    SplashCount++;
-                    MasterThiefCount++;
-                    MagicianCount++;
-
-                    if (EnemyCount >= 21)
+                    if (EnemyCount >= SpawnRates.EnemyCount)
                     {
-                        //enemy call
-
                         MainEnemy.ChangePossition();
                         dazeEnemy.Operation(MainEnemy.PosX, MainEnemy.PosY, _chatService);
                         EnemyCount = 0;
                     }
 
-                    if(MagicianCount > 5)
+                    if (MagicianCount > SpawnRates.MagicianCount)
                     {
                         Thief newThief = new Magician();
                         newThief.Run(_chatService);
                         MagicianCount = 0;
                     }
 
-                    if (MasterThiefCount > 7 )
+                    if (MasterThiefCount > SpawnRates.MasterThiefCount)
                     {
                         Thief newThief2 = new MasterThief();
                         newThief2.Run(_chatService);
                         MasterThiefCount = 0;
                     }
+
+                    StepsCount++;
+                    BonusCount++;
+                    FreezeYourselfStepCount++;
+                    FreezeOthersStepCount++;
+                    EnemyCount++;
+                    BlackSplashCount++;
+                    ColorSplashCount++;
+                    MasterThiefCount++;
+                    MagicianCount++;
 
                     //jei turi str count bet nedaro
 
@@ -437,7 +468,7 @@ namespace Marge.ViewModels
                                 exp.Interpret(context);
                             }
 
-                            string message = "Does " + roman +" = " + number +" ?";
+                            string message = "Does " + roman + " = " + number + " ?";
                             string title = "Answer the question";
 
                             MessageBoxResult result = MessageBox.Show(message, title, MessageBoxButton.YesNo);
@@ -445,7 +476,7 @@ namespace Marge.ViewModels
                             {
                                 IceDamageDealer.ProcessRequest(DamageDealerType.MagitianDamage, MainPlayer);
                             }
-                            
+
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.MasterThief)
                         {
@@ -456,21 +487,23 @@ namespace Marge.ViewModels
                         {
                             IceDamageDealer.ProcessRequest(DamageDealerType.EnemyDamage, MainPlayer);
                             MainPlayer.RequestStrategy(StrategyType.Confused);
-                            
+
                         }
 
                         TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral, _x, _y));
 
-                        
+
 
                         OnPropertyChanged(nameof(Message));
                         OnPropertyChanged(nameof(x));
+                        MainPlayer.PosX = x;
+                        MainPlayer.PosY = y;
                         OnPropertyChanged(nameof(y));
                         OnPropertyChanged(nameof(CurrentPlayerScore));
                     }
                 }
 
-                if(coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
+                if (coordinates.messageType == MessageType.gamePause || coordinates.messageType == MessageType.gamePauseUndo)
                 {
                     SetGamePause();
                 }
@@ -501,10 +534,20 @@ namespace Marge.ViewModels
                     //}
                 }
 
-                if(coordinates.messageType == MessageType.gameOver)
+                if (coordinates.messageType == MessageType.gameOver)
                 {
                     gameHasEnded = true;
 
+                }
+
+                if (coordinates.messageType == MessageType.reset)
+                {
+                    MainPlayer.SetMemento(memento.Memento);
+                    x = MainPlayer.PosX;
+                    y = MainPlayer.PosY;
+                    OnPropertyChanged(nameof(x));
+                    OnPropertyChanged(nameof(y));
+                    OnPropertyChanged(nameof(CurrentPlayerScore));
                 }
             }
 

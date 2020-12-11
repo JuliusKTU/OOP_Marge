@@ -1,4 +1,5 @@
 ﻿using Marge.DesignPatterns.AdapterPattern;
+using Marge.DesignPatterns.Memento;
 using Marge.DesignPatterns.StrategyPattern;
 using Marge.Domain;
 using Marge.Services;
@@ -14,20 +15,82 @@ namespace Marge.GameObjects
 {
     public class Player
     {
-        public string Name { get; set; }
-        public string Color { get; set; }
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        private string _name { get; set; }
+        private string _color { get; set; }
+        private int _posX { get; set; }
+        private int _posY { get; set; }
+
+        private int _score = 0;
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public string Color
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                _color = value;
+            }
+        }
+
+        public int PosX
+        {
+            get
+            {
+                return _posX;
+            }
+            set
+            {
+                _posX = value;
+            }
+        }
+
+        public int PosY
+        {
+            get
+            {
+                return _posY;
+            }
+            set
+            {
+                _posY = value;
+            }
+        }
+
+        public int Score
+        {
+            get
+            {
+                return _score;
+            }
+            set
+            {
+                _score = value;
+            }
+        }
+
         public StrategyType Strategy { get; set; }
         public int AffectedCount { get; set; }
-
-        public int Score = 0;
 
         //atributai
         Dictionary<StrategyType, IMovingStatusStrategy> strategyContext = new Dictionary<StrategyType, IMovingStatusStrategy>();
 
         public Player()
         {
+            Score = 0;
             strategyContext.Add(StrategyType.Confused, new Confusion());
             strategyContext.Add(StrategyType.Frozen, new Freeze());
             strategyContext.Add(StrategyType.Reversed, new Reverse());
@@ -83,6 +146,20 @@ namespace Marge.GameObjects
                 x = xP,
                 y = yP
             });
+        }
+
+        public PlayerMemento CreateMemento()
+        {
+            return (new PlayerMemento(_name, _color, _posX, _posY, _score));
+        }
+
+        public void SetMemento(PlayerMemento memento)
+        {
+            Name = memento.Name;
+            Color = memento.Color;
+            PosX = memento.PosX;
+            PosY = memento.PosY;
+            Score = memento.Score;
         }
     }
 }

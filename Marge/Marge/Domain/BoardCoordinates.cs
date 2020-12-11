@@ -39,7 +39,8 @@ namespace Marge.Domain
         gamePause,
         gamePauseUndo,
         magician,
-        masterThief
+        masterThief,
+        reset
         
     }
 }
