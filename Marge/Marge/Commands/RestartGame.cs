@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using Marge.ViewModels;
@@ -16,10 +17,9 @@ namespace Marge.Commands
     {
         public event EventHandler CanExecuteChanged;
         private readonly BoardCoordinatesViewModel _viewModel;
-        private readonly SignalRChatService _chatService;
-        Player CurrentPlayer;
+        private readonly ConnectionProxy _chatService;
 
-        public RestartGame(BoardCoordinatesViewModel viewModel, SignalRChatService chatService)
+        public RestartGame(BoardCoordinatesViewModel viewModel, ConnectionProxy chatService)
         {
             _viewModel = viewModel;
             _chatService = chatService;
@@ -32,18 +32,9 @@ namespace Marge.Commands
             return true;
         }
 
-        public async void Execute(object parameter)
+        public void Execute(object parameter)
         {
-
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                message = _viewModel.UniqueID.ToString(),
-                id = _viewModel.UniqueID,
-                color = _viewModel.playerColor,
-                messageType = MessageType.reset,
-                x = _viewModel.MainPlayer.PosX,
-                y = _viewModel.MainPlayer.PosY
-            });
+            _chatService.SendMessage(_viewModel.UniqueID.ToString(), _viewModel.UniqueID, _viewModel.playerColor, MessageType.reset, _viewModel.MainPlayer.PosX, _viewModel.MainPlayer.PosY);
         }
     }
 }

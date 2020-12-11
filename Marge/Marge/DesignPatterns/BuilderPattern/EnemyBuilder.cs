@@ -1,4 +1,5 @@
-﻿using Marge.GameObjects;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.GameObjects;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Marge.DesignPatterns.BuilderPattern
             _enemy.PosX = x;
             _enemy.PosY = y;
         }
-        public void passConnection(SignalRChatService chatService)
+        public void passConnection(ConnectionProxy chatService)
         {
             _enemy._chatService = chatService;
         }

@@ -1,4 +1,5 @@
-﻿using Marge.DesignPatterns.StrategyPattern;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.DesignPatterns.StrategyPattern;
 using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
@@ -15,11 +16,11 @@ namespace Marge.Commands
     class MoveRightChatMessageCommand : ICommand
     {
         private readonly BoardCoordinatesViewModel _viewModel;
-        private readonly SignalRChatService _chatService;
+        private readonly ConnectionProxy _chatService;
 
         Player CurrentPlayer;
 
-        public MoveRightChatMessageCommand(BoardCoordinatesViewModel viewModel, SignalRChatService chatService, Player player)
+        public MoveRightChatMessageCommand(BoardCoordinatesViewModel viewModel, ConnectionProxy chatService, Player player)
         {
             _viewModel = viewModel;
             _chatService = chatService;
@@ -47,20 +48,13 @@ namespace Marge.Commands
         }
 
         
-        public async void Execute(object parameter)
+        public void Execute(object parameter)
         {
 
             if (CurrentPlayer.Strategy == StrategyType.Move)
             {
-                await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-                {
-                    messageType = MessageType.playerMovement,
-                    color = _viewModel.playerColor,
-                    id = _viewModel.UniqueID,
-                    message = _viewModel.UniqueID + " has sent a message",
-                    x = _viewModel.x + 1,
-                    y = _viewModel.y
-                });
+                _chatService.SendMessage(_viewModel.UniqueID.ToString(), _viewModel.UniqueID, _viewModel.playerColor, MessageType.playerMovement, _viewModel.x + 1, _viewModel.y);
+                
             }
             else if (CurrentPlayer.Strategy == StrategyType.Frozen && CurrentPlayer.AffectedCount != 0)
             {
@@ -73,17 +67,8 @@ namespace Marge.Commands
             }
             else if (CurrentPlayer.Strategy == StrategyType.Confused && CurrentPlayer.AffectedCount != 0)
             {
-
-                await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-                {
-                    message = _viewModel.UniqueID.ToString(),
-                    id = _viewModel.UniqueID,
-                    color = _viewModel.playerColor,
-                    messageType = MessageType.playerMovement,
-                    x = _viewModel.x + 1,
-                    y = _viewModel.y + 1
-                });
-
+                _chatService.SendMessage(_viewModel.UniqueID.ToString(), _viewModel.UniqueID, _viewModel.playerColor, MessageType.playerMovement, _viewModel.x + 1, _viewModel.y + 1);
+                
                 CurrentPlayer.AffectedCount--;
 
                 if (CurrentPlayer.AffectedCount <= 0)

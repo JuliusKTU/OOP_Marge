@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.Services;
 using Marge.ViewModels;
 using System;
@@ -14,8 +15,8 @@ namespace Marge.Commands
     {
         public event EventHandler CanExecuteChanged;
         private BoardCoordinatesViewModel _viewModel;
-        SignalRChatService _chatService;
-        public Pause(BoardCoordinatesViewModel viewModel, SignalRChatService chatService)
+        ConnectionProxy _chatService;
+        public Pause(BoardCoordinatesViewModel viewModel, ConnectionProxy chatService)
         {
             _viewModel = viewModel;
             _chatService = chatService;
@@ -26,22 +27,16 @@ namespace Marge.Commands
             return true;
         }
 
-        public async void Execute(object parameter)
+        public  void Execute(object parameter)
         {
-
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.gamePause,
-            });
-
+            _chatService.SendMessage("", 1, "", MessageType.gamePause, 1, 1);
+            
         }
 
-        public async void Undo()
+        public  void Undo()
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.gamePauseUndo,
-            });
+            _chatService.SendMessage("", 1, "", MessageType.gamePauseUndo, 1, 1);
+            
         }
     }
 }

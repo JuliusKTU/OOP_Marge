@@ -165,7 +165,6 @@
     <Compile Include="Commands\MoveUpChatMessageCommand.cs" />
     <Compile Include="Commands\Pause.cs" />
     <Compile Include="Commands\RestartGame.cs" />
-    <Compile Include="Commands\SendCoordinatesChatMessageCommand.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\AbstractFacotry.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\BlackSplash.cs" />
     <Compile Include="DesignPatterns\AbstractFactoryPattern\Buff.cs" />
@@ -224,6 +223,9 @@
     <Compile Include="DesignPatterns\FactoryPattern\Joke.cs" />
     <Compile Include="DesignPatterns\FactoryPattern\Normal.cs" />
     <Compile Include="DesignPatterns\PrototypePattern\IPrototype.cs" />
+    <Compile Include="DesignPatterns\ProxyPattern\ConnectionProxy.cs" />
+    <Compile Include="DesignPatterns\ProxyPattern\IConnection.cs" />
+    <Compile Include="DesignPatterns\ProxyPattern\ServerClient.cs" />
     <Compile Include="DesignPatterns\StatePattern\Darken.cs" />
     <Compile Include="DesignPatterns\StatePattern\Lighten.cs" />
     <Compile Include="DesignPatterns\StatePattern\State.cs" />
@@ -318,5 +320,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

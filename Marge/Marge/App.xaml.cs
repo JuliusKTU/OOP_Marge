@@ -10,6 +10,7 @@ using Marge.ViewModels;
 using Marge.GameObjects;
 using Marge.DesignPatterns.BuilderPattern;
 using Marge.DesignPatterns.StatePattern;
+using Marge.DesignPatterns.ProxyPattern;
 
 namespace Marge
 {
@@ -30,6 +31,8 @@ namespace Marge
 
             var SignalRConnection = new Services.SignalRChatService(connection);
 
+            ConnectionProxy connectionProxy = new ConnectionProxy();
+
             var player = new PlayerBuilder();
             player.BuildPlayerName();
             player.BuildPlayerColor();
@@ -39,12 +42,12 @@ namespace Marge
             enemy.BuildPlayerName();
             enemy.BuildPlayerColor();
             enemy.BuildPlayerPos();
-            enemy.passConnection(SignalRConnection);
+            enemy.passConnection(connectionProxy);
 
 
             var darkenBoard = new Darken();
             Board board = new Board(darkenBoard);
-            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(SignalRConnection, player.GetPlayer(), enemy.GetEnemy(), board);
+            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(SignalRConnection, connectionProxy, player.GetPlayer(), enemy.GetEnemy(), board);
             
 
             MainWindow window = new MainWindow

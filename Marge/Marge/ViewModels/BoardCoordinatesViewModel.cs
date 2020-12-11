@@ -31,12 +31,14 @@ using System.Runtime.Remoting.Contexts;
 using Marge.DesignPatterns.Interpreter;
 using Marge.DesignPatterns.VisitorPattern;
 using Marge.DesignPatterns.MementoPattern;
+using Marge.DesignPatterns.ProxyPattern;
 
 namespace Marge.ViewModels
 {
     public class BoardCoordinatesViewModel : ViewModelBase
     {
         SignalRChatService _chatService;
+        ConnectionProxy _connectionProxy;
         public string playerColor = "";
 
         private bool _gamePaused = false;
@@ -170,10 +172,10 @@ namespace Marge.ViewModels
         public ICommand Pause { get; }
         public ICommand RestartGame { get; }
 
-        public BoardCoordinatesViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy)
+        public BoardCoordinatesViewModel(SignalRChatService chatService, ConnectionProxy connectionProxy, Player mainPlayer, Enemy mainEnemy)
         {
 
-
+            _connectionProxy = connectionProxy;
             MainPlayer = mainPlayer;
 
             memento = new MementoCareTaker();
@@ -209,12 +211,12 @@ namespace Marge.ViewModels
             //playerColor.Color = Color.FromArgb(255, 255, 255, 0);
 
             //SendCoordinatesCommand = new SendCoordinatesChatMessageCommand(this, chatService);
-            MoveDownChatMessageCommand = new MoveDownChatMessageCommand(this, chatService, MainPlayer);
-            MoveLeftChatMessageCommand = new MoveLeftChatMessageCommand(this, chatService, MainPlayer);
-            MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, chatService, MainPlayer);
-            MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, chatService, MainPlayer);
-            Pause = new Pause(this, chatService);
-            RestartGame = new RestartGame(this, chatService);
+            MoveDownChatMessageCommand = new MoveDownChatMessageCommand(this, _connectionProxy, MainPlayer);
+            MoveLeftChatMessageCommand = new MoveLeftChatMessageCommand(this, _connectionProxy, MainPlayer);
+            MoveRightChatMessageCommand = new MoveRightChatMessageCommand(this, _connectionProxy, MainPlayer);
+            MoveUpChatMessageCommand = new MoveUpChatMessageCommand(this, _connectionProxy, MainPlayer);
+            Pause = new Pause(this, _connectionProxy);
+            RestartGame = new RestartGame(this, _connectionProxy);
 
             _message = "Waiting for response";
 
@@ -233,7 +235,10 @@ namespace Marge.ViewModels
 
             CurrentPlayer.x = x;
             CurrentPlayer.y = y;
-            chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
+
+            _connectionProxy.AddMessageReceiver(ChatService_CoordinatesMessageReceived);
+
+            //chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
             facade = new Facade(chatService);
 
@@ -291,10 +296,10 @@ namespace Marge.ViewModels
 
         }
 
-        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, Player mainPlayer, Enemy mainEnemy, Board currboard)
+        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, ConnectionProxy connectionProxy, Player mainPlayer, Enemy mainEnemy, Board currboard)
         {
             board = currboard;
-            BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(chatService, mainPlayer, mainEnemy);
+            BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(chatService, connectionProxy, mainPlayer, mainEnemy);
             chatService.Connect().ContinueWith(task =>
             {
                 if (task.Exception != null)
@@ -550,7 +555,6 @@ namespace Marge.ViewModels
                     OnPropertyChanged(nameof(CurrentPlayerScore));
                 }
             }
-
         }
 
         public void SetGamePause()
