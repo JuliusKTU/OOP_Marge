@@ -198,10 +198,10 @@
     <Compile Include="DesignPatterns\DecoratorPattern\StealPointsAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\TeleportAbility.cs" />
     <Compile Include="DesignPatterns\FacadePattern\Facade.cs" />
-    <Compile Include="DesignPatterns\FlyweightPattern\Diamond.cs" />
-    <Compile Include="DesignPatterns\FlyweightPattern\Figure.cs" />
-    <Compile Include="DesignPatterns\FlyweightPattern\FigureFactory.cs" />
-    <Compile Include="DesignPatterns\FlyweightPattern\Traingle.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\AbstractNeutralTile.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\DarkestNeutralTile.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\LightestNeutralTile.cs" />
+    <Compile Include="DesignPatterns\FlyweightPattern\NeutralTileFactory.cs" />
     <Compile Include="DesignPatterns\InterpreterPattern\ContextRoman.cs" />
     <Compile Include="DesignPatterns\InterpreterPattern\ExpressionRoman.cs" />
     <Compile Include="DesignPatterns\InterpreterPattern\HundredExpression.cs" />

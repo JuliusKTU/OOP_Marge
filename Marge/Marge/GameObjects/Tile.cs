@@ -39,6 +39,8 @@ namespace Marge.GameObjects
         BonusNormal,
         BonusJoke,
         Neutral,
+        DarkHole,
+        LightHole,
         Enemy,
         EnemyWithAbilities,
         Magician,

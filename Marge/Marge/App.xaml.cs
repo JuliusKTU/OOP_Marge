@@ -11,6 +11,7 @@ using Marge.GameObjects;
 using Marge.DesignPatterns.BuilderPattern;
 using Marge.DesignPatterns.StatePattern;
 using Marge.DesignPatterns.ProxyPattern;
+using Marge.DesignPatterns.FlyweightPattern;
 
 namespace Marge
 {
@@ -24,12 +25,6 @@ namespace Marge
             //HubConnection connection = new HubConnectionBuilder()
             //    .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
             //    .Build();
-
-            HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/margechat")
-                .Build();
-
-            var SignalRConnection = new Services.SignalRChatService(connection);
 
             ConnectionProxy connectionProxy = new ConnectionProxy();
 
@@ -47,7 +42,7 @@ namespace Marge
 
             var darkenBoard = new Darken();
             Board board = new Board(darkenBoard);
-            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(SignalRConnection, connectionProxy, player.GetPlayer(), enemy.GetEnemy(), board);
+            BoardCoordinatesViewModel chatViewModel = BoardCoordinatesViewModel.CreateConnectedViewModel(connectionProxy, player.GetPlayer(), enemy.GetEnemy(), board);
             
 
             MainWindow window = new MainWindow
@@ -56,6 +51,18 @@ namespace Marge
             };
 
             window.Show();
+
+            NeutralTileFactory factory = new NeutralTileFactory();
+            for (int i = 0; i < 10; i++)
+            {
+                AbstractNeutralTile tile = factory.GetNeutralTile("Darkest");
+                tile.Display(connectionProxy);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                AbstractNeutralTile tile = factory.GetNeutralTile("Lightest");
+                tile.Display(connectionProxy);
+            }
 
 
         }

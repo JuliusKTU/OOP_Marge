@@ -32,6 +32,7 @@ using Marge.DesignPatterns.Interpreter;
 using Marge.DesignPatterns.VisitorPattern;
 using Marge.DesignPatterns.MementoPattern;
 using Marge.DesignPatterns.ProxyPattern;
+using Marge.DesignPatterns.FlyweightPattern;
 
 namespace Marge.ViewModels
 {
@@ -172,7 +173,7 @@ namespace Marge.ViewModels
         public ICommand Pause { get; }
         public ICommand RestartGame { get; }
 
-        public BoardCoordinatesViewModel(SignalRChatService chatService, ConnectionProxy connectionProxy, Player mainPlayer, Enemy mainEnemy)
+        public BoardCoordinatesViewModel(ConnectionProxy connectionProxy, Player mainPlayer, Enemy mainEnemy)
         {
 
             _connectionProxy = connectionProxy;
@@ -239,7 +240,6 @@ namespace Marge.ViewModels
             _connectionProxy.AddMessageReceiver(ChatService_CoordinatesMessageReceived);
 
             //chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
-            _chatService = chatService;
             facade = new Facade(_connectionProxy);
 
             root = new Composite(ComponentType.Effect);
@@ -292,20 +292,18 @@ namespace Marge.ViewModels
             game.Accept(debuffSpawn);
             /* VISITOR DESIGN PATTERN IMPLEMENTATION */
 
+            /* Flyweight design pattern */
+            
+
+            /* Flyweight design pattern */
+
         }
 
-        public static BoardCoordinatesViewModel CreateConnectedViewModel(SignalRChatService chatService, ConnectionProxy connectionProxy, Player mainPlayer, Enemy mainEnemy, Board currboard)
+        public static BoardCoordinatesViewModel CreateConnectedViewModel(ConnectionProxy connectionProxy, Player mainPlayer, Enemy mainEnemy, Board currboard)
         {
             board = currboard;
-            BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(chatService, connectionProxy, mainPlayer, mainEnemy);
-            chatService.Connect().ContinueWith(task =>
-            {
-                if (task.Exception != null)
-                {
-                    ;
-                }
-            });
-
+            BoardCoordinatesViewModel viewModel = new BoardCoordinatesViewModel(connectionProxy, mainPlayer, mainEnemy);
+            
             return viewModel;
         }
 
@@ -457,6 +455,14 @@ namespace Marge.ViewModels
                             root.AddPoint(ComponentType.BlackSplash);
                             MainPlayer.SendSteppedOnBlackSplash(_connectionProxy, _x, _y);
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
+                        }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.DarkHole)
+                        {
+                            MainPlayer.Score -= 3;
+                        }
+                        if (TilesSet.GetTile(_x, _y).TileType == TileType.LightHole)
+                        {
+                            MainPlayer.Score -= 2;
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Magician)
                         {

@@ -32,6 +32,8 @@ namespace Marge.Domain
         stepedOnColorSplash,
         stepedOnBlackSplash,
         enemy,
+        darkHole,
+        lightHole,
         gameOver,
         dazePlayerEnemy,
         teleportPlayerEnemy,

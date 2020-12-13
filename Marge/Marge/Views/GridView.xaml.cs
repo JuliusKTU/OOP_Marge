@@ -330,12 +330,31 @@ namespace Marge.Views
                 string[] words = coordinates.color.Split(' ');
                 //SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
             }
-            else
+            else if (coordinates.messageType == MessageType.darkHole)
             {
                 string[] words = coordinates.color.Split(' ');
-
                 SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
-                
+                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.DarkHole, coordinates.x, coordinates.y));
+            }
+            else if (coordinates.messageType == MessageType.lightHole)
+            {
+                string[] words = coordinates.color.Split(' ');
+                SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                TilesSet.AddTile(coordinates.x, coordinates.y, new Tile(true, true, TileType.LightHole, coordinates.x, coordinates.y));
+            }
+            else
+            {
+                if(TilesSet.GetTile(coordinates.x, coordinates.y).TileType == TileType.DarkHole || TilesSet.GetTile(coordinates.x, coordinates.y).TileType == TileType.LightHole)
+                {
+                    
+                }
+                else
+                {
+                    string[] words = coordinates.color.Split(' ');
+
+                    SetTile(coordinates.x, coordinates.y, new SolidColorBrush(Color.FromRgb(Byte.Parse(words[0]), Byte.Parse(words[1]), Byte.Parse(words[2]))));
+                }
+
             }
 
         }

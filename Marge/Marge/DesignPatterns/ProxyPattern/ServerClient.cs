@@ -26,7 +26,6 @@ namespace Marge.DesignPatterns.ProxyPattern
 
         private void Connect()
         {
-            MessageBox.Show("Connected");
             HubConnection connection = new HubConnectionBuilder()
                 .WithUrl("https://margesignalr20201213214719.azurewebsites.net/margechat")
                 .Build();
