@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using System;
@@ -15,25 +16,16 @@ namespace Marge.DesignPatterns.Factory
 {
     class JackPot : Bonus
     {
-        public JackPot(SignalRChatService chatService) : base(chatService)
+        public JackPot(ConnectionProxy chatService) : base(chatService)
         {
         }
 
-        public override async void SendBonus()
+        public override void SendBonus()
         {
             Random randNum = new Random();
             int Randx = randNum.Next(0, 20);
             int Randy = randNum.Next(0, 20);
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.bonusJackPot,
-                message = "buff",
-                color = ColorOptions[YellowColorShades.Normal].ReceiveColorCode(),
-                x = Randx,
-                y = Randy
-            }) ;
-
-            
+            _chatService.SendMessage("buff", 1, ColorOptions[YellowColorShades.Normal].ReceiveColorCode(), MessageType.bonusJackPot, Randx, Randy);
 
         }
         public override int ReturnAmount()

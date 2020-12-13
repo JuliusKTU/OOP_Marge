@@ -1,4 +1,5 @@
 ﻿using Marge.DesignPatterns.Factory;
+using Marge.DesignPatterns.ProxyPattern;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Marge.DesignPatterns.FactoryPattern
 {
      public abstract class Factory
     {
-        public abstract Bonus CreateBonus(int bonusId, SignalRChatService chatService);
+        public abstract Bonus CreateBonus(int bonusId, ConnectionProxy chatService);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using System;
@@ -12,15 +13,10 @@ namespace Marge.DesignPatterns.DecoratorPattern
 {
     public class TeleportAbility : Decorator
     {
-        public override async void Operation(int x, int y,SignalRChatService _chatService)
+        public override void Operation(int x, int y,ConnectionProxy _chatService)
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                color = "255 0 0",
-                messageType = MessageType.teleportPlayerEnemy,
-                x = x,
-                y = y
-            });
+            _chatService.SendMessage("Teleportation ability", 1, "255 0 0", MessageType.teleportPlayerEnemy, x, y);
+            
             enemy.Operation(x, y, _chatService);
         }
     }

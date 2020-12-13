@@ -1,5 +1,6 @@
 ﻿using Marge.DesignPatterns.AbstractFactoryPattern;
 using Marge.DesignPatterns.FactoryPattern;
+using Marge.DesignPatterns.ProxyPattern;
 using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
@@ -19,19 +20,19 @@ namespace Marge.DesignPatterns.FacadePattern
         private Debuff _freezeYourself;
         private Buff _colorSplash;
         private Buff _freezeOthers;
-        SignalRChatService _chatService;
+        ConnectionProxy _chatService;
         private FactoryPattern.Factory _factory;
 
 
-        public Facade(SignalRChatService chatService)
+        public Facade(ConnectionProxy connectionProxy)
         {
-            _chatService = chatService;
+            _chatService = connectionProxy;
             _paintBomb = new PaintBombFactory();
             _freeze = new FreezeFactory();
-            _blackSplash = new BlackSplash(chatService);
-            _freezeYourself = new FreezeYourself(chatService);
-            _colorSplash = new ColorSplash(chatService);
-            _freezeOthers = new FreezeOthers(chatService);
+            _blackSplash = new BlackSplash(_chatService);
+            _freezeYourself = new FreezeYourself(_chatService);
+            _colorSplash = new ColorSplash(_chatService);
+            _freezeOthers = new FreezeOthers(_chatService);
             _factory = new BonusFactory();
 
         }

@@ -53,7 +53,7 @@ namespace Marge.GameObjects
 
         }
 
-        public override async void Operation(int xa, int ya,SignalRChatService _chatService)
+        public override async void Operation(int xa, int ya,ConnectionProxy _chatService)
         {
             //Random randNum = new Random();
             //PosX = randNum.Next(0, 20);

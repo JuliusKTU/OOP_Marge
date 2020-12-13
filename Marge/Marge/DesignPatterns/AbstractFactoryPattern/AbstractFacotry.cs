@@ -1,4 +1,5 @@
-﻿using Marge.Services;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
     {
        
         //siuncia tipa buffo
-        public abstract Buff CreateBuff(SignalRChatService chatService);
+        public abstract Buff CreateBuff(ConnectionProxy chatService);
 
-        public abstract Debuff CreateDebuff(SignalRChatService chatService);
+        public abstract Debuff CreateDebuff(ConnectionProxy chatService);
 
     }
 }

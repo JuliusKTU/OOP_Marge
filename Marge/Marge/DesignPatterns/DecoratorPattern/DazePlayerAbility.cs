@@ -1,4 +1,5 @@
-﻿using Marge.DesignPatterns.StrategyPattern;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.DesignPatterns.StrategyPattern;
 using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
@@ -13,15 +14,10 @@ namespace Marge.DesignPatterns.DecoratorPattern
 {
     public class DazePlayerAbility : Decorator
     {
-        public async override void Operation(int x, int y,SignalRChatService _chatService)
+        public override void Operation(int x, int y,ConnectionProxy _chatService)
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                color = "255 0 0",
-                messageType = MessageType.dazePlayerEnemy,
-                x = x,
-                y = y
-            });
+            _chatService.SendMessage("Daze player ability", 1, "255 0 0", MessageType.dazePlayerEnemy, x, y);
+            
             enemy.Operation(x, y, _chatService);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Marge.DesignPatterns.AdapterPattern;
 using Marge.DesignPatterns.Memento;
+using Marge.DesignPatterns.ProxyPattern;
 using Marge.DesignPatterns.StrategyPattern;
 using Marge.Domain;
 using Marge.Services;
@@ -114,38 +115,20 @@ namespace Marge.GameObjects
             Score += score;
         }
 
-        public async void SendGameOverMessage(SignalRChatService _chatService, int currenPlayerId)
+        public void SendGameOverMessage(ConnectionProxy _chatService, int currenPlayerId)
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                message = "Game over",
-                id = currenPlayerId,
-                messageType = MessageType.gameOver
-            });
+            _chatService.SendMessage("Game over", currenPlayerId, "255 0 0", MessageType.gameOver, 0, 0);
         }
 
-        public async void SendSteppedOnColorSplash(SignalRChatService _chatService, int xP, int yP)
+        public void SendSteppedOnColorSplash(ConnectionProxy _chatService, int xP, int yP)
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.stepedOnColorSplash,
-                message = "buff effect",
-                color = Color,
-                x = xP,
-                y = yP
-            });
+            _chatService.SendMessage("buff effect", 1, Color, MessageType.stepedOnColorSplash, xP, yP);
         }
 
-        public async void SendSteppedOnBlackSplash(SignalRChatService _chatService, int xP, int yP)
+        public void SendSteppedOnBlackSplash(ConnectionProxy _chatService, int xP, int yP)
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.stepedOnBlackSplash,
-                message = "debuff effect",
-                color = "0 0 0",
-                x = xP,
-                y = yP
-            });
+            _chatService.SendMessage("debuff effect", 1, "0 0 0", MessageType.stepedOnBlackSplash, xP, yP);
+
         }
 
         public PlayerMemento CreateMemento()

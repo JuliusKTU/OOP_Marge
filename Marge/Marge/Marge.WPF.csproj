@@ -211,7 +211,6 @@
     <Compile Include="DesignPatterns\IteratorPattern\Aggregate.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\BoardIterator.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\AbstractIterator.cs" />
-    <Compile Include="DesignPatterns\IteratorPattern\IteratorAggregate.cs" />
     <Compile Include="DesignPatterns\IteratorPattern\TilesCollection.cs" />
     <Compile Include="DesignPatterns\MementoPattern\PlayerMemento.cs" />
     <Compile Include="DesignPatterns\MementoPattern\MementoCareTaker.cs" />

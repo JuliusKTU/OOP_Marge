@@ -240,7 +240,7 @@ namespace Marge.ViewModels
 
             //chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             _chatService = chatService;
-            facade = new Facade(chatService);
+            facade = new Facade(_connectionProxy);
 
             root = new Composite(ComponentType.Effect);
             //Buffai
@@ -291,8 +291,6 @@ namespace Marge.ViewModels
             game.Accept(buffSpawn);
             game.Accept(debuffSpawn);
             /* VISITOR DESIGN PATTERN IMPLEMENTATION */
-
-            
 
         }
 
@@ -379,21 +377,21 @@ namespace Marge.ViewModels
                     if (EnemyCount >= SpawnRates.EnemyCount)
                     {
                         MainEnemy.ChangePossition();
-                        dazeEnemy.Operation(MainEnemy.PosX, MainEnemy.PosY, _chatService);
+                        dazeEnemy.Operation(MainEnemy.PosX, MainEnemy.PosY, _connectionProxy);
                         EnemyCount = 0;
                     }
 
                     if (MagicianCount > SpawnRates.MagicianCount)
                     {
                         Thief newThief = new Magician();
-                        newThief.Run(_chatService);
+                        newThief.Run(_connectionProxy);
                         MagicianCount = 0;
                     }
 
                     if (MasterThiefCount > SpawnRates.MasterThiefCount)
                     {
                         Thief newThief2 = new MasterThief();
-                        newThief2.Run(_chatService);
+                        newThief2.Run(_connectionProxy);
                         MasterThiefCount = 0;
                     }
 
@@ -419,21 +417,21 @@ namespace Marge.ViewModels
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJackPot)
                         {
                             root.AddPoint(ComponentType.JackPot);
-                            MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _chatService)));
+                            MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _connectionProxy)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +25 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusNormal)
                         {
                             root.AddPoint(ComponentType.Normal);
-                            MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _chatService)));
+                            MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _connectionProxy)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJoke)
                         {
                             root.AddPoint(ComponentType.Joke);
-                            MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _chatService)));
+                            MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _connectionProxy)));
                             // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -5 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
@@ -451,13 +449,13 @@ namespace Marge.ViewModels
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BuffColorSplash)
                         {
                             root.AddPoint(ComponentType.ColorSplash);
-                            MainPlayer.SendSteppedOnColorSplash(_chatService, _x, _y);
+                            MainPlayer.SendSteppedOnColorSplash(_connectionProxy, _x, _y);
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffBlackSplash)
                         {
                             root.AddPoint(ComponentType.BlackSplash);
-                            MainPlayer.SendSteppedOnBlackSplash(_chatService, _x, _y);
+                            MainPlayer.SendSteppedOnBlackSplash(_connectionProxy, _x, _y);
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString());
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.Magician)
@@ -516,7 +514,7 @@ namespace Marge.ViewModels
                 if (MainPlayer.Score >= 100)
                 {
                     MessageBox.Show(root.Display(1));
-                    MainPlayer.SendGameOverMessage(_chatService, UniqueID);
+                    MainPlayer.SendGameOverMessage(_connectionProxy, UniqueID);
                     MainPlayer.Score = 0;
                     //gameHasEnded = true;
 

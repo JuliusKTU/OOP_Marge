@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using System;
@@ -11,24 +12,16 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 {
     class FreezeOthers : Buff
     {
-        private SignalRChatService _chatService;
+        private ConnectionProxy _chatService;
 
-        public FreezeOthers(SignalRChatService chatService)
+        public FreezeOthers(ConnectionProxy chatService)
         {
             _chatService = chatService;
         }
 
-        public override async void SendBuff()
+        public override void SendBuff()
         {
-
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.buffFreezeOthers,
-                message = "buff",
-                color = "100 100 200",
-                x = 11,
-                y = 11
-            });
+            _chatService.SendMessage("buff", 1, "100 100 200", MessageType.buffFreezeOthers, 11, 11);
 
             if (TilesSet.GetTile(11,11).IsColored)
             {

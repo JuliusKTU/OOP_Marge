@@ -1,4 +1,5 @@
 ﻿using Marge.DesignPatterns.BridgePattern;
+using Marge.DesignPatterns.ProxyPattern;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace Marge.DesignPatterns.Factory
 {
     public abstract class Bonus
     {
-        protected SignalRChatService _chatService;
+        protected ConnectionProxy _chatService;
 
         public Dictionary<YellowColorShades, ColorSet> ColorOptions = new Dictionary<YellowColorShades, ColorSet>();
 
-        public Bonus(SignalRChatService chatService)
+        public Bonus(ConnectionProxy chatService)
         {
             _chatService = chatService;
            

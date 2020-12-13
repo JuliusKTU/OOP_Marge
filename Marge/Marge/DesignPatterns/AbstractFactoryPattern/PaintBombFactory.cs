@@ -1,4 +1,5 @@
-﻿using Marge.Services;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 {
     class PaintBombFactory : AbstractFactory
     {
-        public override Buff CreateBuff(SignalRChatService chatService)
+        public override Buff CreateBuff(ConnectionProxy chatService)
         {
             return new ColorSplash(chatService);
         }
 
-        public override Debuff CreateDebuff(SignalRChatService chatService)
+        public override Debuff CreateDebuff(ConnectionProxy chatService)
         {
             return new BlackSplash(chatService);
         }

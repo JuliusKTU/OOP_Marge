@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using System;
@@ -12,22 +13,15 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
     public class BlackSplash : Debuff
     {
 
-        private SignalRChatService _chatService;
-        public BlackSplash(SignalRChatService chatService)
+        private ConnectionProxy _chatService;
+        public BlackSplash(ConnectionProxy chatService)
         {
             _chatService = chatService;
         }
 
-        public override async void SendDebuff()
+        public override void SendDebuff()
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.debuffBlackSplash,
-                message = "BlackSplash",
-                color = "0 0 0",
-                x = 4,
-                y = 4
-            });
+            _chatService.SendMessage("BlackSplash", 1, "0 0 0", MessageType.debuffBlackSplash, 4, 4);
 
             if (TilesSet.GetTile(4, 4).IsColored)
             {

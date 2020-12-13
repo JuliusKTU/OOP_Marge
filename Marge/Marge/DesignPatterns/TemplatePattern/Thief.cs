@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ namespace Marge.DesignPatterns.TemplatePattern
 {
     public abstract class Thief
     {
-        SignalRChatService _chatService;
+        ConnectionProxy _chatService;
         protected abstract string Hide();
 
         protected abstract MessageType GetType();
 
-        public void Run(SignalRChatService chatService)
+        public void Run(ConnectionProxy chatService)
         {
             _chatService = chatService;
             string hiddenColor = Hide();
@@ -28,13 +29,9 @@ namespace Marge.DesignPatterns.TemplatePattern
             Random randNum = new Random();
             int Randx = randNum.Next(0, 20);
             int Randy = randNum.Next(0, 20);
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                color = hiddenColor,
-                messageType = type,
-                x = Randx,
-                y = Randy
-            });
+
+            _chatService.SendMessage("Thief", 1, hiddenColor, type, Randx, Randy);
+
         }
 
     }

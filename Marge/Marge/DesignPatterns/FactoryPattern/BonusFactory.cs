@@ -1,4 +1,5 @@
 ﻿using Marge.DesignPatterns.Factory;
+using Marge.DesignPatterns.ProxyPattern;
 using Marge.Services;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Marge.DesignPatterns.FactoryPattern
 {
     public class BonusFactory : Factory
     {
-        public override Bonus CreateBonus(int bonusId, SignalRChatService chatService)
+        public override Bonus CreateBonus(int bonusId, ConnectionProxy chatService)
         {
             switch (bonusId)
             {

@@ -1,4 +1,5 @@
 ﻿using Marge.DesignPatterns.IteratorPattern;
+using Marge.DesignPatterns.ProxyPattern;
 using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
@@ -41,21 +42,9 @@ namespace Marge.Views
             //    .WithUrl("https://margesignalr20201107074704.azurewebsites.net/margechat")
             //    .Build();
 
-            HubConnection connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/margechat")
-                .Build();
+            ConnectionProxy chatService = new ConnectionProxy();
+            chatService.AddMessageReceiver(ChatService_CoordinatesMessageReceived);
 
-            chatService = new Services.SignalRChatService(connection);
-
-            chatService.Connect().ContinueWith(task =>
-            {
-                if (task.Exception != null)
-                {
-                    ;
-                }
-            });
-
-            chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
         }
         
 

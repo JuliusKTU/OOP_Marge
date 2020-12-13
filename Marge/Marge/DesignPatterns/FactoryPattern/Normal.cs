@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using System;
@@ -11,7 +12,7 @@ namespace Marge.DesignPatterns.Factory
 {
     class Normal : Bonus
     {
-        public Normal(SignalRChatService chatService) : base(chatService)
+        public Normal(ConnectionProxy chatService) : base(chatService)
         {
         }
 
@@ -20,21 +21,13 @@ namespace Marge.DesignPatterns.Factory
             return 10;
         }
 
-        public override async void SendBonus()
+        public override void SendBonus()
         {
             Random randNum = new Random();
             int Randx = randNum.Next(0, 20);
             int Randy = randNum.Next(0, 20);
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.bonusNormal,
-                message = "buff",
-                color = ColorOptions[YellowColorShades.Dark].ReceiveColorCode(),
-                x = Randx,
-                y = Randy
-            });
-
-            
+            _chatService.SendMessage("buff", 1, ColorOptions[YellowColorShades.Dark].ReceiveColorCode(), MessageType.bonusNormal, Randx, Randy);
+           
             if (TilesSet.GetTile(Randx, 15).IsColored)
             {
                 TilesSet.AddTile(Randx, Randy, new Tile(true, true, TileType.BonusNormal, Randx, Randy));

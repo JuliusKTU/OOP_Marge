@@ -1,4 +1,5 @@
-﻿using Marge.Domain;
+﻿using Marge.DesignPatterns.ProxyPattern;
+using Marge.Domain;
 using Marge.GameObjects;
 using Marge.Services;
 using System;
@@ -11,23 +12,16 @@ namespace Marge.DesignPatterns.AbstractFactoryPattern
 {
     public class ColorSplash : Buff
     {
-        private SignalRChatService _chatService;
-        public ColorSplash(SignalRChatService chatService)
+        private ConnectionProxy _chatService;
+        public ColorSplash(ConnectionProxy chatService)
         {
 
             _chatService = chatService;
         }
 
-        public override async void SendBuff()
+        public override void SendBuff()
         {
-            await _chatService.SendCoordinatesMessage(new BoardCoordinates()
-            {
-                messageType = MessageType.buffSplashBomb,
-                message = "SplashBomb",
-                color = "255 51 51",
-                x = 5,
-                y = 5
-            });
+            _chatService.SendMessage("SplashBomb", 1, "255 51 51", MessageType.buffSplashBomb, 5, 5);
 
             if (TilesSet.GetTile(5, 5).IsColored)
             {
