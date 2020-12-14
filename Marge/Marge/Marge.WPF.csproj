@@ -188,9 +188,9 @@
     <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\IceDamage.cs" />
     <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\MagicianDamage.cs" />
     <Compile Include="DesignPatterns\ChainOfResponsibilityPattern\ThiefDamage.cs" />
-    <Compile Include="DesignPatterns\CompositePattern\Component1.cs" />
-    <Compile Include="DesignPatterns\CompositePattern\Composite.cs" />
-    <Compile Include="DesignPatterns\CompositePattern\Leaf.cs" />
+    <Compile Include="DesignPatterns\CompositePattern\GameResults.cs" />
+    <Compile Include="DesignPatterns\CompositePattern\Effect.cs" />
+    <Compile Include="DesignPatterns\CompositePattern\CountLeaf.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\DazePlayerAbility.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\Decorator.cs" />
     <Compile Include="DesignPatterns\DecoratorPattern\AbstractEnemy.cs" />

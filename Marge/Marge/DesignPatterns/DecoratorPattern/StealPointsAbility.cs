@@ -13,7 +13,7 @@ namespace Marge.DesignPatterns.DecoratorPattern
 {
     public class StealPointsAbility : Decorator
     {
-        public override async void Operation(int x, int y, ConnectionProxy _chatService)
+        public override void Operation(int x, int y, ConnectionProxy _chatService)
         {
             _chatService.SendMessage("Steal points ability", 1, "255 0 0", MessageType.stealPointEnemy, x, y);
             

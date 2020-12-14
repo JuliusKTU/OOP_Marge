@@ -8,14 +8,14 @@ using System.Windows;
 
 namespace Marge.DesignPatterns.CompositePattern
 {
-    class Leaf : Component1
+    class CountLeaf : GameResults
     {
         private int count;
         // Constructor
-        public Leaf(ComponentType name): base(name)
+        public CountLeaf(ComponentType name): base(name)
         {
         }
-        public override void Add(Component1 c)
+        public override void Add(GameResults c)
         {
             MessageBox.Show("Cannot add to a leaf");
         }
@@ -25,7 +25,7 @@ namespace Marge.DesignPatterns.CompositePattern
             return name + " " + count;
         }
 
-        public override void Remove(Component1 c)
+        public override void Remove(GameResults c)
         {
             MessageBox.Show("Cannot remove from a leaf");
         }

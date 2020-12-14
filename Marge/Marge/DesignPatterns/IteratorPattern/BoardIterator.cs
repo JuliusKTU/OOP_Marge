@@ -72,56 +72,5 @@ namespace Marge.DesignPatterns.Iterator
 
         }
 
-
-
-        //public override object Current()
-        //{
-        //    //return _collection.GetItem(xposition, yposition);
-        //    return 1;
-        //}
-
-        //public override int[] Key()
-        //{
-        //    int[] array = new int[2];
-        //    array[0] = xposition;
-        //    array[1] = yposition;
-        //    return array;
-        //}
-
-        //public override bool MoveNext()
-        //{
-        //    MessageBox.Show("Inside");
-        //    if (yposition + 2 < _collection.HowManyTiles())
-        //    {
-        //        yposition += 2;
-        //        MessageBox.Show("Inside IF");
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Inside ELSE");
-        //        if (xposition + 1 <= _collection.HowManyTiles())
-        //        {
-        //            xposition += 1;
-        //            yposition = 0;
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Inside ELSE ELSE ");
-        //            return false;
-        //        }
-
-        //    }
-
-        //    return true;
-
-        //}
-
-        //public override void Reset()
-        //{
-        //    xposition = 0;
-        //    yposition = 0;
-
-        //}
     }
 }

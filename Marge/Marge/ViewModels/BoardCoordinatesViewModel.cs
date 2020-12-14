@@ -48,7 +48,6 @@ namespace Marge.ViewModels
         public int UniqueID { get; }
         public int UniqueID2 { get; }
         public int UniqueID3 { get; }
-
         private int _x { get; set; }
         private int _y { get; set; }
         private static Board board { get; set; }
@@ -71,7 +70,7 @@ namespace Marge.ViewModels
         StealPointsAbility enemySteal;
         TeleportAbility teleportEnemy;
         DazePlayerAbility dazeEnemy;
-        Composite root;
+        Effect root;
 
         DamageDealer EnemyDamageDealer;
         DamageDealer MagicianDamageDealer;
@@ -164,7 +163,6 @@ namespace Marge.ViewModels
             }
         }
 
-
         //public ICommand SendCoordinatesCommand { get; }
         public ICommand MoveDownChatMessageCommand { get; }
         public ICommand MoveLeftChatMessageCommand { get; }
@@ -225,6 +223,8 @@ namespace Marge.ViewModels
             y = MainPlayer.PosY;
             playerColor = MainPlayer.Color;
 
+            /* CHAIN OF RESPONSIBILITY */
+
             EnemyDamageDealer = new EnemyDamage();
             MagicianDamageDealer = new MagicianDamage();
             ThiefDamageDealer = new ThiefDamage();
@@ -234,6 +234,8 @@ namespace Marge.ViewModels
             ThiefDamageDealer.SetSuccessor(MagicianDamageDealer);
             MagicianDamageDealer.SetSuccessor(EnemyDamageDealer);
 
+            /* CHAIN OF RESPONSIBILITY */
+
             CurrentPlayer.x = x;
             CurrentPlayer.y = y;
 
@@ -242,17 +244,17 @@ namespace Marge.ViewModels
             //chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
             facade = new Facade(_connectionProxy);
 
-            root = new Composite(ComponentType.Effect);
+            root = new Effect(ComponentType.Effect);
             //Buffai
 
-            Composite buff = new Composite(ComponentType.Buff);
-            Composite negativeBuff = new Composite(ComponentType.Negative); //negative
-            Composite positiveBuff = new Composite(ComponentType.Positive); //positive
-            positiveBuff.Add(new Leaf(ComponentType.ColorSplash));
-            positiveBuff.Add(new Leaf(ComponentType.FreezeOthers));
+            Effect buff = new Effect(ComponentType.Buff);
+            Effect negativeBuff = new Effect(ComponentType.Negative); //negative
+            Effect positiveBuff = new Effect(ComponentType.Positive); //positive
+            positiveBuff.Add(new CountLeaf(ComponentType.ColorSplash));
+            positiveBuff.Add(new CountLeaf(ComponentType.FreezeOthers));
 
-            negativeBuff.Add(new Leaf(ComponentType.BlackSplash));
-            negativeBuff.Add(new Leaf(ComponentType.FreezeYourself));
+            negativeBuff.Add(new CountLeaf(ComponentType.BlackSplash));
+            negativeBuff.Add(new CountLeaf(ComponentType.FreezeYourself));
 
             buff.Add(negativeBuff);
             buff.Add(positiveBuff);
@@ -260,10 +262,10 @@ namespace Marge.ViewModels
             // /Buffai
             // Bonusai
 
-            Composite bonus = new Composite(ComponentType.Bonus);
-            bonus.Add(new Leaf(ComponentType.JackPot));
-            bonus.Add(new Leaf(ComponentType.Normal));
-            bonus.Add(new Leaf(ComponentType.Joke));
+            Effect bonus = new Effect(ComponentType.Bonus);
+            bonus.Add(new CountLeaf(ComponentType.JackPot));
+            bonus.Add(new CountLeaf(ComponentType.Normal));
+            bonus.Add(new CountLeaf(ComponentType.Joke));
 
             //Bonusai
            
@@ -416,21 +418,18 @@ namespace Marge.ViewModels
                         {
                             root.AddPoint(ComponentType.JackPot);
                             MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(1, _connectionProxy)));
-                            // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +25 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusNormal)
                         {
                             root.AddPoint(ComponentType.Normal);
                             MainPlayer.PlayerCalculateScore(Score.AddPoints(new BonusFactory().CreateBonus(3, _connectionProxy)));
-                            // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " +10 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.BonusJoke)
                         {
                             root.AddPoint(ComponentType.Joke);
                             MainPlayer.PlayerCalculateScore(Score.ReducePoints(new BonusFactory().CreateBonus(2, _connectionProxy)));
-                            // MessageBox.Show(Board.GetTile(_x, _y).TileType.ToString() + " HaHa -5 Points");
                             MessageBox.Show(TilesSet.GetTile(_x, _y).TileType.ToString() + MainPlayer.Score);
                         }
                         if (TilesSet.GetTile(_x, _y).TileType == TileType.DebuffFreezeYourself)
@@ -476,8 +475,8 @@ namespace Marge.ViewModels
                             {
                                 exp.Interpret(context);
                             }
-
-                            string message = "Does " + roman + " = " + number + " ?";
+                            
+                            string message = "Does " + roman + " = " + context.Output + " ?";
                             string title = "Answer the question";
 
                             MessageBoxResult result = MessageBox.Show(message, title, MessageBoxButton.YesNo);
@@ -501,8 +500,6 @@ namespace Marge.ViewModels
 
                         TilesSet.AddTile(_x, _y, new Tile(true, true, TileType.Neutral, _x, _y));
 
-
-
                         OnPropertyChanged(nameof(Message));
                         OnPropertyChanged(nameof(x));
                         MainPlayer.PosX = x;
@@ -522,25 +519,6 @@ namespace Marge.ViewModels
                     MessageBox.Show(root.Display(1));
                     MainPlayer.SendGameOverMessage(_connectionProxy, UniqueID);
                     MainPlayer.Score = 0;
-                    //gameHasEnded = true;
-
-                    //var BoardIter = new TilesCollection();
-                    //for (int i = 0; i < 20; i++)
-                    //{
-                    //    for (int y = 0; y < 20; y++)
-                    //    {
-                    //        BoardIter[i, y] = TilesSet.GetTile(i, y);
-                    //    }
-                    //}
-                    //AbstractIterator iter = BoardIter.CreateIterator();
-
-                    //object item = iter.First();
-
-                    //while (item != null)
-                    //{
-                    //    MessageBox.Show(item.ToString());
-                    //    item = iter.Next();
-                    //}
                 }
 
                 if (coordinates.messageType == MessageType.gameOver)

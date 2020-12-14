@@ -51,8 +51,6 @@ namespace Marge.Views
         public void AddTiles()
         {
 
-            //< Rectangle Fill = "Black" IsHitTestVisible = "False"
-            //           Grid.Column = "1" Grid.Row = "2" />
             for (int x = 0; x < 20; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -67,8 +65,6 @@ namespace Marge.Views
                     gridMain.Children.Add(ColorBlock);
                 }
             }
-
-            //chatService.CoordinatesReceived += ChatService_CoordinatesMessageReceived;
         }
 
         public void ClearBoard()

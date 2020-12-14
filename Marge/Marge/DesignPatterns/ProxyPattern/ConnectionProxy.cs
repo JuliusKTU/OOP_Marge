@@ -11,16 +11,14 @@ namespace Marge.DesignPatterns.ProxyPattern
     {
         private ServerClient client = new ServerClient();
 
-
-        
         public void AddMessageReceiver(Action<BoardCoordinates> method)
         {
             client.AddMessageReceiver(method);
         }
-
        
         public void SendMessage(string mess, int uniqueid, string newColor, MessageType type, int xcoord, int ycoord)
         {
+            System.Threading.Thread.Sleep(10);
             client.SendMessage(mess, uniqueid, newColor, type, xcoord, ycoord);
         }
     }

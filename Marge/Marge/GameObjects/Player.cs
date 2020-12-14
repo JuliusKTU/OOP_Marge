@@ -20,6 +20,7 @@ namespace Marge.GameObjects
         private string _color { get; set; }
         private int _posX { get; set; }
         private int _posY { get; set; }
+        private PlayerMemento privatePlayerMemento;
 
         private int _score = 0;
 
@@ -136,6 +137,11 @@ namespace Marge.GameObjects
             return (new PlayerMemento(_name, _color, _posX, _posY, _score));
         }
 
+        public void CreatePrivateMemento()
+        {
+            privatePlayerMemento = new PlayerMemento(_name, _color, _posX, _posY, _score);
+        }
+
         public void SetMemento(PlayerMemento memento)
         {
             Name = memento.Name;
@@ -143,6 +149,15 @@ namespace Marge.GameObjects
             PosX = memento.PosX;
             PosY = memento.PosY;
             Score = memento.Score;
+        }
+
+        public void SetPrivateMemento()
+        {
+            Name = privatePlayerMemento.Name;
+            Color = privatePlayerMemento.Color;
+            PosX = privatePlayerMemento.PosX;
+            PosY = privatePlayerMemento.PosY;
+            Score = privatePlayerMemento.Score;
         }
     }
 }

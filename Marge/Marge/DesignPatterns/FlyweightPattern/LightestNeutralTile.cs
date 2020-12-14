@@ -25,7 +25,7 @@ namespace Marge.DesignPatterns.FlyweightPattern
             int Randx = randNum.Next(0, 20);
             int Randy = randNum.Next(0, 20);
             //MessageBox.Show(Randx + " " + Randy);
-            chatService.SendMessage("Light hole", 1, this.color, MessageType.lightHole, Randx, Randy);
+           // chatService.SendMessage("Light hole", 1, this.color, MessageType.lightHole, Randx, Randy);
         }
     }
 }

@@ -8,15 +8,15 @@ using System.Windows;
 
 namespace Marge.DesignPatterns.CompositePattern
 {
-    public class Composite : Component1
+    public class Effect : GameResults
     {
-        private List<Component1> _children = new List<Component1>();
+        private List<GameResults> _children = new List<GameResults>();
 
-        public Composite(ComponentType name) : base(name)
+        public Effect(ComponentType name) : base(name)
         {
         }
 
-        public override void Add(Component1 c)
+        public override void Add(GameResults c)
         {
             _children.Add(c);
         }
@@ -27,7 +27,7 @@ namespace Marge.DesignPatterns.CompositePattern
 
             // Recursively display child nodes
             
-            foreach (Component1 component in _children)
+            foreach (GameResults component in _children)
             {
                 result += component.Display(depth + 2)+" \n";
             }
@@ -35,14 +35,14 @@ namespace Marge.DesignPatterns.CompositePattern
             return result;
         }
 
-        public override void Remove(Component1 c)
+        public override void Remove(GameResults c)
         {
             _children.Remove(c);
         }
 
         public override void AddPoint(ComponentType leafName)
         {
-            foreach (Component1 component in _children)
+            foreach (GameResults component in _children)
             {
                 component.AddPoint(leafName);
             }
